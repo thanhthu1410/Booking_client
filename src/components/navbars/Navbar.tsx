@@ -12,7 +12,7 @@ export default function Navbar() {
             <div className="navbar_container_bottom">
                 <div className="navbar_container_chirld">
                    <div className="navbar_logo">
-                        <img src="https://themeholy.com/html/rasm/demo/assets/img/logo-white2.svg" alt="" />
+                        <img src="https://themeholy.com/html/rasm/demo/assets/img/logo-white.svg" alt="" />
                     
                    </div>
                    <div className="navbar_center">
