@@ -1,0 +1,140 @@
+.banner_container{
+    width: 100%;
+    background-color: hsl(20, 43%, 96%);
+    font-family: 'Cormorant Garamond', serif;
+    position: relative;
+    .banner_container_chirld{
+        max-width: 1440px;
+        margin: 0 auto;
+        display: flex;
+        padding: 3%;
+        justify-content: space-between;
+        
+        .banner_chirld_left{
+            width: 48%;
+            display: flex;
+       
+            img{
+                // width: 50%;
+            }
+            .img1{
+                border-radius: 100px 0px 0px 0px;
+                margin-bottom: 30px;
+            }
+            .img2{
+                border-radius: 0px 0px 100px 0px;
+                padding-left: 20px;
+                margin-top: 40px;
+            }
+        }
+        .banner_chirld_right{
+            width: 43%;
+            .banner_detail_title{
+                color: rgb(194, 133, 101);
+                font-size: 1.2rem;
+            }
+            h2{
+                font-size: 2.6rem ;
+                font-weight: 400;
+                margin-top: 25px;
+            }
+            .banner_detail_content{
+                
+                font-size: 1.2rem;
+                border-left: 3px solid rgb(194, 133, 101);
+                padding-left: 20px;
+                margin-top: 25px;
+                font-weight: 550;
+                color: gray;
+                
+            }
+        }
+
+    }
+    .our_service_container{
+       width: 100%;
+        .our_service_container_chirld{
+            background-color: #fff;
+            max-width: 1440px;
+            margin: 0 auto;
+            .our_service_top{
+                padding-top: 60px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                height: 250px;
+                p{
+                    color: rgb(194, 133, 101);
+                    font-size: 1.2rem;
+                }
+                img{
+                    padding: 15px 0;
+                }
+                h2{
+                    font-size: 48px;
+                    font-weight: 500;
+                    line-height: 1.2;
+                  
+                }
+            }
+            .our_service_bottom{
+                width: 100%;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 2% 10%;
+                flex-wrap: wrap;
+                gap: 30px;
+                .service_item{
+                    width: 31%;
+                    background-color: rgb(249, 243, 240);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                    text-align: center;
+                    padding: 25px ;
+                    img{
+                        padding: 10px 0;
+                    }
+                    .title{
+                        font-weight: 550;
+                        font-size: 1.3rem;
+                    }
+                    .content{
+                        color: gray;
+                        line-height: 2;
+                        font-size: 1.1rem;
+                    }
+
+                }
+
+            }
+        }
+    }
+    .leas{
+        position: absolute;
+        top: 460px;
+        transform: translateY(0px);
+        animation: float 6s ease-out infinite;
+    }
+    .leas-green{
+        position: absolute;
+        top: 960px;
+        right: 0px;
+        transform: translateY(0px);
+        animation: float 6s ease-out infinite;
+    }
+}
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-50px);
+    }
+    100% {
+        transform: translateY(0px);
+    }
+}
