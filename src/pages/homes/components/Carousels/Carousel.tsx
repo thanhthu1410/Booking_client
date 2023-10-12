@@ -8,8 +8,6 @@ export default function MyCarousel() {
   useEffect(() => {
     const slideUp = {
       distance: '200%',
-      // origin: 'bottom',
-      // opacity: 1,
       reset: true,
       duration: 3000,
     };
@@ -18,34 +16,46 @@ export default function MyCarousel() {
   });
   useEffect(() => {
     const slideUp = {
-      distance: '180%',
-      // origin: 'bottom',
-      // opacity: 1,
+      // distance: '180%',
       reset: true,
       duration: 5000,
     };
     const sr = ScrollReveal();
     sr.reveal('.btn-101', slideUp);
   });
-
+  useEffect(() => {
+    const slideUp = {
+      distance: '160%',
+      // origin: 'bottom',
+      // opacity: 1,
+      reset: true,
+      duration: 4000,
+    };
+    const sr = ScrollReveal();
+    sr.reveal('.title-h5', slideUp);
+  });
   const [banners, setBanners] = useState([
     {
       id: 1,
       url: "https://themeholy.com/html/rasm/demo/assets/img/hero/hero_bg_3_2.jpg",
       title: "haircut with a subtle shape",
-      title2: "Styling and Heat Protection"
+      title2: "Styling and Heat Protection",
+      title3: "This style features shaved or closely cropped",
+
     },
     {
       id: 2,
       url: "https://themeholy.com/html/rasm/demo/assets/img/hero/hero_bg_3_1.jpg",
       title: "timeless classic hair styles",
-      title2: "Seasonal Hair Care"
+      title2: "Seasonal Hair Care",
+      title3: "Similar to the messy bun but positioned",
     },
     {
       id: 3,
       url: "https://themeholy.com/html/rasm/demo/assets/img/hero/hero_bg_3_3.jpg",
       title: "the best hairstyles for women in the world",
-      title2: "Trust in Our Expert Hair Care"
+      title2: "Trust in Our Expert Hair Care",
+      title3: "Change Your Look With Our Talented Stylists",
     },
   ]);
 
@@ -67,6 +77,7 @@ export default function MyCarousel() {
             <div className='items_title'>
               <p className="title-p"><img src="https://themeholy.com/html/rasm/demo/assets/img/theme-img/title_left2.svg" alt="" />{banner.title2}</p>
               <h2 className="title-h2" >{banner.title}</h2>
+              <h5 className="title-h5">{banner.title3}</h5>
               <button className="btn-101">
                 BOOKING NOW
                 <svg>
