@@ -6,10 +6,9 @@ import StylistSlider from './stylistSliders/StylistSlider'
 export default function Layout() {
   return (
     <div>
-      <MyCarousel/>
-        <Banner/>
-        <StylistSlider/>
-  
+      <MyCarousel />
+      <Banner />
+      <StylistSlider />
     </div>
   )
 }
