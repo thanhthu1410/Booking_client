@@ -7,22 +7,37 @@
 .items_title {
   position: absolute;
   top: 40%;
-  left: 240px;
+  left: 260px;
+  width: 750px;
+ 
+  img{
+    padding-right: 15px;
+  }
 
   .title-p {
     display: flex;
-    color: #e0d7c9;
+     color: hsl(21, 43%, 58%);
+    font-size: 1.3rem;
+    display: flex;
+    
     // animation: fadeIn 2s;
   }
 
   .title-h2 {
     color: #fff;
     text-transform: uppercase;
-    font-size: 45px;
+    font-size: 50px;
     font-weight: 400;
     animation-delay: 0.3s
-    // animation: fadeIn 10s  ease infinite;
-    // animation-delay: 1s;
+  }
+  .title-h5 {
+    color:hsl(21, 52%, 75%);
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: 400;
+    // animation-delay: 0.2s;
+    padding-bottom: 25px;
+  
   }
 }
 

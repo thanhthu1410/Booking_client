@@ -41,6 +41,7 @@ export default function Banner() {
             Welcome to Our Hair Salon We Will Change Your Look!
           </h2>
           <p className="banner_detail_content">We are committed to using high-quality hair care products to ensure that your hair receives the best possible treatment. From shampoos and conditioners to styling products.</p>
+           <img src="https://firebasestorage.googleapis.com/v0/b/bookingsalon-fa833.appspot.com/o/homepageImg%2Fab.png?alt=media&token=d1ca18f3-dd3d-449e-8d0d-c99df645d0e5&_gl=1*1log4ri*_ga*MTg1ODg5NjEyOS4xNjg4MDg4OTU3*_ga_CW55HF8NVT*MTY5NzAxNDM2NC41Ny4xLjE2OTcwMTUwMDguNDkuMC4w" alt="" />
         </div>
 
       </div>

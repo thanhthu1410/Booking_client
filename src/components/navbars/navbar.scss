@@ -4,6 +4,8 @@
     top: 0;
     left: 0;
     z-index: 99;
+    background-color: hsl(22, 46%, 92%);
+      
     .navbar_container_chirld{
         max-width: 1440px;
         margin: 0 auto;
@@ -27,13 +29,16 @@
             img{
                 margin-top: 5px;
                 width: 100%;
-                // height: 90%;
             }
         }
         .navbar_center{
             width: 40%;
             display: flex;
             justify-content: space-between;
+            span{
+                cursor: pointer;
+                font-size: 1.2rem;
+            }
         }
         .navbar_right{
             width: 10%;
