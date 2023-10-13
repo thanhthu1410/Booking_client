@@ -1,107 +1,239 @@
-import React, { useEffect, useState } from 'react';
-import './admin.scss';
-import { useDispatch, useSelector } from 'react-redux';
-import { timeAction } from '@/stores/slices/time.slice';
-import { StoreType } from '@/stores';
-import api from '@/services/api';
-import { Datepicker } from '@mobiscroll/react';
-import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 
-export default function Admin() {
 
-    const dispatch = useDispatch();
+import React, { useEffect } from 'react';
+import './admin.scss'
+import { Link, Outlet } from 'react-router-dom';
 
-    const [start, setStart] = useState<string>();
-    const [end, setEnd] = useState<string>();
+const Sidebar: React.FC = () => {
     useEffect(() => {
-        console.log("start", start)
-    }, [start])
-    useEffect(() => {
-        console.log("end", end)
-    }, [end])
-    function handleSubmit(e: any) {
-        e.preventDefault();
-        let data = {
-            duration: e.target.duration.value,
-            startTime: start,
-            endTime: end,
-            maxDate: e.target.daysReservation.value,
-            stepMinute: e.target.minimumPeriod.value
-        }
-        console.log("data", data)
-        api.timeApi.update(data)
-            .then(res => {
-                if (res.status == 200) {
-                    console.log("res", res);
+        const sidebar = document.querySelector(".sidebar");
+        const submenuItems = document.querySelectorAll(".submenu_item");
+        const sidebarOpen = document.querySelector("#sidebarOpen");
+        const sidebarClose = document.querySelector(".collapse_sidebar");
+        const sidebarExpand = document.querySelector(".expand_sidebar");
+
+        const handleSidebarOpen = () => sidebar?.classList.toggle("close");
+
+        const handleSidebarClose = () => {
+            sidebar?.classList.add("close", "hoverable");
+        };
+
+        const handleSidebarExpand = () => {
+            sidebar?.classList.remove("close", "hoverable");
+        };
+
+        const handleMouseEnter = () => {
+            if (sidebar?.classList.contains("hoverable")) {
+                sidebar?.classList.remove("close");
+            }
+        };
+
+        const handleMouseLeave = () => {
+            if (sidebar?.classList.contains("hoverable")) {
+                sidebar.classList.add("close");
+            }
+        };
+
+        const handleSubmenuItem = (index: number) => () => {
+            submenuItems.forEach((item2, index2) => {
+                if (index !== index2) {
+                    item2.classList.remove("show_submenu");
                 }
-            })
-            .catch(err => {
-                console.log("err", err);
-            })
-    }
-    return (
-        <div className='admin'>
-            <form onSubmit={(e: any) => handleSubmit(e)}>
-                {/* <div className='form_group'>
-                    <label htmlFor="">Start Time</label><br />
-                    <Datepicker
-                        controls={['time']}
-                        timeFormat="HH:mm"
-                        onChange={(e) => {
-                            setStart(e.value)
-                            console.log(start)
-                        }}
-                    />
-                    <input type="text" name="startTime" />
-                </div>
-                <div className='form_group'>
-                    <label htmlFor="">End Time</label><br />
-                    <input type="text" name="endTime" />
-                    <Datepicker
-                        controls={['time']}
-                        timeFormat="HH:mm"
-                        onChange={(e) => setEnd(e.value)}
-                    />
-                </div> */}
-                <div className='form_group'>
-                    <label htmlFor="">Start Time</label><br />
-                    <Datepicker
-                        controls={['time']}
-                        timeFormat="HH:mm"
-                        onChange={(e) => {
-                            let date = new Date(e.value)
-                            const startTime = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
-                            setStart(startTime)
-                        }}
-                    />
-                </div>
-                <div className='form_group'>
-                    <label htmlFor="">End Time</label><br />
-                    <Datepicker
-                        controls={['time']}
-                        timeFormat="HH:mm"
-                        onChange={(e) => {
-                            let date = new Date(e.value)
-                            const endTime = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
-                            setEnd(endTime)
-                        }}
-                    />
-                </div>
 
-                <div className='form_group'>
-                    <label htmlFor="">Time Duration</label><br />
-                    <input type="text" name="duration" />
+            });
+        };
+
+        sidebarOpen?.addEventListener("click", handleSidebarOpen);
+        sidebarClose?.addEventListener("click", handleSidebarClose);
+        sidebarExpand?.addEventListener("click", handleSidebarExpand);
+
+        sidebar?.addEventListener("mouseenter", handleMouseEnter);
+        sidebar?.addEventListener("mouseleave", handleMouseLeave);
+
+        // submenuItems.forEach((item, index) => {
+        //     item.addEventListener("click", handleSubmenuItem(index));
+        // });
+        submenuItems.forEach((item, index) => {
+            item.addEventListener("click", () => {
+                item.classList.toggle("show_submenu");
+                submenuItems.forEach((item2, index2) => {
+                    if (index !== index2) {
+                        item2.classList.remove("show_submenu");
+                    }
+                });
+            });
+        });
+
+        if (window.innerWidth < 768) {
+            sidebar?.classList.add("close");
+        } else {
+            sidebar?.classList.remove("close");
+        }
+
+        return () => {
+            sidebarOpen?.removeEventListener("click", handleSidebarOpen);
+            sidebarClose?.removeEventListener("click", handleSidebarClose);
+            sidebarExpand?.removeEventListener("click", handleSidebarExpand);
+            sidebar?.removeEventListener("mouseenter", handleMouseEnter);
+            sidebar?.removeEventListener("mouseleave", handleMouseLeave);
+            submenuItems.forEach((item, index) => {
+                item.removeEventListener("click", handleSubmenuItem(index));
+            });
+        };
+    }, []);
+
+    return (
+        <div className='admin_container'>
+            <nav className="navbar">
+                <div className="logo_item">
+                    <i className="bx bx-menu" id="sidebarOpen" />
+                    <img src="https://firebasestorage.googleapis.com/v0/b/bookingsalon-fa833.appspot.com/o/homepageImg%2Flogo-white.svg?alt=media&token=56a09dd9-7817-464e-99c4-feb3a28f33ff&_gl=1*1ufdsen*_ga*MTg1ODg5NjEyOS4xNjg4MDg4OTU3*_ga_CW55HF8NVT*MTY5NzE3MDU0Mi41OS4xLjE2OTcxNzE0MDguMjUuMC4w" alt="" />
+
                 </div>
-                <div className='form_group'>
-                    <label htmlFor="">Number of days for reservation</label><br />
-                    <input type="text" name="daysReservation" />
+                <div className="search_bar">
+                    <input type="text" placeholder="Search" />
                 </div>
-                <div className='form_group'>
-                    <label htmlFor="">Minimum booking period</label><br />
-                    <input type="text" name="minimumPeriod" />
+                <div className="navbar_content">
+                    <i className="bi bi-grid" />
+                    <i className="bx bx-sun" id="darkLight" />
+                    <i className="bx bx-bell" />
+                    <img src="https://rasm.co/cdn/shop/products/DSC_3446_1100x.JPG?v=1686770055" alt="" className="profile" />
                 </div>
-                <button type='submit' className='save_button'>Save</button>
-            </form>
+            </nav>
+            <div className='body_container' >
+                <div className="sidebar">
+                    <div className="menu_content">
+                        <ul className="menu_items">
+                            <li className="item">
+                                <a className="nav_link submenu_item">
+                                    <span className="navlink_icon">
+                                        <i className="fa-brands fa-servicestack"></i>
+                                    </span>
+                                    <span className="navlink">Service Manager</span>
+                                    <i className="bx bx-chevron-right arrow-left" />
+                                </a>
+                                <ul className="menu_items submenu">
+                                    <Link to="service" className="nav_link sublink">
+                                        List Service
+                                    </Link>
+                                    <Link to="add" className="nav_link sublink">
+                                        Add Service
+                                    </Link>
+                                </ul>
+                            </li>
+
+                            <li className="item">
+                                <a className="nav_link submenu_item">
+                                    <span className="navlink_icon">
+                                        <i className="fa-solid fa-clipboard-user"></i>
+                                    </span>
+                                    <span className="navlink">Staff Manager</span>
+                                    <i className="bx bx-chevron-right arrow-left" />
+                                </a>
+                                <ul className="menu_items submenu">
+                                    <Link to="service" className="nav_link sublink">
+                                        List Staff
+                                    </Link>
+                                    <Link to="add" className="nav_link sublink">
+                                        Add Staff
+                                    </Link>
+                                </ul>
+                            </li>
+
+                            <li className="item">
+                                <a className="nav_link submenu_item">
+                                    <span className="navlink_icon">
+                                        <i className="fa-solid fa-calendar-check"></i>
+                                    </span>
+                                    <span className="navlink">Appointment  Manager</span>
+                                    <i className="bx bx-chevron-right arrow-left" />
+                                </a>
+                                <ul className="menu_items submenu">
+                                    <Link to="service" className="nav_link sublink">
+                                        List Appointment
+                                    </Link>
+                                    <Link to="add" className="nav_link sublink">
+                                        Add Appointment
+                                    </Link>
+                                </ul>
+                            </li>
+
+                            <li className="item">
+                                <a className="nav_link submenu_item">
+                                    <span className="navlink_icon">
+                                        <i className="fa-solid fa-users"></i>
+                                    </span>
+                                    <span className="navlink">Customer Manager</span>
+                                    <i className="bx bx-chevron-right arrow-left" />
+                                </a>
+                                <ul className="menu_items submenu">
+                                    <Link to="service" className="nav_link sublink">
+                                        List Customer
+                                    </Link>
+                                    <Link to="add" className="nav_link sublink">
+                                        Add Customer
+                                    </Link>
+                                </ul>
+                            </li>
+
+                            <li className="item">
+                                <a className="nav_link submenu_item">
+                                    <span className="navlink_icon">
+                                        <i className="fa-solid fa-money-bill"></i>
+                                    </span>
+                                    <span className="navlink">Voucher Manager</span>
+                                    <i className="bx bx-chevron-right arrow-left" />
+                                </a>
+                                <ul className="menu_items submenu">
+                                    <Link to="service" className="nav_link sublink">
+                                        List Voucher
+                                    </Link>
+                                    <Link to="add" className="nav_link sublink">
+                                        Add Voucher
+                                    </Link>
+                                </ul>
+                            </li>
+                            <li className="item">
+                                <a className="nav_link submenu_item">
+                                    <span className="navlink_icon">
+                                        <i className="fa-solid fa-chart-simple"></i>
+                                    </span>
+                                    <span className="navlink">Chart Manager</span>
+                                    <i className="bx bx-chevron-right arrow-left" />
+                                </a>
+                            </li>
+
+                            <li className="item">
+                                <a className="nav_link submenu_item">
+                                    <span className="navlink_icon">
+                                        <i className="fa-solid fa-flag"></i>
+                                    </span>
+                                    <span className="navlink">Report</span>
+                                    <i className="bx bx-chevron-right arrow-left" />
+                                </a>
+                            </li>
+
+                        </ul>
+                        <div className="bottom_content">
+                            <div className="bottom expand_sidebar">
+                                <span> Expand</span>
+                                <i className="bx bx-log-in" />
+                            </div>
+                            <div className="bottom collapse_sidebar">
+                                <span> Collapse</span>
+                                <i className="bx bx-log-out" />
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div className='admin_content'>
+                    <Outlet />
+                </div>
+            </div>
         </div>
-    )
-}
+
+    );
+};
+
+export default Sidebar;
