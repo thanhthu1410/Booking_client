@@ -7,7 +7,7 @@ import { Route } from "react-router-dom";
 export default
     <Route>
         <Route path='admin' element={<Sidebar />}>
-            <Route path='service' element={<ListService />}></Route>
-            <Route path='add' element={<AddService />}></Route>
+            <Route index path="service" element={<ListService />}></Route>
+            <Route path='addService' element={<AddService />}></Route>
         </Route>
     </Route>
