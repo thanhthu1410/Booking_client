@@ -19,7 +19,7 @@ export default function Navbar() {
                     </div>
                     <div className="navbar_center">
                         <span>HOME</span>
-                        <span>ABOUT </span>
+                        <span onClick={() => navigate("/service")}>SERVICE </span>
                         <span onClick={() => navigate("/booking")}>BOOKING</span>
                         <span>CONTACT</span>
                     </div>
