@@ -20,6 +20,7 @@
     position: relative;
     background-color: #0c1319 !important;
     transition: all 0.5s ease;
+    position: relative;
 
     .admin_content {
         position: absolute;
@@ -89,7 +90,7 @@
     .navbar_content i {
         cursor: pointer;
         font-size: 20px;
-        color: var(white-color);
+        color: var(white-color) !important;
     }
 
     /* sidebar */
@@ -123,43 +124,6 @@
         position: relative;
     }
 
-
-    // .menu_title {
-    //     margin: 15px 0;
-    //     padding: 0 20px;
-    //     font-size: 18px;
-    // }
-
-    // .sidebar.close .menu_title {
-    //     padding: 6px 30px;
-    // }
-
-    // .menu_title::before {
-    //     color: var(--grey-color);
-    //     white-space: nowrap;
-    // }
-
-    // .menu_dahsboard::before {
-    //     content: "Dashboard";
-    // }
-
-    // .menu_editor::before {
-    //     content: "Editor";
-    // }
-
-    // .menu_setting::before {
-    //     content: "Setting";
-    // }
-
-    // .sidebar.close .menu_title::before {
-    //     content: "";
-    //     position: absolute;
-    //     height: 2px;
-    //     width: 18px;
-    //     border-radius: 12px;
-    //     background: var(--grey-color-light);
-    // }
-
     .menu_items {
         padding: 0;
         list-style: none;
@@ -183,9 +147,10 @@
         left: -20px;
     }
 
-    .navlink_icon:hover {
-        // background: var(--blue-color);
-    }
+    // .navlink_icon:hover {
+    //     background: var(--blue-color);
+    //     color: #fff !important;
+    // }
 
     .sidebar .nav_link {
         display: flex;
