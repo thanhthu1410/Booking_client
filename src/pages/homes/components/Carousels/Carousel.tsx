@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import ScrollReveal from 'scrollreveal';
 import { Carousel } from 'antd';
 import "./carousel.scss";
+import { useNavigate } from 'react-router';
 
 export default function MyCarousel() {
-
+const navigate = useNavigate()
   useEffect(() => {
     const slideUp = {
       distance: '200%',
@@ -78,7 +79,7 @@ export default function MyCarousel() {
               <p className="title-p"><img src="https://themeholy.com/html/rasm/demo/assets/img/theme-img/title_left2.svg" alt="" />{banner.title2}</p>
               <h2 className="title-h2" >{banner.title}</h2>
               <h5 className="title-h5">{banner.title3}</h5>
-              <button className="btn-101">
+              <button className="btn-101" onClick={() => navigate("/booking")}>
                 BOOKING NOW
                 <svg>
                   <defs>
