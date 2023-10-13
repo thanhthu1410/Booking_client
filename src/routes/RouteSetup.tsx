@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from '../pages/homes/Home'
 import Layout from '../pages/homes/components/Layout'
 import Lazy from '@/utils/Lazy/Lazy'
+import RouteAdmin from './RouteAdmin'
 
 export default function RouteSetup() {
     return (
@@ -13,6 +14,7 @@ export default function RouteSetup() {
                     <Route path="/booking" element={Lazy(() => import("@pages/booking/Booking"))()}></Route>
                     <Route path="/service" element={Lazy(() => import("@pages/services/Service"))()}></Route>
                 </Route>
+                {RouteAdmin}
             </Routes>
         </BrowserRouter>
     )
