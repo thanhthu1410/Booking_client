@@ -1,7 +1,18 @@
-import { useState } from "react";
+import { Datepicker } from "@mobiscroll/react";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 
 export default function Booking() {
     const [voucher,setVoucher] = useState<object[]>([])
+    // const [start, setStart] = useState<string>();
+    // const [end, setEnd] = useState<string>();
+    const [time, setTime] = useState<string[]>();
+    useEffect(() => {
+      if(time){
+        console.log("time[0]", time[0]);
+      }
+    }, [time])
     function generateRandomVoucher(length: number) {
         let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         let result = '';
@@ -14,21 +25,29 @@ export default function Booking() {
       }  
       function generateVouchers(quantity: number,length:number,type:string,value:number,title: string) {
         let vouchers = [];
-      
         for (let i = 0; i < quantity; i++) {
           let voucher = generateRandomVoucher(length);
           const formartVoucher = {
             code: voucher,
-            type,
+            discountType: type,
             value,
             title
           }
           console.log("formartVoucher",formartVoucher);
+
           vouchers.push(formartVoucher);
         }
         return setVoucher(vouchers) ;
       }
       console.log(voucher);
+      useEffect(() => {
+        if(voucher.length > 0){
+            axios.post("http://localhost:3000/api/v1/vouchers",voucher)
+            .then(res => console.log("res",res))
+            .catch(err => console.log("err",err)
+            ) 
+        }
+      },[voucher])
   return (
     <div>Create Voucher
         <form onSubmit={(e: any)=>{ 
@@ -48,8 +67,19 @@ export default function Booking() {
         <input type="number" placeholder="enter quantity voucher" name="quantity"/>
         <p>Value:</p>
         <input type="number" name="valueDiscount" />
+        
+        <Datepicker
+                controls={['date']}
+                select="range"
+                // startInput={start}
+                // endInput={end}
+                onChange={(e) => setTime(e.value)}
+            />
+
         <button type="submit">create voucher</button>
+
         </form>
+        
     </div>
   )
 }

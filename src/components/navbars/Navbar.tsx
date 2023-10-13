@@ -17,9 +17,9 @@ export default function Navbar() {
                    </div>
                    <div className="navbar_center">
                          <span>HOME</span>
-                        <span>ABOUT </span>
+                        <span>SERVICE </span>
                         <span>BOOKING</span>
-                        <span>CONTACT</span>
+                        <span>ABOUT</span>
                    </div>
                    <div className="navbar_right">
                    <i className="fa-solid fa-magnifying-glass"></i>

@@ -116,7 +116,7 @@ export default function StylistSlider() {
             <div className="final_content">
                 <img src="https://firebasestorage.googleapis.com/v0/b/bookingsalon-fa833.appspot.com/o/homepageImg%2FA%CC%89nh%20chu%CC%A3p%20ma%CC%80n%20hi%CC%80nh%202023-10-11%20155447.png?alt=media&token=51d1bd11-f77a-4822-b0ee-dbb165504b0d&_gl=1*6xh0e1*_ga*MTg1ODg5NjEyOS4xNjg4MDg4OTU3*_ga_CW55HF8NVT*MTY5NzAxNDM2NC41Ny4xLjE2OTcwMTQ1MTcuMzcuMC4w" alt="" />
             </div>
-
+                
         </div>
 
     )
