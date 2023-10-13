@@ -10,8 +10,9 @@ export default function RouteSetup() {
             <Routes>
                 <Route path='/' element={<Home />}>
                     <Route index element={<Layout />}></Route>
+                    <Route path="/booking" element={Lazy(() => import("@pages/booking/Booking"))()}></Route>
                 </Route>
-                <Route path="/booking" element={Lazy(() => import("@pages/booking/Booking"))()}></Route>
+                
             </Routes>
         </BrowserRouter>
     )
