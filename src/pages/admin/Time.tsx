@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './admin.scss';
+import './time.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { timeAction } from '@/stores/slices/time.slice';
 import { StoreType } from '@/stores';
