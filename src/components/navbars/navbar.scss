@@ -39,6 +39,22 @@
             width: 40%;
             display: flex;
             justify-content: space-between;
+            span{
+                cursor: pointer;
+                position: relative;
+            }:after{
+                content: '';
+                width: 0;
+                height: 3px;
+                background: #f8f8f8;
+                position: absolute;
+                left: 0;
+                bottom: -10px;
+                transition: 0.5s;
+              }
+             span:hover::after{
+                width:100%;
+              } 
         }
 
         .navbar_right {

@@ -18,10 +18,10 @@ export default function Navbar() {
 
                     </div>
                     <div className="navbar_center">
-                        <span>HOME</span>
+                        <span onClick={() => navigate("/")}>HOME</span>
                         <span onClick={() => navigate("/service")}>SERVICE </span>
                         <span onClick={() => navigate("/booking")}>BOOKING</span>
-                        <span>CONTACT</span>
+                        <a  href="#about">TIPS</a>
                     </div>
                     <div className="navbar_right">
                         <i className="fa-solid fa-magnifying-glass"></i>
