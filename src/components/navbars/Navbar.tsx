@@ -20,7 +20,7 @@ export default function Navbar() {
                    <div className="navbar_center">
                          <span>HOME</span>
                         <span>ABOUT </span>
-                        <span>BOOKING</span>
+                        <span onClick={() => navigate("/booking")}>BOOKING</span>
                         <span>CONTACT</span>
                    </div>
                    <div className="navbar_right">
@@ -30,9 +30,6 @@ export default function Navbar() {
                    </div>
                 </div>
             </div>
-
-
-
         </div>
     )
 }
