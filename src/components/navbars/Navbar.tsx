@@ -1,6 +1,8 @@
+import { useNavigate } from "react-router"
 import "./navbar.scss"
 
 export default function Navbar() {
+    const navigate = useNavigate();
     return (
         <div className="navbar_container">
 
@@ -17,9 +19,9 @@ export default function Navbar() {
                    </div>
                    <div className="navbar_center">
                          <span>HOME</span>
-                        <span>SERVICE </span>
+                        <span>ABOUT </span>
                         <span>BOOKING</span>
-                        <span>ABOUT</span>
+                        <span>CONTACT</span>
                    </div>
                    <div className="navbar_right">
                    <i className="fa-solid fa-magnifying-glass"></i>

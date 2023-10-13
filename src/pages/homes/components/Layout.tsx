@@ -7,11 +7,10 @@ import BookingTable from '../../bookings/Booking'
 export default function Layout() {
   return (
     <div>
-      <MyCarousel/>
-        <Banner/>
-        <StylistSlider/>
-      
-  
+      <MyCarousel />
+      <Banner />
+      <StylistSlider />
+
     </div>
   )
 }
