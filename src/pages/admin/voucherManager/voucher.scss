@@ -1,0 +1,30 @@
+
+.voucher_container{
+    .add_voucher_container{
+        padding: 30px;
+        h4{
+            margin-bottom: 30px;
+        }
+        label{
+            font-weight: 500;
+            font-size: 1.2rem;
+            padding-right: 20px;
+        }
+        select{
+            padding:5px 15px;
+        }
+        input{
+            width: 50%;
+            padding: 5px 10px ;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            margin-bottom: 20px;
+        }
+        button{
+            padding: 5px 15px;
+            border-radius: 8px;
+            background-color: black;
+            color: #fff;
+        }
+    }
+}
