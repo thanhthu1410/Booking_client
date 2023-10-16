@@ -19,6 +19,10 @@ const Calendar: React.FC = () => {
         return store.timeStore
     })
 
+    useEffect(() => {
+        console.log("timeStore", timeStore)
+    }, [timeStore])
+
 
     const [stepMinute, setStepMinute] = useState(15)
 
@@ -64,13 +68,13 @@ const Calendar: React.FC = () => {
                 stepMinute={(timeStore.data as any)?.stepMinute}
                 minTime={(timeStore.data as any)?.startTime}
                 maxTime={(timeStore.data as any)?.endTime}
-                min={new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDay() + 8, currentDate.getHours(), currentDate.getMinutes() + (timeStore.data as any)?.duration)}
+                min={new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDay() + 15, currentDate.getHours(), currentDate.getMinutes() + (timeStore.data as any)?.duration)}
                 // max={new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, currentDate.getDay() + 8)}
                 max={maxDate}
                 onChange={(event) => setSelectedDate(event.value)}
                 invalid={invalidDates}
             />
-            <button onClick={handleBookAppointment}>Book</button>
+            <button className='booktime' onClick={handleBookAppointment}>Book</button>
         </div>
     );
 }

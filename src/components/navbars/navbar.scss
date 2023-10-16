@@ -4,7 +4,7 @@
     top: 0;
     left: 0;
     z-index: 99;
-
+    background-color: hsl(22, 46%, 92%);
     .navbar_container_chirld {
         max-width: 1440px;
         margin: 0 auto;
@@ -55,6 +55,26 @@
              span:hover::after{
                 width:100%;
               } 
+              .about_title{
+                cursor: pointer;
+                position: relative;
+            }:after{
+                content: '';
+                width: 0;
+                height: 3px;
+                background: #f8f8f8;
+                position: absolute;
+                left: 0;
+                bottom: -10px;
+                transition: 0.5s;
+              }
+             .about_title:hover::after{
+                width:100%;
+              } 
+            .about_title{
+                text-decoration: none;
+                color: #f8f8f8;
+            }
         }
 
         .navbar_right {
