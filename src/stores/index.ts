@@ -1,9 +1,11 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { timeReducer } from './slices/time.slice';
+import { serviceReducer } from './slices/service.slice';
 
 // Kết hợp reducer
 const rootReducer = combineReducers({
-    timeStore: timeReducer
+    timeStore: timeReducer,
+    serviceStore: serviceReducer
 });
 
 // Xuất ra store type

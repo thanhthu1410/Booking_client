@@ -1,16 +1,33 @@
 import { useNavigate } from 'react-router-dom'
-import './listService.scss'
+import './service.scss'
 import EditService from './EditService'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import api from '@/services/api'
 
 export default function ListService() {
     const navigate = useNavigate()
     const [modal, setModal] = useState(false)
+    const [services, setServices] = useState([])
+    useEffect(() => {
+        api.serviceApi.findMany()
+            .then(res => {
+                if (res.status == 200) {
+                    console.log('Lista de servicos', res.data.data);
+                    setServices(res.data.data)
+                }
+            })
+            .catch(err => {
+                console.log("err", err);
+
+            })
+    }, [])
+
     return (
 
         <div>
             {modal ? (
                 <EditService
+                    setModal={setModal}
                 ></EditService>
             ) : (
                 <></>
@@ -25,7 +42,7 @@ export default function ListService() {
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Avartar</th>
-                            <th scope="col">User ID</th>
+                            {/* <th scope="col">User ID</th> */}
                             <th scope="col">Name</th>
                             <th scope="col">Price</th>
                             <th scope="col">Description</th>
@@ -36,29 +53,34 @@ export default function ListService() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">1</th>
-                            <td><img className='img' src="https://skinkraft.com/cdn/shop/articles/Evidence-Based_db1b4e63-9d14-40c6-baad-32c51be1073b_1024x400.jpg?v=1625565535" alt="" /></td>
-                            <td>000001</td>
-                            <td>Cut hair</td>
-                            <td>$100</td>
-                            <td>nhanh chong, tien loi, dep</td>
-                            <td>
-                                <label className="switch">
-                                    <input type="checkbox" />
-                                    <span className="slider round"></span>
-                                </label>
-                            </td>
-                            <td >13/10</td>
-                            <td>13/10</td>
-                            <td className='action'>
-                                <i className="fa-solid fa-trash"></i>
-                                <i onClick={() => {
-                                    console.log("hhh");
-                                    setModal(true)
-                                }} className="fa-solid fa-pen"></i>
-                            </td>
-                        </tr>
+                        {services.map((item: any, index) => (
+                            <tr key={Date.now() * Math.random()}>
+                                <th scope="row">{index + 1}</th>
+                                <td><img className='img' src={item.avatar} alt="" /></td>
+                                {/* <td>000001</td> */}
+                                <td>{item.name}</td>
+                                <td>${item.price}</td>
+                                <td>{item.desc}</td>
+                                <td>
+                                    <label className="switch">
+                                        <input type="checkbox" />
+                                        <span className="slider round"></span>
+                                    </label>
+                                </td>
+                                <td >{item.createAt}</td>
+                                <td>{item.updateAt}</td>
+                                <td className='action'>
+                                    <i className="fa-solid fa-trash"></i>
+                                    <i onClick={() => {
+                                        setModal(true)
+                                    }} className="fa-solid fa-pen"></i>
+                                </td>
+                            </tr>
+                        ))}
+
+
+
+
                     </tbody>
                 </table>
 

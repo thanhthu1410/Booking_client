@@ -58,11 +58,9 @@ input:checked+.slider:before {
     border-radius: 50%;
 }
 
-.action {
-    display: flex;
-    gap: 20px;
-    margin-left: 10px;
-}
+// .action {
+//     margin-left: 50px;
+// }
 
 .img {
     width: 100px;
@@ -87,37 +85,9 @@ input:checked+.slider:before {
     }
 }
 
-/* Add Service */
-.service_container {
-    .add_service_content {
-        display: flex;
-        margin-left: 20px;
-        gap: 100px;
-
-        .add_image {
-            margin-top: 10px;
-        }
-
-        .add_content {
-            // margin-top: 30px;
-
-            label {
-                display: block;
-                margin-bottom: 5px;
-                font-weight: bold;
-                font-size: 20px;
-            }
-
-            input {
-                margin-bottom: 10px;
-                padding: 10px;
-            }
-        }
-
-        .add_content input {
-            width: 400px;
-            height: 40px;
-            border-radius: 5px;
-        }
-    }
+table,
+th,
+td {
+    text-align: center;
+    align-items: center;
 }
