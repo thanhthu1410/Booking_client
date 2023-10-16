@@ -1,6 +1,7 @@
-import React from 'react'
+
+import { useState } from 'react'
 import './editService.scss'
-export default function EditService() {
+export default function EditService(props: any) {
     return (
         <div className='container_edit'>
             <div className='container_content'>
@@ -28,7 +29,9 @@ export default function EditService() {
 
                         <div className='button'>
                             <button type="button" className="btn btn-success">Save</button>
-                            <button type="button" className="btn btn-secondary">Cancle</button>
+                            <button onClick={() => {
+                                props.setModal(false)
+                            }} type="button" className="btn btn-secondary">Cancle</button>
                         </div>
 
 

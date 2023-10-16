@@ -132,10 +132,10 @@ const Sidebar: React.FC = () => {
                                     <i className="bx bx-chevron-right arrow-left" />
                                 </a>
                                 <ul className="menu_items submenu">
-                                    <Link to="service" className="nav_link sublink">
+                                    <Link to="listStaff" className="nav_link sublink">
                                         List Staff
                                     </Link>
-                                    <Link to="add" className="nav_link sublink">
+                                    <Link to="addStaff" className="nav_link sublink">
                                         Add Staff
                                     </Link>
                                 </ul>
@@ -168,11 +168,8 @@ const Sidebar: React.FC = () => {
                                     <i className="bx bx-chevron-right arrow-left" />
                                 </a>
                                 <ul className="menu_items submenu">
-                                    <Link to="service" className="nav_link sublink">
+                                    <Link to="listCustomer" className="nav_link sublink">
                                         List Customer
-                                    </Link>
-                                    <Link to="add" className="nav_link sublink">
-                                        Add Customer
                                     </Link>
                                 </ul>
                             </li>
