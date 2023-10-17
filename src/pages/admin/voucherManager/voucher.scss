@@ -11,7 +11,9 @@
             padding-right: 20px;
         }
         select{
-            padding:5px 15px;
+            padding:7px 20px;
+            border-radius: 8px;
+            border: 2px solid;
         }
         input{
             width: 50%;
@@ -27,4 +29,17 @@
             color: #fff;
         }
     }
+    .ant-picker-range{
+        margin-bottom: 20px;
+        margin-left: 20px;
+        border: 2px solid;
+        border-radius: 8px;
+    }
+}
+.ant-picker-input{
+    input{
+        color: black !important;
+    margin: 0 !important;
+    }
+
 }

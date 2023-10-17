@@ -1,55 +1,25 @@
-import { useState } from "react";
+import React, { useState } from 'react';
+import { DatePicker, Space } from 'antd';
 
-export default function Booking() {
-    const [voucher,setVoucher] = useState<object[]>([])
-    function generateRandomVoucher(length: number) {
-        let characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        let result = '';
-        for (let i = 0; i < length; i++) {
-          let randomIndex = Math.floor(Math.random() * characters.length);
-          result += characters[randomIndex];
-        }
-        console.log("result",result);     
-        return result;
-      }  
-      function generateVouchers(quantity: number,length:number,type:string,value:number,title: string) {
-        let vouchers = [];
-      
-        for (let i = 0; i < quantity; i++) {
-          let voucher = generateRandomVoucher(length);
-          const formartVoucher = {
-            code: voucher,
-            type,
-            value,
-            title
-          }
-          console.log("formartVoucher",formartVoucher);
-          vouchers.push(formartVoucher);
-        }
-        return setVoucher(vouchers) ;
-      }
-      console.log(voucher);
-  return (
-    <div>Create Voucher
-        <form onSubmit={(e: any)=>{ 
-            e.preventDefault();
-            if(e.target.type.value == "percent"){
-              if(Number( e.target.valueDiscount.value) > 100 ){
-                    alert("percent over 100")
-              }
-            }
-            generateVouchers(e.target.quantity.value,6,e.target.type.value,Number(e.target.valueDiscount.value),e.target.title.value)}}>
-            <select name="type" id="">
-              <option value="percent">Percent</option>
-              <option value="cash">Cash</option>
-            </select>
-        <p>Title</p>
-        <input type="text" name="title"/>
-        <input type="number" placeholder="enter quantity voucher" name="quantity"/>
-        <p>Value:</p>
-        <input type="number" name="valueDiscount" />
-        <button type="submit">create voucher</button>
-        </form>
-    </div>
-  )
+const { RangePicker } = DatePicker;
+interface Props{
+  setVoucherTime: any
 }
+const DateTimeVoucher = (props: Props) => {
+  console.log("props",props.setVoucherTime);
+  
+  const handleDateChange = (dates: any, dateStrings: [string, string]) => {
+    // dates là một mảng chứa 2 đối tượng moment, tương ứng với ngày bắt đầu và kết thúc
+    // dateStrings là một mảng chứa 2 chuỗi đại diện cho ngày bắt đầu và kết thúc
+
+    const [start, end] = dateStrings;
+    console.log(`Ngày bắt đầu: ${start}, Ngày kết thúc: ${end}`);
+    props.setVoucherTime({ start: start, end: end });
+  }
+
+  return (
+    <RangePicker onChange={handleDateChange} />
+  );
+}
+
+export default DateTimeVoucher;

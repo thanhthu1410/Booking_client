@@ -9,6 +9,7 @@ import Table from 'react-bootstrap/Table';
 import { useDispatch, useSelector } from 'react-redux';
 import EditVoucher from './EditVoucher';
 import "./listvoucher.scss"
+import moment from 'moment';
 
 
 function ListVoucher() {  
@@ -16,6 +17,7 @@ function ListVoucher() {
     const [modal, setModal] = useState(false)
     const [vocherState, setVoucherState] = useState<Voucher>();
     const voucherStore = useSelector((store: StoreType) => store.voucherStore); 
+    
     function deleteVoucher(voucher:Voucher) {
         const newData = {
             ...voucher,
@@ -46,6 +48,8 @@ function ListVoucher() {
                         <th>Discount Type</th>
                         <th>Value</th>
                         <th>Status</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -56,6 +60,7 @@ function ListVoucher() {
                         <td>{voucher.title}</td>
                         <td>{voucher.discountType}</td>
                         <td>{voucher.value}</td>
+                       
                         <td>{voucher.status ?
 
                             <label className="switch">
@@ -69,6 +74,8 @@ function ListVoucher() {
                                 <span className="slider round"></span>
                             </label>
                         }</td>
+                         <td>{moment(new Date(Number(voucher.startAt))).format('DD/MM/YYYY')}</td>
+                        <td>{moment(new Date(Number(voucher.endAt))).format('DD/MM/YYYY')}</td>
                         <td className='action'>
                             <i className="fa-solid fa-trash" onClick={()=> deleteVoucher(voucher)}></i>
                             <i onClick={() => {
