@@ -1,107 +1,108 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './time.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { timeAction } from '@/stores/slices/time.slice';
-import { StoreType } from '@/stores';
 import api from '@/services/api';
 import { Datepicker } from '@mobiscroll/react';
 import "@mobiscroll/react/dist/css/mobiscroll.min.css";
+import { Modal, message } from 'antd';
+import { StoreType } from '@/stores';
 
 export default function Time() {
 
     const dispatch = useDispatch();
 
-    const [start, setStart] = useState<string>();
-    const [end, setEnd] = useState<string>();
+    const timeStore = useSelector((store: StoreType) => {
+        return store.timeStore
+    });
+
     useEffect(() => {
-        console.log("start", start)
-    }, [start])
-    useEffect(() => {
-        console.log("end", end)
-    }, [end])
+        console.log("timeStore", timeStore)
+    }, [timeStore])
+
+    const [loading, setLoading] = useState(false);
+
+    const [start, setStart] = useState(timeStore.data?.startTime);
+    const [end, setEnd] = useState(timeStore.data?.endTime);
+
     function handleSubmit(e: any) {
         e.preventDefault();
+        setLoading(true);
         let data = {
-            duration: e.target.duration.value,
+            duration: Number(e.target.duration.value),
             startTime: start,
             endTime: end,
-            maxDate: e.target.daysReservation.value,
-            stepMinute: e.target.minimumPeriod.value
+            maxDate: Number(e.target.daysReservation.value),
+            stepMinute: Number(e.target.minimumPeriod.value)
         }
-        console.log("data", data)
         api.timeApi.update(data)
             .then(res => {
                 if (res.status == 200) {
+                    setLoading(false);
+                    Modal.success({
+                        title: "Thông báo",
+                        content: "Cập nhật thời gian thành công!"
+                    })
                     console.log("res", res);
                 }
             })
             .catch(err => {
-                console.log("err", err);
+                setLoading(false);
+                message.warning("Cập nhật thời gian thất bại")
             })
     }
     return (
-        <div className='admin'>
-            <form onSubmit={(e: any) => handleSubmit(e)}>
-                {/* <div className='form_group'>
-                    <label htmlFor="">Start Time</label><br />
-                    <Datepicker
-                        controls={['time']}
-                        timeFormat="HH:mm"
-                        onChange={(e) => {
-                            setStart(e.value)
-                            console.log(start)
-                        }}
-                    />
-                    <input type="text" name="startTime" />
-                </div>
-                <div className='form_group'>
-                    <label htmlFor="">End Time</label><br />
-                    <input type="text" name="endTime" />
-                    <Datepicker
-                        controls={['time']}
-                        timeFormat="HH:mm"
-                        onChange={(e) => setEnd(e.value)}
-                    />
-                </div> */}
-                <div className='form_group'>
-                    <label htmlFor="">Start Time</label><br />
-                    <Datepicker
-                        controls={['time']}
-                        timeFormat="HH:mm"
-                        onChange={(e) => {
-                            let date = new Date(e.value)
-                            const startTime = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
-                            setStart(startTime)
-                        }}
-                    />
-                </div>
-                <div className='form_group'>
-                    <label htmlFor="">End Time</label><br />
-                    <Datepicker
-                        controls={['time']}
-                        timeFormat="HH:mm"
-                        onChange={(e) => {
-                            let date = new Date(e.value)
-                            const endTime = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
-                            setEnd(endTime)
-                        }}
-                    />
-                </div>
+        <>
+            {timeStore.data && (
+                <div className='admin'>
+                    <form onSubmit={(e: any) => handleSubmit(e)}>
+                        <div className='form_group'>
+                            <label htmlFor="">Start Time</label><br />
+                            <Datepicker
+                                controls={['time']}
+                                timeFormat="HH:mm"
+                                onChange={(e) => {
+                                    let date = new Date(e.value)
+                                    const startTime = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+                                    setStart(startTime)
+                                }}
+                                defaultSelection={timeStore.data?.startTime}
+                                value={start}
+                            />
+                        </div>
+                        <div className='form_group'>
+                            <label htmlFor="">End Time</label><br />
+                            <Datepicker
+                                controls={['time']}
+                                timeFormat="HH:mm"
+                                onChange={(e) => {
+                                    let date = new Date(e.value)
+                                    const endTime = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+                                    setEnd(endTime)
+                                }}
+                                defaultSelection={timeStore.data?.endTime}
+                                value={end}
+                            />
+                        </div>
 
-                <div className='form_group'>
-                    <label htmlFor="">Time Duration</label><br />
-                    <input type="text" name="duration" />
+                        <div className='form_group'>
+                            <label htmlFor="">Time Duration</label><br />
+                            <input type="text" name="duration" defaultValue={timeStore.data?.stepMinute} />
+                        </div>
+                        <div className='form_group'>
+                            <label htmlFor="">Number of days for reservation</label><br />
+                            <input type="text" name="daysReservation" defaultValue={timeStore.data?.maxDate} />
+                        </div>
+                        <div className='form_group'>
+                            <label htmlFor="">Minimum booking period</label><br />
+                            <input type="text" name="minimumPeriod" defaultValue={timeStore.data?.duration} />
+                        </div>
+                        <button type='submit' className='save_button'>
+                            {loading ? <span className='loading-spinner'></span> : "Save"}
+                        </button>
+                    </form>
                 </div>
-                <div className='form_group'>
-                    <label htmlFor="">Number of days for reservation</label><br />
-                    <input type="text" name="daysReservation" />
-                </div>
-                <div className='form_group'>
-                    <label htmlFor="">Minimum booking period</label><br />
-                    <input type="text" name="minimumPeriod" />
-                </div>
-                <button type='submit' className='save_button'>Save</button>
-            </form>
-        </div>
+            )}
+        </>
+
     )
 }

@@ -16,13 +16,12 @@ function App() {
           dispatch(timeAction.setData(res.data.data));
         }
       })
-      api.voucherApi.findMany()
+    api.voucherApi.findMany()
       .then(res => {
-        if(res.status == 200) {
-          console.log("listvoucher",res)   
-          dispatch(voucherAction.setData(res.data.data))      
+        if (res.status == 200) {
+          dispatch(voucherAction.setData(res.data.data))
         }
-      } )
+      })
   }, [])
 
   return (
