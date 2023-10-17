@@ -1,24 +1,39 @@
-import api from '@/services/api';
+
 import store, { StoreType } from '@/stores';
-import { Voucher, voucherAction } from '@/stores/slices/voucher.slice';
-import { message } from 'antd';
+import { Voucher } from '@/stores/slices/voucher.slice';
+import api from '@/services/api';
+import { Modal, message } from 'antd';
+import { voucherAction } from '@/stores/slices/voucher.slice';
+import { useState } from 'react';
 import Table from 'react-bootstrap/Table';
 import { useDispatch, useSelector } from 'react-redux';
+import EditVoucher from './EditVoucher';
+import "./listvoucher.scss"
 
-function ListVoucher() {
-    const dispatch = useDispatch()
-    const voucherStore = useSelector((store: StoreType) => store.voucherStore)
-    console.log("voucherStore",voucherStore);
-    function deleteVoucher (id: number) {
-        console.log("thu nekk");
-        
-        api.voucherApi.delete(id)
-        .then(res => {message.success("Delete Successfull !");
-        dispatch(voucherAction.setReLoad())
+
+function ListVoucher() {  
+    const dispatch = useDispatch();
+    const [modal, setModal] = useState(false)
+    const [vocherState, setVoucherState] = useState<Voucher>();
+    const voucherStore = useSelector((store: StoreType) => store.voucherStore); 
+    function deleteVoucher(voucher:Voucher) {
+        const newData = {
+            ...voucher,
+            IsDelete: true
+        }
+        Modal.confirm({
+            title: "Do you want delete this Voucher !",
+            content: "",
+            onOk: () => {
+                api.voucherApi.update(newData)
+                    .then(res => {
+                       message.success("Delete Voucher Successfull !");
+                        dispatch(voucherAction.setReLoad());
+                    })
+                    .catch(err => console.log("err", err)
+                    )
+            }
         })
-        .catch(err => console.log("err",err)
-        )
-
     }
     return (
         <div className='listVoucher_container'>
@@ -34,20 +49,38 @@ function ListVoucher() {
                         <th>Action</th>
                     </tr>
                 </thead>
-                <tbody>
-                    {voucherStore.data?.map((voucher :Voucher,index: number) =><tr key={Math.random() * Date.now()}>
+                <tbody className='content_listvoucher'>
+                    {voucherStore.data?.map((voucher: Voucher, index: number) => <tr key={Math.random() * Date.now()}>
                         <td>{index + 1}</td>
                         <td>{voucher.code}</td>
                         <td>{voucher.title}</td>
                         <td>{voucher.discountType}</td>
                         <td>{voucher.value}</td>
-                        <td>{voucher.status ? "true" : "false"}</td>
-                        <td><i onClick={() => deleteVoucher(voucher.id)} className="fa-solid fa-trash-can"></i></td>
-                    </tr> )
-                   }
-                    
-              
-                  
+                        <td>{voucher.status ?
+
+                            <label className="switch">
+                                <input type="checkbox" name='active' checked />
+                                <span className="slider round"></span>
+                            </label>
+
+                            :
+                            <label className="switch">
+                                <input type="checkbox" name='active' />
+                                <span className="slider round"></span>
+                            </label>
+                        }</td>
+                        <td className='action'>
+                            <i className="fa-solid fa-trash" onClick={()=> deleteVoucher(voucher)}></i>
+                            <i onClick={() => {
+                                setModal(true)
+                                setVoucherState(voucher)
+                            }} className="fa-solid fa-pen">
+
+                            </i>
+                        </td>
+                    </tr>)
+                    }
+                    {modal ? <EditVoucher setModal={setModal} voucher={vocherState}></EditVoucher> : <></>}
                 </tbody>
             </Table>
         </div>
