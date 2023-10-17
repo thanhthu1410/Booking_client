@@ -183,11 +183,11 @@ const Sidebar: React.FC = () => {
                                     <i className="bx bx-chevron-right arrow-left" />
                                 </a>
                                 <ul className="menu_items submenu">
-                                    <Link to="service" className="nav_link sublink">
-                                        List Voucher
-                                    </Link>
-                                    <Link to="add" className="nav_link sublink">
+                                    <Link to="voucher" className="nav_link sublink">
                                         Add Voucher
+                                    </Link>
+                                    <Link to="listvoucher" className="nav_link sublink">
+                                        List Voucher
                                     </Link>
                                 </ul>
                             </li>
