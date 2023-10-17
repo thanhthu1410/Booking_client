@@ -1,15 +1,18 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 export interface Time {
+    startTime: string,
+    endTime: string,
     stepMinute: number,
-    duration: number
+    duration: number,
+    maxDate: number
 }
 
 export interface TimeState {
     data: Time | null;
 }
 
-export const initialState = {
+export const initialState: TimeState = {
     data: null,
 }
 
