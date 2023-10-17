@@ -14,10 +14,11 @@ export interface Voucher {
 }
 
 export interface VoucherState {
-    data: Voucher | null;
+    data: Voucher[] | null;
+    reLoad: boolean
 }
 
-export const initialState = {
+export const initialState: VoucherState = {
     data: null,
     reLoad: false
 }

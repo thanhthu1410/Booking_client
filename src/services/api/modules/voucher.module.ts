@@ -1,3 +1,4 @@
+import { Voucher } from "@/stores/slices/voucher.slice";
 import axios from "axios";
 
 export default {
@@ -7,7 +8,7 @@ export default {
     findMany: async function () {
         return await axios.get(import.meta.env.VITE_APP_SERVER_HOST_API + "vouchers");
     },
-    delete:  async function (id: number) {
-        return await axios.get(import.meta.env.VITE_APP_SERVER_HOST_API + "vouchers/" + id);
+    update:  async function (voucher:Voucher) {
+        return await axios.patch(import.meta.env.VITE_APP_SERVER_HOST_API + "vouchers/" + voucher.id, voucher);
     },
 }
