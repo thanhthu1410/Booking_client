@@ -11,6 +11,8 @@ export interface Voucher {
     value : number
     creatAt: string
     id: number
+    startAt: string
+    endAt : string
 }
 
 export interface VoucherState {
