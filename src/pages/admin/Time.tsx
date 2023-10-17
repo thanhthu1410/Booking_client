@@ -7,7 +7,7 @@ import api from '@/services/api';
 import { Datepicker } from '@mobiscroll/react';
 import "@mobiscroll/react/dist/css/mobiscroll.min.css";
 
-export default function Admin() {
+export default function Time() {
 
     const dispatch = useDispatch();
 
