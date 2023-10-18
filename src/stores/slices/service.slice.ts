@@ -44,8 +44,11 @@ const serviceSlice = createSlice({
 
             }
         },
-        getService: function (state, action) {
-            return action.payload
+        setDataService: function (state, action) {
+            return {
+                ...state,
+                data: action.payload
+            }
         },
 
 
