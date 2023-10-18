@@ -22,13 +22,13 @@ export default function ListService() {
     const dispatch = useDispatch();
     const [searchStatus, setSearchStatus] = useState(false);
     const [searchData, setSearchData] = useState<Services[]>([]);;
+
     const [loading, setLoading] = useState(false);
     let timeOut: any;
     function search(e: any) {
 
         if (e.target.value == "") {
             setSearchData([])
-            setLoading(false)
             return;
         };
         timeOut = setTimeout(async () => {
@@ -43,21 +43,18 @@ export default function ListService() {
                     setTimeout(() => {
                         setSearchStatus(false);
                         setSearchData(result.data.data);
-                        setLoading(false);
                     }, 1500)
                     console.log("setSeardata", searchData);
-
-
-                } else {
+                }
+                else {
                     setSearchStatus(false);
-                    setLoading(false)
                 }
             } catch (err) {
                 console.log("err:", err)
                 console.log("loi call api search");
 
             }
-        }, 600)
+        }, 500)
 
     }
 
@@ -75,7 +72,6 @@ export default function ListService() {
                     }
                     setMaxPage(maxPageArr);
                     setSkipItem(res.data.data.length)
-                    //console.log('Lista de servicos', res.data.data);
                     setServices(res.data.data)
                     dispatch(serviceActions.reload());
                 }
@@ -163,37 +159,77 @@ export default function ListService() {
                         </tr>
                     </thead>
                     <tbody>
-                        {services?.map((item: any, index) => (
-                            <tr key={Date.now() * Math.random()}>
-                                <th scope="row">{index + 1}</th>
-                                <td><img className='img' src={item.avatar} alt="" /></td>
-                                {/* <td>000001</td> */}
-                                <td>{item.name}</td>
-                                <td>${item.price}</td>
-                                <td>{item.desc}</td>
-                                <td>
-                                    <label className="switch">
-                                        <input type="checkbox" defaultChecked={item.status} />
-                                        <span className="slider round"></span>
-                                    </label>
-                                </td>
-                                <td >{item.createAt}</td>
-                                <td>{item.updateAt}</td>
-                                <td className='action'>
-                                    <button onClick={() => {
-                                        setModal(true)
-                                        setUpdateData(item)
-                                    }} type="button" className="btn btn-success">Edit</button>
-                                    <button onClick={(e: any) => {
-                                        e.preventDefault()
-                                        setIsDelete(!isDelete)
-                                        handleDelete(item.id)
-                                    }} type="button" className="btn btn-danger">Delete</button>
-                                </td>
-                            </tr>
-                        ))}
+
+                        {searchData.length > 0 ? (
+                            searchData?.map((item: any, index) => (
+                                <tr key={Date.now() * Math.random()}>
+                                    <th scope="row">{index + 1}</th>
+                                    <td><img className='img' src={item.avatar} alt="" /></td>
+                                    {/* <td>000001</td> */}
+                                    <td>{item.name}</td>
+                                    <td>${item.price}</td>
+                                    <td>{item.desc}</td>
+                                    <td>
+                                        <label className="switch">
+                                            <input type="checkbox" defaultChecked={item.status} />
+                                            <span className="slider round"></span>
+                                        </label>
+                                    </td>
+                                    <td >{item.createAt}</td>
+                                    <td>{item.updateAt}</td>
+                                    <td className='action'>
+                                        <button onClick={() => {
+                                            setModal(true)
+                                            setUpdateData(item)
+                                        }} type="button" className="btn btn-success">Edit</button>
+                                        <button onClick={(e: any) => {
+                                            e.preventDefault()
+                                            setIsDelete(!isDelete)
+                                            handleDelete(item.id)
+                                        }} type="button" className="btn btn-danger">Delete</button>
+                                    </td>
+                                </tr>
+                            ))
+                        ) : (
+                            <>
+                                {services?.map((item: any, index) => (
+                                    <tr key={Date.now() * Math.random()}>
+                                        <th scope="row">{index + 1}</th>
+                                        <td><img className='img' src={item.avatar} alt="" /></td>
+                                        {/* <td>000001</td> */}
+                                        <td>{item.name}</td>
+                                        <td>${item.price}</td>
+                                        <td>{item.desc}</td>
+                                        <td>
+                                            <label className="switch">
+                                                <input type="checkbox" defaultChecked={item.status} />
+                                                <span className="slider round"></span>
+                                            </label>
+                                        </td>
+                                        <td >{item.createAt}</td>
+                                        <td>{item.updateAt}</td>
+                                        <td className='action'>
+                                            <button onClick={() => {
+                                                setModal(true)
+                                                setUpdateData(item)
+                                            }} type="button" className="btn btn-success">Edit</button>
+                                            <button onClick={(e: any) => {
+                                                e.preventDefault()
+                                                setIsDelete(!isDelete)
+                                                handleDelete(item.id)
+                                            }} type="button" className="btn btn-danger">Delete</button>
+                                        </td>
+                                    </tr>
+                                ))}
+                            </>
+                        )}
                     </tbody>
                 </table>
+                {searchStatus ? (<div className="d-flex justify-content-center loading-wrapper">
+                    <div className="spinner-border" role="status">
+                        <span className="visually-hidden">Loading...</span>
+                    </div>
+                </div>) : <></>}
                 <nav aria-label="Page navigation example page_box  ">
                     <ul className="pagination">
                         <li className="page-item">

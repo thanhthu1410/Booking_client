@@ -12,34 +12,7 @@ export default function ListStaff() {
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [modal, setModal] = useState(false)
-    const imgPreviewRef: MutableRefObject<HTMLImageElement | null> = useRef(null);
-    const [avatarFile, setAvatarFile] = useState<File | null>(null);
-    function addNewService(e: FormEvent<HTMLFormElement>) {
-        console.log("da vao")
-        e.preventDefault();
 
-        let formData = new FormData();
-        formData.append("avatar", avatarFile!)
-        // formData.append("avatar", newProductAvatar.avatar);
-        formData.append("service", JSON.stringify({
-            name: (e.target as any).name.value,
-            desc: (e.target as any).des.value,
-            price: (e.target as any).type.value,
-        }))
-        api.serviceApi.create(formData)
-            .then(res => {
-                console.log("res", res)
-                dispatch(serviceActions.insertService(res.data));
-                Modal.success({
-                    content: "Add Service sucsses"
-
-                });
-            })
-            .catch(err => {
-                console.log("err", err);
-            })
-
-    }
     return (
         <div>
             {modal ? (
