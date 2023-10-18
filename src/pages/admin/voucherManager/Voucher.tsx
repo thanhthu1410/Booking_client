@@ -57,17 +57,24 @@ export default function Voucher() {
     }
     api.voucherApi.create(data)
       .then(res =>{ message.success("Create Voucher Successfull !");
+      (document.getElementById("title") as HTMLInputElement
+      ).value = "";
+      (document.getElementById("valueDiscount") as HTMLInputElement
+      ).value = "";
+      (document.getElementById("quantity") as HTMLInputElement
+      ).value = "";
       api.voucherApi.findMany()
       .then(res => dispatch(voucherAction.setData(res.data.data)))
       .catch(err => console.log("err", err))
   })
+
+
       .catch(err => console.log("err", err))
    
   }
   return (
     <div className="voucher_container">
       <div className="add_voucher_container">
-      
         <h4><i className="fa-solid fa-plus"></i> Add Voucher :</h4>
        <label htmlFor=""> Expiry Date : </label>
         <DateTimeVoucher setVoucherTime={setVoucherTime}/>
@@ -82,11 +89,11 @@ export default function Voucher() {
             <option value="cash">Cash</option>
           </select> <br />
           <label>Title :</label> <br />
-          <input type="text" name="title" placeholder="Title of new Voucher" /><br />
+          <input type="text" name="title" placeholder="Title of new Voucher" id="title" /><br />
           <label>Quantity :</label><br />
-          <input type="number" placeholder="Quantity of Vouchers" name="quantity" /><br />
+          <input type="number" placeholder="Quantity of Vouchers" name="quantity" id="quantity" /><br />
           <label>Value:</label><br />
-          <input type="number" name="valueDiscount" placeholder="10% or 100.000" /><br />
+          <input type="number" name="valueDiscount" placeholder="10% or 100.000" id="valueDiscount" /><br />
           <button type="submit">Create Voucher</button>
         </form>
 

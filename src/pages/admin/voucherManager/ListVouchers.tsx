@@ -26,6 +26,9 @@ function ListVoucher() {
     const [searchStatus, setSearchStatus] = useState(false)
     const voucherStore = useSelector((store: StoreType) => store.voucherStore);
     const navigate = useNavigate();
+    function currencyFormat(num: number) {
+        return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+     }
     useEffect(() => {
         setIsLoading(true);
         api.voucherApi.findAllPagination(maxItemPage, skipItem)
@@ -195,7 +198,7 @@ function ListVoucher() {
                                <td>{voucher.code}</td>
                                <td>{voucher.title}</td>
                                <td>{voucher.discountType}</td>
-                               <td>{voucher.value}</td>
+                               <td>{voucher.discountType == "percent" ? `${voucher.value}%` : currencyFormat(voucher.value)}</td>
 
                                <td>{voucher.status ?
 
