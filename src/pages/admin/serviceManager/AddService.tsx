@@ -13,6 +13,16 @@ export default function AddService() {
     const imgPreviewRef: MutableRefObject<HTMLImageElement | null> = useRef(null);
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
     function addNewService(e: FormEvent<HTMLFormElement>) {
+        if ((e.target as any).name.value == "") {
+            message.warning("Please enter The Title of Voucher")
+            return
+        } else if ((e.target as any).desc.value == "") {
+            message.warning("Please Choose Type of Voucher")
+            return
+        } else if ((e.target as any).price.value == "") {
+            message.warning("Please enter value discount of Voucher")
+            return
+        }
         console.log("da vao")
         e.preventDefault();
 
@@ -55,6 +65,7 @@ export default function AddService() {
             <form
                 onSubmit={(e) => {
                     console.log("ghhh");
+                    e.preventDefault();
 
                     addNewService(e)
                 }}

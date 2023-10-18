@@ -11,6 +11,12 @@ export default {
     findMany: async function (take: number, skip: number) {
         return await axios.get(`${import.meta.env.VITE_APP_SERVER_HOST_API}services?take=${take}&skip=${skip}`);
     },
+    findAllService: async function () {
+        return await axios.get(import.meta.env.VITE_APP_SERVER_HOST_API + "services/search?");
+    },
+    searchService: async function (searchString: string) {
+        return await axios.get(`${import.meta.env.VITE_APP_SERVER_HOST_API}services/search?q=${searchString}`)
+    },
     delete: async function (id: any) {
         return await axios.delete(`${import.meta.env.VITE_APP_SERVER_HOST_API}services/${id}`)
     },

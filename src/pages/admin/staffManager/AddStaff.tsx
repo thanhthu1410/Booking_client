@@ -64,18 +64,15 @@ export default function AddStaff() {
                             <h1>List Service</h1>
                         </div>
                         <div className='list_service'>
-                            <Checkbox onChange={onChange}>
-                                <label>Cut hair</label>
-                            </Checkbox><br />
-                            <Checkbox onChange={onChange}>
-                                <label>Cut hair</label>
-                            </Checkbox><br />
-                            <Checkbox onChange={onChange}>
-                                <label>Cut hair</label>
-                            </Checkbox><br />
-                            <Checkbox onChange={onChange}>
-                                <label>Cut hair</label>
-                            </Checkbox>
+
+                            {serviceStore.data?.map((item: any) => (
+                                <div>
+                                    <Checkbox onChange={onChange}>
+                                        <label>{item.name}</label>
+                                    </Checkbox><br />
+                                </div>
+
+                            ))}
                         </div>
                         <div className='button_add_staff'>
                             <button type="submit" className="btn btn-dark">Add Service</button>

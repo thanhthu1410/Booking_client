@@ -22,6 +22,50 @@ export default function ListService() {
     const dispatch = useDispatch()
 
 
+    const [searchStatus, setSearchStatus] = useState(false);
+    const [searchData, setSearchData] = useState<Services[]>([]);;
+
+    const [loading, setLoading] = useState(false);
+
+    let timeOut: any;
+    function search(e: any) {
+
+        if (e.target.value == "") {
+            setSearchData([])
+            setLoading(false)
+            return;
+        };
+        timeOut = setTimeout(async () => {
+            setSearchStatus(true)
+            try {
+                if (searchStatus) {
+                    return
+                }
+                let result = await api.serviceApi.searchService(e.target.value);
+                if (result.status == 200) {
+                    // sau 1.5s set lai data & tat loading
+                    setTimeout(() => {
+                        setSearchStatus(false);
+                        setSearchData(result.data.data);
+                        setLoading(false);
+                    }, 1500)
+                    console.log("setSeardata", searchData);
+
+
+                } else {
+                    setSearchStatus(false);
+                    setLoading(false)
+                }
+            } catch (err) {
+                console.log("err:", err)
+                console.log("loi call api search");
+
+            }
+        }, 600)
+
+    }
+
+
     useEffect(() => {
         api.serviceApi.findMany(maxItemPage, skipItem)
             .then(res => {
@@ -37,6 +81,7 @@ export default function ListService() {
                     setSkipItem(res.data.data.length)
                     //console.log('Lista de servicos', res.data.data);
                     setServices(res.data.data)
+                    dispatch(serviceActions.reload());
                 }
             })
             .catch(err => {
@@ -61,6 +106,8 @@ export default function ListService() {
                     setSkipItem(res.data.data.length)
                     setServices(res.data.data)
                     setSelectedPage(pageItemObj.number);
+                    dispatch(serviceActions.reload());
+
                 }
             })
     }
@@ -95,8 +142,12 @@ export default function ListService() {
                 <h3>List Service</h3>
             </div>
 
-            <div className='search_service'>
-                <input className='search_service_text' type="text" placeholder='Search' />
+            <div className='voucher_search_container'>
+                <input type="text" placeholder='Enter Service...' onChange={(e) => {
+                    e.preventDefault()
+                    search(e);
+                }} />
+                <i className="fa-solid search_icon fa-magnifying-glass"></i>
             </div>
 
             <div>
