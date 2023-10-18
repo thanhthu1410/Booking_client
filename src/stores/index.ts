@@ -2,13 +2,14 @@ import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { timeReducer } from './slices/time.slice';
 import { serviceReducer } from './slices/service.slice';
 import { voucherReducer } from './slices/voucher.slice';
+import { staffReducer } from './slices/staff.slice';
 
 // Kết hợp reducer
 const rootReducer = combineReducers({
     timeStore: timeReducer,
     serviceStore: serviceReducer,
-    voucherStore: voucherReducer
-    
+    voucherStore: voucherReducer,
+    staffStore: staffReducer
 });
 
 // Xuất ra store type

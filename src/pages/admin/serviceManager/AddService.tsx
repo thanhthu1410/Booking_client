@@ -14,13 +14,13 @@ export default function AddService() {
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
     function addNewService(e: FormEvent<HTMLFormElement>) {
         if ((e.target as any).name.value == "") {
-            message.warning("Please enter The Title of Voucher")
+            message.warning("Please enter  Name of Service")
             return
         } else if ((e.target as any).desc.value == "") {
-            message.warning("Please Choose Type of Voucher")
+            message.warning("Please enter value Description of Service")
             return
         } else if ((e.target as any).price.value == "") {
-            message.warning("Please enter value discount of Voucher")
+            message.warning("Please enter value price of Service")
             return
         }
         console.log("da vao")
@@ -64,9 +64,7 @@ export default function AddService() {
             </div>
             <form
                 onSubmit={(e) => {
-                    console.log("ghhh");
                     e.preventDefault();
-
                     addNewService(e)
                 }}
                 className='add_service_content'>
