@@ -87,6 +87,27 @@ input:checked+.slider:before {
     }
 }
 
+.search_service {
+    display: flex;
+    margin-bottom: 30px;
+
+    .search_service_text {
+        padding: 5px;
+        width: 300px;
+        border-radius: 10px;
+        font-size: 20px;
+    }
+}
+
+
+
+.pagination {
+    display: flex !important;
+    justify-content: center !important;
+    margin-top: 20px;
+}
+
+
 // table,
 // th,
 // td {

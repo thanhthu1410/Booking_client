@@ -12,18 +12,40 @@ export interface Services {
 
 }
 
-const initialState: {
+export interface ServicesState {
     data: null | undefined | Services[]
-} = {
-    data: null
-};
+    reLoad: boolean
+}
+
+const initialState: ServicesState = {
+    data: null,
+    reLoad: false
+
+}
+
+// const initialState: {
+//     data: null | undefined | Services[]
+// } = {
+
+//      reLoad: false
+// };
 
 const serviceSlice = createSlice({
-    name: "service",
+    name: "services",
     initialState,
     reducers: {
         insertService: function (state, action) {
             state.data?.unshift(action.payload)
+        },
+        reload: (state) => {
+            return {
+                ...state,
+                reLoad: !state.reLoad,
+
+            }
+        },
+        getService: function (state, action) {
+            return action.payload
         },
 
 
