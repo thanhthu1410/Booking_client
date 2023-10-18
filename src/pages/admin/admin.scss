@@ -139,6 +139,12 @@
         border-radius: 6px;
     }
 
+    .navlink_icon.setting {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
     .navlink_icon::before {
         content: "";
         position: absolute;

@@ -2,9 +2,10 @@
 
 import React, { useEffect } from 'react';
 import './admin.scss'
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 
 const Sidebar: React.FC = () => {
+    const navigate = useNavigate();
     useEffect(() => {
         const sidebar = document.querySelector(".sidebar");
         const submenuItems = document.querySelectorAll(".submenu_item");
@@ -183,11 +184,11 @@ const Sidebar: React.FC = () => {
                                     <i className="bx bx-chevron-right arrow-left" />
                                 </a>
                                 <ul className="menu_items submenu">
-                                    <Link to="service" className="nav_link sublink">
-                                        List Voucher
-                                    </Link>
-                                    <Link to="add" className="nav_link sublink">
+                                    <Link to="voucher" className="nav_link sublink">
                                         Add Voucher
+                                    </Link>
+                                    <Link to="listvoucher" className="nav_link sublink">
+                                        List Voucher
                                     </Link>
                                 </ul>
                             </li>
@@ -207,6 +208,20 @@ const Sidebar: React.FC = () => {
                                         <i className="fa-solid fa-flag"></i>
                                     </span>
                                     <span className="navlink">Report</span>
+                                    <i className="bx bx-chevron-right arrow-left" />
+                                </a>
+                            </li>
+
+                            <li className="item" onClick={() => navigate("/admin/setting")}>
+                                <a className="nav_link submenu_item">
+                                    <span className="navlink_icon setting">
+                                        <span className="material-symbols-outlined">
+                                            settings
+                                        </span>
+                                    </span>
+                                    <span className="navlink">
+                                        Setting
+                                    </span>
                                     <i className="bx bx-chevron-right arrow-left" />
                                 </a>
                             </li>

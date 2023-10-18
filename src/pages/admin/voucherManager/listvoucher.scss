@@ -1,0 +1,21 @@
+.content_listvoucher{
+    td{
+        padding: 5px;
+    }
+    .action{
+        display: flex;
+        width: 100%;
+        justify-content: space-evenly;
+        padding: 20px;
+        border-bottom: none;
+        border-top: none;
+        margin: 0;
+        .fa-solid{
+            font-size: 1.1rem;
+        }
+        .fa-solid:hover{
+            color: rgba(24, 92, 218, 0.733);
+        
+        }
+    }
+}
