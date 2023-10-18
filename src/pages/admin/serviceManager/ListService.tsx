@@ -19,12 +19,11 @@ export default function ListService() {
     const [maxItemPage, setMaxItemPage] = useState(2);
     const [skipItem, setSkipItem] = useState(0);
     const [maxPage, setMaxPage] = useState<any[]>([]);
-    const dispatch = useDispatch()
-
-
+    const dispatch = useDispatch();
     const [searchStatus, setSearchStatus] = useState(false);
     const [searchData, setSearchData] = useState<Services[]>([]);;
 
+    const [loading, setLoading] = useState(false);
     let timeOut: any;
     function search(e: any) {
 
