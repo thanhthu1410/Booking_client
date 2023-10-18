@@ -4,7 +4,7 @@ import { useDispatch } from 'react-redux';
 import { FormEvent, MutableRefObject, useRef, useState } from 'react';
 import api from '@/services/api';
 import { serviceActions } from '@/stores/slices/service.slice';
-import { Modal } from 'antd';
+import { Modal, message } from 'antd';
 
 
 export default function AddService() {
@@ -33,10 +33,11 @@ export default function AddService() {
             .then(res => {
                 console.log("res", res)
                 dispatch(serviceActions.insertService(res.data));
-                Modal.success({
-                    content: "Add Service sucsses"
+                // Modal.success({
+                //     content: "Add Service sucsses"
 
-                });
+                // });
+                message.success("Add Service sucsses")
             })
             .catch(err => {
                 console.log("err", err);

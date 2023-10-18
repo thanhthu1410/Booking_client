@@ -202,3 +202,67 @@ input:checked+.slider:before {
         }
     }
 }
+
+
+/* AddStaff */
+
+
+.add_staff_content {
+    display: flex;
+    margin-left: 20px;
+    gap: 100px;
+
+    .add_image {
+        margin-top: 10px;
+    }
+
+    .add_content {
+        // margin-top: 30px;
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+
+        input {
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+    }
+
+    .add_content input {
+        width: 400px;
+        height: 40px;
+        border-radius: 5px;
+    }
+
+    .staff_service {
+        font-size: 25px;
+
+        .staff_service_text {
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        .list_service {
+            margin: 20px 0;
+        }
+
+        .list_service label {
+            font-size: 25px;
+        }
+
+
+    }
+
+    .button_add_staff {
+        margin-top: 100px;
+    }
+
+    .button_add_staff button {
+        font-size: 15px;
+
+    }
+}
