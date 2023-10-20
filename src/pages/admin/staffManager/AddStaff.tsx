@@ -61,6 +61,7 @@ export default function AddStaff() {
             birthDay: (e.target as any).birthDay.value,
             experience: (e.target as any).experience.value,
             phoneNumber: (e.target as any).phoneNumber.value,
+            serviceList: selectedServices
         }
 
 

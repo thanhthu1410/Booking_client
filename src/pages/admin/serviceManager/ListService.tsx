@@ -6,7 +6,7 @@ import api from '@/services/api'
 import { useDispatch } from 'react-redux'
 import { Modal } from 'antd'
 import { Services, serviceActions } from '@/stores/slices/service.slice'
-import SearchService from './SearchService'
+
 
 export default function ListService() {
     const navigate = useNavigate()
@@ -107,7 +107,7 @@ export default function ListService() {
 
     const handleDelete = (id: any) => {
         Modal.confirm({
-            title: "Do you want delete this Voucher !",
+            title: "Do you want delete this Service !",
             content: "",
             onOk: () => {
                 api.serviceApi.delete(id)

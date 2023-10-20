@@ -6,10 +6,7 @@ import api from '@/services/api';
 import { serviceActions } from '@/stores/slices/service.slice';
 import { useDispatch } from 'react-redux';
 
-interface Picture {
-    file: File;
-    url: string;
-}
+
 
 export default function EditService(props: any) {
     const dispatch = useDispatch()
@@ -19,7 +16,7 @@ export default function EditService(props: any) {
     const [isSwitchOn, setIsSwitchOn] = useState(updateData?.status || false);
     // const [isSwitchOn, setIsSwitchOn] = useState(Boolean(updateData.status));
     const urlPreviewRef = useRef<HTMLImageElement>(null);
-    console.log("urlPreviewRef:", urlPreviewRef)
+    //console.log("urlPreviewRef:", urlPreviewRef)
 
     async function updateService(eventForm: any) {
         eventForm.preventDefault();
@@ -33,7 +30,7 @@ export default function EditService(props: any) {
         let formData = new FormData();
         formData?.append('services', JSON.stringify(updateInfor));
         formData.append("avatar", picture!)
-        console.log("formData:", formData)
+        //console.log("formData:", formData)
         api.serviceApi
             .update(updateData?.id, formData)
             .then((res) => {
@@ -46,7 +43,7 @@ export default function EditService(props: any) {
                     dispatch(serviceActions.reload());
                 } else {
                     Modal.error({
-                        content: res.data.message,
+                        content: "update error",
                     });
                 }
             })
@@ -101,9 +98,7 @@ export default function EditService(props: any) {
 
                         <div className='button'>
                             <button type="submit" className="btn btn-success">Save</button>
-                            <button onClick={() => {
-                                props.setModal(false)
-                            }} type="button" className="btn btn-secondary">Cancle</button>
+                            <button type="button" className="btn btn-secondary">Cancle</button>
                         </div>
 
 
