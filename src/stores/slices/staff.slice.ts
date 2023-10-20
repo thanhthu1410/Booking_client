@@ -9,6 +9,7 @@ export interface Staff {
     avatar: string;
     phoneNumber: string;
     experience: string;
+    serviceList: Array<number>
 }
 
 export interface StaffState {
@@ -22,12 +23,6 @@ const initialState: StaffState = {
 
 }
 
-// const initialState: {
-//     data: null | undefined | Services[]
-// } = {
-
-//      reLoad: false
-// };
 
 const staffSlice = createSlice({
     name: "services",

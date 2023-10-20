@@ -6,6 +6,7 @@ import { timeAction } from "./stores/slices/time.slice";
 import { voucherAction } from "./stores/slices/voucher.slice";
 import { StoreType } from "./stores";
 import { serviceActions } from "./stores/slices/service.slice";
+
 function App() {
   const store = useSelector((store: StoreType) => store)
 
@@ -38,6 +39,8 @@ function App() {
         }
       })
   }, [store.serviceStore.reLoad])
+
+
 
 
   return (
