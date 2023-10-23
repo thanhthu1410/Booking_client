@@ -41,7 +41,16 @@ export default function AddService() {
         formData.append("service", JSON.stringify(data))
         api.serviceApi.create(formData)
             .then(res => {
-                console.log("res", res)
+                (document.getElementById("name") as HTMLInputElement
+                ).value = "";
+                (document.getElementById("desc") as HTMLInputElement
+                ).value = "";
+                (document.getElementById("price") as HTMLInputElement
+                ).value = "";
+                (document.getElementById("imgFile") as HTMLInputElement
+                ).value = "";
+                (imgPreviewRef.current! as HTMLImageElement).src = "https://content.gobsn.com/i/bodyandfit/no-xplode_Image_01?layer0=$PDP$";
+                // console.log("res", res)
                 dispatch(serviceActions.insertService(res.data));
                 // Modal.success({
                 //     content: "Add Service sucsses"
@@ -69,8 +78,8 @@ export default function AddService() {
                 }}
                 className='add_service_content'>
                 <div className='add_image'>
-                    <img ref={imgPreviewRef} src="https://content.gobsn.com/i/bodyandfit/no-xplode_Image_01?layer0=$PDP$" alt="" style={{ width: "200px", height: "200px", borderRadius: "50%", marginTop: "10px", marginBottom: "10px" }} /> <br />
-                    <input name='imgs' type="file"
+                    <img id='img' ref={imgPreviewRef} src="https://content.gobsn.com/i/bodyandfit/no-xplode_Image_01?layer0=$PDP$" alt="" style={{ width: "200px", height: "200px", borderRadius: "50%", marginTop: "10px", marginBottom: "10px" }} /> <br />
+                    <input id='imgFile' name='imgs' type="file"
                         onChange={(e) => {
                             if (e.target.files) {
                                 if (e.target.files.length > 0) {
@@ -84,13 +93,13 @@ export default function AddService() {
                 <div className='add_content' >
 
                     <label>Name: </label>
-                    <input type="text" name='name' /> <br />
+                    <input type="text" name='name' id='name' /> <br />
 
                     <label>Price: </label>
-                    <input type="text" name='price' /><br />
+                    <input type="text" name='price' id='price' /><br />
 
                     <label>Description: </label>
-                    <input type="text" name='desc' /><br />
+                    <input type="text" name='desc' id='desc' /><br />
                 </div>
                 <div className='button_add_service'>
                     <button type="submit" className="btn btn-dark">Add Service</button>

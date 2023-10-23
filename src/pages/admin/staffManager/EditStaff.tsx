@@ -1,21 +1,32 @@
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import './staff.scss'
 import { useRef, useState } from 'react'
 import api from '@/services/api';
 import { Modal, message } from 'antd';
 import { staffActions } from '@/stores/slices/staff.slice';
+import { StoreType } from '@/stores';
 
 export default function EditStaff(props: any) {
     const dispatch = useDispatch()
     const [updateData, setUpdateData] = useState(props.staff);
-    console.log("staff:", updateData)
     const [picture, setPicture] = useState<File | null>(null);
-
+    const [isDelete, setIsDelete] = useState(false);
     const urlPreviewRef = useRef<HTMLImageElement>(null);
-
     const [isSwitchOn, setIsSwitchOn] = useState(updateData?.status || false);
 
     async function updateStaff(eventForm: any) {
+        if ((eventForm.target as any).desc.value == "") {
+            message.warning("Please enter value Description of Staff")
+            return
+        }
+        else if ((eventForm.target as any).experience.value == "") {
+            message.warning("Please enter value Experience of Staff")
+            return
+        }
+        else if ((eventForm.target as any).phoneNumber.value == "") {
+            message.warning("Please enter value Phone Number of Staff")
+            return
+        }
         eventForm.preventDefault();
         let updateInfor = {
             experience: eventForm.target.experience.value,
@@ -29,9 +40,8 @@ export default function EditStaff(props: any) {
         formData?.append('avatar', picture!)
         api.staffApi.update(updateData?.id, formData)
             .then((res) => {
-                console.log("res", res);
-                if (res.data.status === 200) {
-                    message.success(res.data.message);
+                if (res.status == 200) {
+                    message.success("Update Staff Successfull!");
                     props.setModal(false);
                     setUpdateData(updateInfor)
                     setIsSwitchOn(updateInfor.status);
@@ -49,6 +59,60 @@ export default function EditStaff(props: any) {
             })
     }
 
+
+    function handleDeleteStaffService(id: any) {
+        api.staffApi.deleteStaffService(id)
+            .then(res => {
+                if (res.status === 200) {
+                    message.success("Delete Ok!")
+                    setIsDelete(!isDelete)
+                    dispatch(staffActions.reload())
+                } else {
+                    message.error("Delete fail")
+                }
+            })
+            .catch(err => console.log("err", err)
+            )
+    }
+
+
+    const serviceStore = useSelector((store: StoreType) => {
+        return store.serviceStore
+    })
+    // console.log("🚀 serviceStore ~ serviceStore:", serviceStore.data)
+
+    const staffStore = useSelector((store: StoreType) => {
+        return store.staffStore
+    })
+    // console.log("staffStore ~ staffStore:", staffStore.data)
+
+
+    const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
+    console.log("selectedServiceId", selectedServiceId);
+
+    const handleAddService = (e: any) => {
+        e.preventDefault();
+        if (!selectedServiceId) {
+            message.warning("Please select a service");
+            return;
+        }
+        const serviceData = {
+            serviceId: Number(selectedServiceId),
+            staffId: Number(updateData?.id),
+        };
+        api.staffApi.createStaffService(serviceData)
+            .then((res) => {
+                console.log("davao");
+                console.log(" res:", res)
+                if (res.status == 200) {
+                    message.success("Create Service Successful");
+                    dispatch(staffActions.reload());
+                } else {
+                    message.error("Create Service fail");
+                }
+            })
+            .catch((err) => console.log("err", err));
+    };
     return (
         <div>
             <div className='container_editService'>
@@ -59,7 +123,7 @@ export default function EditStaff(props: any) {
                     className='container_content_service'>
                     <div className='add_service_content'>
                         <div className='add_image'>
-                            <img src={updateData?.avatar} ref={urlPreviewRef} alt="" style={{ width: "150px", height: "150px", borderRadius: "50%", marginTop: "10px", marginBottom: "10px" }} /> <br />
+                            <img src={updateData?.avatar} ref={urlPreviewRef} alt="" /> <br />
                             <input accept="image/*" type="file" name='imgs'
                                 onChange={(event: any) => {
                                     if (event.target.files.length === 0) {
@@ -79,14 +143,16 @@ export default function EditStaff(props: any) {
                         </div>
                         <div className='add_content' >
 
-                            <label >Status</label>
-                            <label className="switch">
-                                <input type="checkbox"
-                                    checked={isSwitchOn}
-                                    onChange={() => setIsSwitchOn(!updateData?.status)}
-                                />
-                                <span className="slider round"></span>
-                            </label>
+                            <div className='status_container'>
+                                <label >Status :</label>
+                                <label className="switch">
+                                    <input type="checkbox"
+                                        checked={isSwitchOn}
+                                        onChange={() => setIsSwitchOn(!updateData?.status)}
+                                    />
+                                    <span className="slider round"></span>
+                                </label>
+                            </div>
 
                             <label>Experience: </label>
                             <input type="text" name='experience' defaultValue={updateData?.experience} /> <br />
@@ -100,25 +166,73 @@ export default function EditStaff(props: any) {
                                 <button type="submit" className="btn btn-success">Save</button>
                                 <button onClick={() => {
                                     props.setModal(false)
-                                }} type="submit" className="btn btn-secondary">Cancle</button>
+                                }} type="button" className="btn btn-secondary">Cancle</button>
                             </div>
 
                         </div>
                     </div>
-                    <div className='add_service_content'>
-                        <div className='add_image'>
-                            <h1>Staff Service</h1>
+                    <div className='add_service_content2'>
+                        <div className='add_service_container'>
+                            <h2>Staff Service</h2>
                         </div>
-                        <div className='add_content_container_service' >
-                            {updateData?.staffServices?.map((item: any) => (
-                                <div key={Date.now() * Math.random()} className='add_content_service'>
-                                    <img src={item.service.avatar} alt="" />
-                                    <p>{item.service.name}</p>
-                                    <i className="fa-solid fa-trash"></i>
-                                </div>
-                            ))}
+                        <div className='add_service'>
+                            <div>
+                                <select name="serviceId"
+                                    id="serviceDropdown"
+                                    onChange={(e) => {
+                                        console.log("dfdsgdg", e.target.value);
+                                        setSelectedServiceId(e.target.value)
+                                    }}
+                                >
+                                    {serviceStore?.data?.map((service) => {
+                                        const isServiceAdded = updateData?.staffServices?.some((item: any) => item.service.id == service.id);
+                                        if (!isServiceAdded) {
+                                            return (
+                                                <option key={service.id} value={service.id} >{service.name}</option>
+                                            );
+                                        }
+                                        return null;
+                                    })}
+                                </select>
+                            </div>
+                            <div>
+                                <button onClick={(e: any) => {
+                                    e.preventDefault(e)
+                                    handleAddService(e)
+                                }} type="button" className="btn btn-success">+ Service</button>
+                            </div>
+                        </div>
+                        <div className='add_content_container_service'>
+                            <table className="table">
+                                <thead className="thead-dark">
+                                    <tr>
+                                        <th scope="col">Avartar</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {updateData?.staffServices?.map((item: any) => {
+                                        const serviceInData = serviceStore?.data?.find((service) => service.id == item.service.id);
+                                        // Chỉ hiển thị nếu dịch vụ có trong serviceStore?.data?
+                                        if (serviceInData) {
+                                            return (
+                                                <tr key={item.id} >
+                                                    <td><img style={{ width: "50px", height: "50px", }} src={item?.service?.avatar} alt="" /></td>
+                                                    <td><p>{item.service.name}</p></td>
+                                                    <td><i onClick={(e) => {
+                                                        setIsDelete(!isDelete);
+                                                        e.preventDefault();
+                                                        handleDeleteStaffService(item.id);
+                                                    }} className="fa-solid fa-trash"></i></td>
+                                                </tr>
+                                            );
+                                        }
+                                        return null;
+                                    })}
 
-
+                                </tbody>
+                            </table>
 
                         </div>
                     </div>

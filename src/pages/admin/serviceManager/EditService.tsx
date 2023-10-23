@@ -12,7 +12,7 @@ export default function EditService(props: any) {
     const dispatch = useDispatch()
     const [updateData, setUpdateData] = useState(props.item);
     const [picture, setPicture] = useState<File | null>(null);
-
+    const [modal, setModal] = useState(false)
     const [isSwitchOn, setIsSwitchOn] = useState(updateData?.status || false);
     // const [isSwitchOn, setIsSwitchOn] = useState(Boolean(updateData.status));
     const urlPreviewRef = useRef<HTMLImageElement>(null);
@@ -20,6 +20,19 @@ export default function EditService(props: any) {
 
     async function updateService(eventForm: any) {
         eventForm.preventDefault();
+        console.log("thu nekk");
+
+        if ((eventForm.target as any).name.value == "") {
+            message.warning("Please enter  Name of Service")
+            return
+        } else if ((eventForm.target as any).desc.value == "") {
+            message.warning("Please enter value Description of Service")
+            return
+        } else if ((eventForm.target as any).price.value == "") {
+            message.warning("Please enter value price of Service")
+            return
+        }
+
         let updateInfor = {
             //...updateData,
             name: eventForm.target.name.value,
@@ -27,21 +40,26 @@ export default function EditService(props: any) {
             price: Number(eventForm.target.price.value),
             status: isSwitchOn,
         };
+        console.log("thu nekk 1");
         let formData = new FormData();
         formData?.append('services', JSON.stringify(updateInfor));
         formData.append("avatar", picture!)
         //console.log("formData:", formData)
+        console.log("thu nekk 2");
         api.serviceApi
             .update(updateData?.id, formData)
             .then((res) => {
-                console.log("res:", res)
-                if (res.status === 200) {
+                console.log("abcdcvfd");
+
+                if (res.status == 200) {
+                    console.log("200");
                     message.success(res.data.message);
                     props.setModal(false);
-                    setUpdateData(updateInfor)
+                    setUpdateData({ ...updateData, ...updateInfor });
                     setIsSwitchOn(updateInfor.status);
                     dispatch(serviceActions.reload());
                 } else {
+                    props.setModal(false);
                     Modal.error({
                         content: "update error",
                     });
@@ -97,8 +115,10 @@ export default function EditService(props: any) {
                         <input type="text" name='desc' defaultValue={updateData?.desc} /><br />
 
                         <div className='button'>
-                            <button type="submit" className="btn btn-success">Save</button>
-                            <button type="button" className="btn btn-secondary">Cancle</button>
+                            <button type="submit" className="btn btn-success" >Save</button>
+                            <button onClick={() => {
+                                props.setModal(false)
+                            }} type="button" className="btn btn-secondary">Cancle</button>
                         </div>
 
 

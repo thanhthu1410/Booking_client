@@ -9,7 +9,9 @@ export interface Staff {
     avatar: string;
     phoneNumber: string;
     experience: string;
-    serviceList: Array<number>
+    serviceList: Array<number>;
+    serviceId: number
+
 }
 
 export interface StaffState {

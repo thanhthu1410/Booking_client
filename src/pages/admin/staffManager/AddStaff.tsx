@@ -68,7 +68,21 @@ export default function AddStaff() {
         formData.append("staff", JSON.stringify(data))
         api.staffApi.create(formData)
             .then(res => {
-                console.log("res", res)
+                (document.getElementById("name") as HTMLInputElement
+                ).value = "";
+                (document.getElementById("desc") as HTMLInputElement
+                ).value = "";
+                (document.getElementById("birthDay") as HTMLInputElement
+                ).value = "";
+                (document.getElementById("experience") as HTMLInputElement
+                ).value = "";
+                (document.getElementById("phoneNumber") as HTMLInputElement
+                ).value = "";
+                (document.getElementById("imgFile") as HTMLInputElement
+                ).value = "";
+                (imgPreviewRef.current! as HTMLImageElement).src = "https://content.gobsn.com/i/bodyandfit/no-xplode_Image_01?layer0=$PDP$";
+                setSelectedServices([]);
+                //console.log("res", res)
                 dispatch(staffActions.insertStaff(res.data));
                 message.success("Add Staff sucsses")
             })
@@ -98,7 +112,7 @@ export default function AddStaff() {
                     className='add_staff_content'>
                     <div className='add_image'>
                         <img ref={imgPreviewRef} src="https://content.gobsn.com/i/bodyandfit/no-xplode_Image_01?layer0=$PDP$" alt="" style={{ width: "200px", height: "200px", borderRadius: "50%", marginTop: "10px", marginBottom: "10px" }} /> <br />
-                        <input name='imgs' type="file"
+                        <input id='imgFile' name='imgs' type="file"
                             onChange={(e) => {
                                 if (e.target.files) {
                                     if (e.target.files.length > 0) {
@@ -113,19 +127,19 @@ export default function AddStaff() {
                     <div className='add_content' >
 
                         <label>Name: </label>
-                        <input type="text" name='name' /> <br />
+                        <input type="text" name='name' id='name' /> <br />
 
                         <label>Birthday: </label>
-                        <input type="text" name='birthDay' /><br />
+                        <input type="text" name='birthDay' id='birthDay' /><br />
 
                         <label>Phone: </label>
-                        <input type="text" name='phoneNumber' /><br />
+                        <input type="text" name='phoneNumber' id='phoneNumber' /><br />
 
                         <label>Experience: </label>
-                        <input type="text" name='experience' /><br />
+                        <input type="text" name='experience' id='experience' /><br />
 
                         <label>Description: </label>
-                        <input type="text" name='desc' /><br />
+                        <input type="text" name='desc' id='desc' /><br />
                     </div>
                     <div className='staff_service'>
                         <div className='staff_service_text'>
