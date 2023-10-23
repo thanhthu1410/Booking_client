@@ -87,12 +87,6 @@ input:checked+.slider:before {
     }
 }
 
-// table,
-// th,
-// td {
-//     text-align: center;
-//     align-items: center;
-// }
 
 
 /* EditStaff */
@@ -107,7 +101,7 @@ input:checked+.slider:before {
     z-index: 1001;
 
     .container_content_service {
-        width: 1200px;
+        width: 1100px;
         background-color: white;
         border-radius: 10px;
         position: fixed;
@@ -117,18 +111,38 @@ input:checked+.slider:before {
         z-index: 1002;
         height: 650px;
         display: flex;
+        justify-content: space-evenly;
 
         .add_service_content {
             // display: flex;
-            margin-left: 50px;
-            gap: 100px;
+            padding-top: 30px;
+
 
             .add_image {
-                margin-top: 10px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 220px;
+
+                img {
+                    width: 200px;
+                    height: 200px;
+                    border-radius: 50%;
+                    margin-right: 20px;
+                }
+
             }
 
+
             .add_content {
-                margin-top: 30px;
+
+
+                // margin-top: 30px;
+                .status_container {
+                    display: flex;
+                    width: 130px;
+                    justify-content: space-between;
+                }
 
                 label {
                     display: block;
@@ -140,7 +154,7 @@ input:checked+.slider:before {
                 input {
                     margin-bottom: 10px;
                     padding: 10px;
-                    font-size: 25px;
+                    font-size: 22px;
                 }
 
                 .button {
@@ -164,40 +178,45 @@ input:checked+.slider:before {
                 border-radius: 5px;
             }
 
-            .add_content_container_service {
-                margin-top: 20px;
+
+
+
+        }
+
+        .add_service_content2 {
+            width: 400px;
+            padding-top: 30px;
+
+            h2 {
+                margin-bottom: 30px;
             }
 
-            .add_content_service {
+            .add_service {
+
                 display: flex;
-                border: 1px solid black;
-                margin: 20px 0;
-                margin-top: 35px;
-                border-radius: 10px;
+                gap: 20px;
+
+                select {
+                    padding: 7px 12px !important;
+                    font-size: 20px !important;
+                    border-radius: 10px;
+                }
+
+                button {
+                    padding: 7px 10px !important;
+                    font-size: 18px;
+                    border-radius: 10px;
+                }
+
             }
 
+            .add_content_container_service {
+                margin-top: 30px;
 
 
-
-            .add_content_service p {
-                font-size: 25px;
-                margin-left: 15px;
-                margin-top: 15px;
-            }
-
-            .add_content_service i {
-                font-size: 20px;
-                margin-left: 350px;
-                margin-top: 25px;
-                margin-right: 10px;
-                color: red;
-            }
-
-            .add_content_service img {
-                width: 50px;
-                height: 50px;
-                margin: 10px 10px;
-                // border-radius: 50%;
+                img {
+                    border-radius: 50% !important;
+                }
             }
         }
     }
@@ -217,8 +236,6 @@ input:checked+.slider:before {
     }
 
     .add_content {
-        // margin-top: 30px;
-
         label {
             display: block;
             margin-bottom: 5px;

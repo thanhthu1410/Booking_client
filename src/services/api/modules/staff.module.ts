@@ -8,8 +8,17 @@ export default {
             }
         })
     },
-    findAll: async function () {
-        return await axios.get(`${import.meta.env.VITE_APP_SERVER_HOST_API}staffs`);
+    createStaffService: async function (serviceData: any) {
+        return await axios.post(import.meta.env.VITE_APP_SERVER_HOST_API + "staff-services", serviceData)
+    },
+    findAllStaff: async function () {
+        return await axios.get(import.meta.env.VITE_APP_SERVER_HOST_API + "staffs/search?");
+    },
+    searchStaff: async function (searchString: string) {
+        return await axios.get(`${import.meta.env.VITE_APP_SERVER_HOST_API}staffs/search?q=${searchString}`)
+    },
+    findAll: async function (take: number, skip: number) {
+        return await axios.get(`${import.meta.env.VITE_APP_SERVER_HOST_API}staffs?take=${take}&skip=${skip}`);
     },
     delete: async function (id: any) {
         return await axios.delete(`${import.meta.env.VITE_APP_SERVER_HOST_API}staffs/${id}`)
@@ -25,4 +34,7 @@ export default {
             },
         );
     },
+    deleteStaffService: async function (id: any) {
+        return await axios.delete(`${import.meta.env.VITE_APP_SERVER_HOST_API}staff-services/${id}`)
+    }
 }

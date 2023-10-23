@@ -6,6 +6,7 @@ import { timeAction } from "./stores/slices/time.slice";
 import { voucherAction } from "./stores/slices/voucher.slice";
 import { StoreType } from "./stores";
 import { serviceActions } from "./stores/slices/service.slice";
+import { staffActions } from "./stores/slices/staff.slice";
 
 function App() {
   const store = useSelector((store: StoreType) => store)
@@ -33,12 +34,23 @@ function App() {
     api.serviceApi.findAllService()
       .then(res => {
         if (res.status == 200) {
-          console.log("serviceList", res.data.data);
+          // console.log("serviceList", res.data.data);
           dispatch(serviceActions.setDataService(res.data.data))
 
         }
       })
   }, [store.serviceStore.reLoad])
+
+  useEffect(() => {
+    api.staffApi.findAllStaff()
+      .then(res => {
+        if (res.status == 200) {
+          // console.log("serviceList", res.data.data);
+          dispatch(staffActions.setDataStaff(res.data.data))
+
+        }
+      })
+  }, [store.staffStore.reLoad])
 
 
 

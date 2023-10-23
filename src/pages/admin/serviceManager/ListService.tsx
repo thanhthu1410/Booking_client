@@ -3,9 +3,10 @@ import './service.scss'
 import EditService from './EditService'
 import { useEffect, useState } from 'react'
 import api from '@/services/api'
-import { useDispatch } from 'react-redux'
-import { Modal } from 'antd'
+import { useDispatch, useSelector } from 'react-redux'
+import { Modal, message } from 'antd'
 import { Services, serviceActions } from '@/stores/slices/service.slice'
+import { StoreType } from '@/stores'
 
 
 export default function ListService() {
@@ -57,8 +58,6 @@ export default function ListService() {
         }, 500)
 
     }
-
-
     useEffect(() => {
         api.serviceApi.findMany(maxItemPage, skipItem)
             .then(res => {
@@ -121,6 +120,13 @@ export default function ListService() {
         })
     };
 
+
+    const serviceStore = useSelector((store: StoreType) => {
+        return store.serviceStore
+    })
+    console.log("serviceStore:", serviceStore.data)
+
+
     return (
 
         <div>
@@ -153,8 +159,8 @@ export default function ListService() {
                             <th scope="col">Price</th>
                             <th scope="col">Description</th>
                             <th scope="col">Status</th>
-                            <th scope="col">Create At</th>
-                            <th scope="col">Update At</th>
+                            {/* <th scope="col">Create At</th>
+                            <th scope="col">Update At</th> */}
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -175,8 +181,8 @@ export default function ListService() {
                                             <span className="slider round"></span>
                                         </label>
                                     </td>
-                                    <td >{item.createAt}</td>
-                                    <td>{item.updateAt}</td>
+                                    {/* <td >{item.createAt}</td>
+                                    <td>{item.updateAt}</td> */}
                                     <td className='action'>
                                         <button onClick={() => {
                                             setModal(true)
@@ -206,8 +212,8 @@ export default function ListService() {
                                                 <span className="slider round"></span>
                                             </label>
                                         </td>
-                                        <td >{item.createAt}</td>
-                                        <td>{item.updateAt}</td>
+                                        {/* <td >{item.createAt}</td>
+                                        <td>{item.updateAt}</td> */}
                                         <td className='action'>
                                             <button onClick={() => {
                                                 setModal(true)
