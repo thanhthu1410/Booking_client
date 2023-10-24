@@ -3,15 +3,26 @@ import { useNavigate } from 'react-router-dom';
 
 import './staff.scss'
 
-import { Checkbox, message } from 'antd';
-import type { CheckboxChangeEvent } from 'antd/es/checkbox';
+import { Checkbox, Spin, message } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreType } from '@/stores';
 import { FormEvent, MutableRefObject, useRef, useState } from 'react';
 import api from '@/services/api';
 import { staffActions } from '@/stores/slices/staff.slice';
+import { LoadingOutlined } from '@ant-design/icons';
+import Loading from '@/pages/component/Loading';
 
 export default function AddStaff() {
+
+    const [load, setLoad] = useState(false);
+    const antIcon = (
+        <LoadingOutlined
+            style={{
+                fontSize: 24,
+            }}
+            spin
+        />
+    );
     const navigate = useNavigate()
 
     const [selectedServices, setSelectedServices] = useState<number[]>([]);
@@ -24,7 +35,7 @@ export default function AddStaff() {
         return store.serviceStore
     })
 
-
+    const isNumber = (value: string) => /^\d+$/.test(value);
     const dispatch = useDispatch()
     const imgPreviewRef: MutableRefObject<HTMLImageElement | null> = useRef(null);
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
@@ -47,7 +58,13 @@ export default function AddStaff() {
             message.warning("Please enter value Phone Number of Staff")
             return
         }
-        console.log("da vao")
+
+        const phoneNumberValue = (e.target as any).phoneNumber.value;
+        if (!phoneNumberValue || !isNumber(phoneNumberValue)) {
+            message.warning("Please enter a valid numeric birthDayValue for the service");
+            return;
+        }
+        // console.log("da vao")
         e.preventDefault();
 
         let formData = new FormData();
@@ -66,6 +83,7 @@ export default function AddStaff() {
 
 
         formData.append("staff", JSON.stringify(data))
+        setLoad(true)
         api.staffApi.create(formData)
             .then(res => {
                 (document.getElementById("name") as HTMLInputElement
@@ -85,6 +103,7 @@ export default function AddStaff() {
                 //console.log("res", res)
                 dispatch(staffActions.insertStaff(res.data));
                 message.success("Add Staff sucsses")
+                setLoad(false)
             })
             .catch(err => {
                 console.log("err", err);
@@ -158,7 +177,15 @@ export default function AddStaff() {
                             </Checkbox.Group>
                         </div>
                         <div className='button_add_staff'>
-                            <button type="submit" className="btn btn-dark">Add Service</button>
+                            {
+                                load && <Loading />
+                            }
+                            <button type="submit" className={`${load && ' active'} btn btn-dark btn_submit`}>
+                                Add Staff
+                                <div className='btn_loading'>
+                                    <Spin indicator={antIcon} />
+                                </div>
+                            </button>
                         </div>
                     </div>
                 </form>

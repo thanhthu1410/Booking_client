@@ -4,14 +4,28 @@ import { useDispatch } from 'react-redux';
 import { FormEvent, MutableRefObject, useRef, useState } from 'react';
 import api from '@/services/api';
 import { serviceActions } from '@/stores/slices/service.slice';
-import { Modal, message } from 'antd';
-
+import { Modal, Spin, message } from 'antd';
+import { LoadingOutlined } from '@ant-design/icons';
+import Loading from '@/pages/component/Loading';
 
 export default function AddService() {
+
+    const [load, setLoad] = useState(false);
+    const antIcon = (
+        <LoadingOutlined
+            style={{
+                fontSize: 24,
+            }}
+            spin
+        />
+    );
+
+
     const navigate = useNavigate()
     const dispatch = useDispatch()
     const imgPreviewRef: MutableRefObject<HTMLImageElement | null> = useRef(null);
     const [avatarFile, setAvatarFile] = useState<File | null>(null);
+    const isNumber = (value: string) => /^\d+$/.test(value);
     function addNewService(e: FormEvent<HTMLFormElement>) {
         if ((e.target as any).name.value == "") {
             message.warning("Please enter  Name of Service")
@@ -22,6 +36,14 @@ export default function AddService() {
         } else if ((e.target as any).price.value == "") {
             message.warning("Please enter value price of Service")
             return
+        } else if ((imgPreviewRef.current! as HTMLImageElement).src == "") {
+            message.warning("No image selected yet!")
+            return
+        }
+        const priceValue = (e.target as any).price.value;
+        if (!priceValue || !isNumber(priceValue)) {
+            message.warning("Please enter a valid numeric price for the service");
+            return;
         }
         console.log("da vao")
         e.preventDefault();
@@ -39,6 +61,7 @@ export default function AddService() {
 
 
         formData.append("service", JSON.stringify(data))
+        setLoad(true)
         api.serviceApi.create(formData)
             .then(res => {
                 (document.getElementById("name") as HTMLInputElement
@@ -50,13 +73,9 @@ export default function AddService() {
                 (document.getElementById("imgFile") as HTMLInputElement
                 ).value = "";
                 (imgPreviewRef.current! as HTMLImageElement).src = "https://content.gobsn.com/i/bodyandfit/no-xplode_Image_01?layer0=$PDP$";
-                // console.log("res", res)
                 dispatch(serviceActions.insertService(res.data));
-                // Modal.success({
-                //     content: "Add Service sucsses"
-
-                // });
                 message.success("Add Service sucsses")
+                setLoad(false)
             })
             .catch(err => {
                 console.log("err", err);
@@ -85,6 +104,8 @@ export default function AddService() {
                                 if (e.target.files.length > 0) {
                                     (imgPreviewRef.current! as HTMLImageElement).src = URL.createObjectURL(e.target.files[0]);
                                     setAvatarFile(e.target.files[0])
+                                } else {
+                                    message.error("No image selected yet!");
                                 }
                             }
                         }}
@@ -102,7 +123,15 @@ export default function AddService() {
                     <input type="text" name='desc' id='desc' /><br />
                 </div>
                 <div className='button_add_service'>
-                    <button type="submit" className="btn btn-dark">Add Service</button>
+                    {
+                        load && <Loading />
+                    }
+                    <button type="submit" className={`${load && ' active'} btn btn-dark btn_submit`}>
+                        Add Service
+                        <div className='btn_loading'>
+                            <Spin indicator={antIcon} />
+                        </div>
+                    </button>
                 </div>
             </form>
         </div>

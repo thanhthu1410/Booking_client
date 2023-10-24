@@ -5,6 +5,7 @@ import { Modal, message } from 'antd';
 import api from '@/services/api';
 import { serviceActions } from '@/stores/slices/service.slice';
 import { useDispatch } from 'react-redux';
+import Service from '@/pages/services/Service';
 
 
 
@@ -34,37 +35,53 @@ export default function EditService(props: any) {
         }
 
         let updateInfor = {
-            //...updateData,
+            ...updateData,
             name: eventForm.target.name.value,
             desc: eventForm.target.desc.value,
             price: Number(eventForm.target.price.value),
             status: isSwitchOn,
         };
-        console.log("thu nekk 1");
+
         let formData = new FormData();
         formData?.append('services', JSON.stringify(updateInfor));
         formData.append("avatar", picture!)
-        //console.log("formData:", formData)
-        console.log("thu nekk 2");
         api.serviceApi
             .update(updateData?.id, formData)
             .then((res) => {
-                console.log("abcdcvfd");
-
                 if (res.status == 200) {
-                    console.log("200");
+                    console.log("DAVAO");
+                    console.log("res", res.data);
+
+
                     message.success(res.data.message);
                     props.setModal(false);
-                    setUpdateData({ ...updateData, ...updateInfor });
-                    setIsSwitchOn(updateInfor.status);
-                    dispatch(serviceActions.reload());
+                    const updateListService = props.services.map((service: any) => {
+                        if (service.id === updateData.id) {
+                            return {
+                                ...service,
+                                name: updateInfor.name,
+                                desc: updateInfor.desc,
+                                price: updateInfor.price,
+                                avatar: res.data.data.avatar,
+                                status: updateInfor.status,
+                            }
+                        } else {
+                            return service
+                        }
+                    })
+                    props.setServices(updateListService);
+                    // setIsSwitchOn(updateInfor.status);
+                    // dispatch(serviceActions.reload());
                 } else {
                     props.setModal(false);
                     Modal.error({
                         content: "update error",
                     });
+
                 }
+
             })
+
             .catch((err) => {
                 console.log('err', err);
             });
@@ -80,7 +97,7 @@ export default function EditService(props: any) {
                         <img src={updateData?.avatar} ref={urlPreviewRef} alt="" style={{ width: "150px", height: "150px", borderRadius: "50%", marginTop: "10px", marginBottom: "10px" }} /> <br />
                         <input accept="image/*" name="imgs" type="file" onChange={(event: any) => {
                             if (event.target.files.length === 0) {
-                                console.log('Chưa chọn hình!');
+                                message.error("No image selected yet!")
                             } else {
                                 setPicture(event.target.files[0])
                                 let blobUrl = URL.createObjectURL(
