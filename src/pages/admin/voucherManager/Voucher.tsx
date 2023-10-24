@@ -5,28 +5,28 @@ import { useDispatch } from "react-redux";
 import { voucherAction } from "@/stores/slices/voucher.slice";
 import DateTimeVoucher from "@/pages/bookings/Booking";
 import { useState } from "react";
-interface VoucherTime{
+interface VoucherTime {
   start: string
   end: string
 }
 export default function Voucher() {
   const dispatch = useDispatch()
-  const[voucherTime,setVoucherTime] = useState<VoucherTime>()
-  console.log("voucherTime",voucherTime);
-  let timeStart: string ;
-  let timeEnd: string ;
+  const [voucherTime, setVoucherTime] = useState<VoucherTime>()
+  console.log("voucherTime", voucherTime);
+  let timeStart: string;
+  let timeEnd: string;
 
-  if(voucherTime){
+  if (voucherTime) {
     const dataObjStart = new Date(voucherTime.start);
     const dataObjEnd = new Date(voucherTime.end);
     timeStart = dataObjStart.getTime().toString()
     timeEnd = dataObjEnd.getTime().toString()
-    console.log("timeStart",timeStart);
-    console.log("endStart",timeEnd);
-    
+    console.log("timeStart", timeStart);
+    console.log("endStart", timeEnd);
+
   }
- 
-  
+
+
   function createVoucher(e: any) {
     if (e.target.title.value == "") {
       message.warning("Please enter The Title of Voucher")
@@ -51,33 +51,33 @@ export default function Voucher() {
       discountType: e.target.type.value,
       value: e.target.valueDiscount.value,
       quantity: e.target.quantity.value,
-      endAt: timeStart,
-      startAt:timeEnd,
-
+      endAt: timeEnd,
+      startAt: timeStart,
     }
     api.voucherApi.create(data)
-      .then(res =>{ message.success("Create Voucher Successfull !");
-      (document.getElementById("title") as HTMLInputElement
-      ).value = "";
-      (document.getElementById("valueDiscount") as HTMLInputElement
-      ).value = "";
-      (document.getElementById("quantity") as HTMLInputElement
-      ).value = "";
-      api.voucherApi.findMany()
-      .then(res => dispatch(voucherAction.setData(res.data.data)))
-      .catch(err => console.log("err", err))
-  })
+      .then(res => {
+        message.success("Create Voucher Successfull !");
+        (document.getElementById("title") as HTMLInputElement
+        ).value = "";
+        (document.getElementById("valueDiscount") as HTMLInputElement
+        ).value = "";
+        (document.getElementById("quantity") as HTMLInputElement
+        ).value = "";
+        api.voucherApi.findMany()
+          .then(res => dispatch(voucherAction.setData(res.data.data)))
+          .catch(err => console.log("err", err))
+      })
 
 
       .catch(err => console.log("err", err))
-   
+
   }
   return (
     <div className="voucher_container">
       <div className="add_voucher_container">
         <h4><i className="fa-solid fa-plus"></i> Add Voucher :</h4>
-       <label htmlFor=""> Expiry Date : </label>
-        <DateTimeVoucher setVoucherTime={setVoucherTime}/>
+        <label htmlFor=""> Expiry Date : </label>
+        <DateTimeVoucher setVoucherTime={setVoucherTime} />
         <form onSubmit={(e: any) => {
           e.preventDefault();
 

@@ -1,26 +1,39 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+export interface Staff {
+    id: number
+    name: string
+    avatar: string
+    experience: string
+}
 
-export interface Services {
-    id: string;
+export interface StaffService {
+    id: number
+    createdAt: Date
+    updatedAt: Date
+    IsDelete: boolean
+    serviceId: number
+    staffId: number
+    staff: Staff
+}
+
+export interface Service {
+    id: number;
     name: string;
     desc: string;
-    // active: Boolean;
     avatar: string;
-    price: string;
-
-
+    price: number;
+    staffServices: StaffService[]
 }
 
 export interface ServicesState {
-    data: null | undefined | Services[]
+    data: null | undefined | Service[]
     reLoad: boolean
 }
 
 const initialState: ServicesState = {
     data: null,
     reLoad: false
-
 }
 
 const serviceSlice = createSlice({
