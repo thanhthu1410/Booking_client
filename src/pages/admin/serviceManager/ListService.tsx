@@ -17,14 +17,14 @@ export default function ListService() {
     const [updateData, setUpdateData] = useState([])
     const [isDelete, setIsDelete] = useState(false);
     const [selectedPage, setSelectedPage] = useState(null);
-    const [maxItemPage, setMaxItemPage] = useState(2);
+    const [maxItemPage, setMaxItemPage] = useState(5);
     const [skipItem, setSkipItem] = useState(0);
     const [maxPage, setMaxPage] = useState<any[]>([]);
     const dispatch = useDispatch();
     const [searchStatus, setSearchStatus] = useState(false);
     const [searchData, setSearchData] = useState<Services[]>([]);;
 
-    const [loading, setLoading] = useState(false);
+    //const [loading, setLoading] = useState(false);
     let timeOut: any;
     function search(e: any) {
 
@@ -58,6 +58,9 @@ export default function ListService() {
         }, 500)
 
     }
+    const serviceStore = useSelector((store: StoreType) => {
+        return store.serviceStore
+    })
     useEffect(() => {
         api.serviceApi.findMany(maxItemPage, skipItem)
             .then(res => {
@@ -72,7 +75,6 @@ export default function ListService() {
                     setMaxPage(maxPageArr);
                     setSkipItem(res.data.data.length)
                     setServices(res.data.data)
-                    dispatch(serviceActions.reload());
                 }
             })
             .catch(err => {
@@ -97,8 +99,6 @@ export default function ListService() {
                     setSkipItem(res.data.data.length)
                     setServices(res.data.data)
                     setSelectedPage(pageItemObj.number);
-                    dispatch(serviceActions.reload());
-
                 }
             })
     }
@@ -111,8 +111,10 @@ export default function ListService() {
             onOk: () => {
                 api.serviceApi.delete(id)
                     .then(res => {
-                        console.log("res", res.data);
-                        dispatch(serviceActions.reload())
+                        message.success("Delete Service Successfull !");
+                        const listServiceAfterDel = services;
+                        const filterService = listServiceAfterDel.filter((item: Services) => item.id !== id)
+                        setServices(filterService);
                     })
                     .catch(err => console.log("err", err)
                     )
@@ -121,17 +123,15 @@ export default function ListService() {
     };
 
 
-    const serviceStore = useSelector((store: StoreType) => {
-        return store.serviceStore
-    })
-    console.log("serviceStore:", serviceStore.data)
+
+
 
 
     return (
 
         <div>
             {modal ? (
-                <EditService setModal={setModal} item={updateData}  ></EditService>
+                <EditService setModal={setModal} item={updateData} services={services} setServices={setServices} ></EditService>
             ) : (
                 <></>
             )}

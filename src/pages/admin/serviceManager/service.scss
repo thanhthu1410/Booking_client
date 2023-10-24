@@ -151,6 +151,27 @@ input:checked+.slider:before {
 
         .button_add_service {
             margin-top: 213px;
+
+            .btn_submit {
+                position: relative !important;
+
+                .btn_loading {
+                    position: absolute;
+                    top: 50%;
+                    left: 50%;
+                    transform: translate(-50%, -50%);
+                    display: none;
+                }
+
+                &.active {
+                    background-color: rgba(rgb(4, 0, 0), 0.4) !important;
+                    opacity: 0.7 !important;
+
+                    .btn_loading {
+                        display: block;
+                    }
+                }
+            }
         }
 
         .button_add_service button {

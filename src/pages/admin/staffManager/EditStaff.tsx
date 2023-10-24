@@ -2,13 +2,27 @@ import { useDispatch, useSelector } from 'react-redux'
 import './staff.scss'
 import { useRef, useState } from 'react'
 import api from '@/services/api';
-import { Modal, message } from 'antd';
+import { Modal, Spin, message } from 'antd';
 import { staffActions } from '@/stores/slices/staff.slice';
 import { StoreType } from '@/stores';
+import { LoadingOutlined } from '@ant-design/icons';
+import Loading from '@/pages/component/Loading';
+
 
 export default function EditStaff(props: any) {
+
+    const [load, setLoad] = useState(false);
+    const antIcon = (
+        <LoadingOutlined
+            style={{
+                fontSize: 24,
+            }}
+            spin
+        />
+    );
     const dispatch = useDispatch()
     const [updateData, setUpdateData] = useState(props.staff);
+    console.log(" updateData:", updateData)
     const [picture, setPicture] = useState<File | null>(null);
     const [isDelete, setIsDelete] = useState(false);
     const urlPreviewRef = useRef<HTMLImageElement>(null);
@@ -38,6 +52,7 @@ export default function EditStaff(props: any) {
         let formData = new FormData();
         formData?.append('staff', JSON.stringify(updateInfor));
         formData?.append('avatar', picture!)
+        setLoad(true)
         api.staffApi.update(updateData?.id, formData)
             .then((res) => {
                 if (res.status == 200) {
@@ -45,7 +60,8 @@ export default function EditStaff(props: any) {
                     props.setModal(false);
                     setUpdateData(updateInfor)
                     setIsSwitchOn(updateInfor.status);
-                    dispatch(staffActions.reload());
+                    //dispatch(staffActions.reload());
+                    setLoad(false)
                 } else {
                     props.setModal(false);
                     Modal.error({
@@ -60,19 +76,23 @@ export default function EditStaff(props: any) {
     }
 
 
+
     function handleDeleteStaffService(id: any) {
         api.staffApi.deleteStaffService(id)
             .then(res => {
                 if (res.status === 200) {
                     message.success("Delete Ok!")
                     setIsDelete(!isDelete)
-                    dispatch(staffActions.reload())
+                    setUpdateData({ ...updateData, staffServices: updateData.staffServices?.filter((services: any) => services.id !== id) })
+                    //dispatch(staffActions.reload())
                 } else {
                     message.error("Delete fail")
                 }
             })
             .catch(err => console.log("err", err)
             )
+
+
     }
 
 
@@ -100,13 +120,22 @@ export default function EditStaff(props: any) {
             serviceId: Number(selectedServiceId),
             staffId: Number(updateData?.id),
         };
+
+
+
         api.staffApi.createStaffService(serviceData)
             .then((res) => {
-                console.log("davao");
+                // console.log("davao");
                 console.log(" res:", res)
                 if (res.status == 200) {
+                    const dataFilterService = serviceStore.data?.filter((service) => Number(service.id) === Number(selectedServiceId))
+                    const newDataService = [...updateData?.staffServices]
+                    if (dataFilterService && dataFilterService?.length > 0) {
+                        newDataService.push({ IsDelete: false, id: res?.data?.data?.id, service: dataFilterService[0], serviceId: dataFilterService[0]?.id, staffId: updateData?.id })
+                        setUpdateData({ ...updateData, staffServices: newDataService })
+                        console.log("newcvf", newDataService);
+                    }
                     message.success("Create Service Successful");
-                    dispatch(staffActions.reload());
                 } else {
                     message.error("Create Service fail");
                 }
@@ -127,6 +156,7 @@ export default function EditStaff(props: any) {
                             <input accept="image/*" type="file" name='imgs'
                                 onChange={(event: any) => {
                                     if (event.target.files.length === 0) {
+                                        message.error("No image selected yet!")
                                         console.log('Chưa chọn hình!');
                                     } else {
                                         setPicture(event.target.files[0])
@@ -163,7 +193,15 @@ export default function EditStaff(props: any) {
                             <label>Description: </label>
                             <input type="text" name='desc' defaultValue={updateData?.desc} /><br />
                             <div className='button'>
-                                <button type="submit" className="btn btn-success">Save</button>
+                                {
+                                    load && <Loading />
+                                }
+                                <button type="submit" className={`${load && ' active'} btn btn-success btn_submit`}>
+                                    Save
+                                    <div className='btn_loadingg'>
+                                        <Spin indicator={antIcon} />
+                                    </div>
+                                </button>
                                 <button onClick={() => {
                                     props.setModal(false)
                                 }} type="button" className="btn btn-secondary">Cancle</button>
@@ -181,7 +219,7 @@ export default function EditStaff(props: any) {
                                     id="serviceDropdown"
                                     onChange={(e) => {
                                         console.log("dfdsgdg", e.target.value);
-                                        setSelectedServiceId(e.target.value)
+                                        setSelectedServiceId(e.target.value);
                                     }}
                                 >
                                     {serviceStore?.data?.map((service) => {

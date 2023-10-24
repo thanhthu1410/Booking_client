@@ -161,6 +161,27 @@ input:checked+.slider:before {
 
                     margin-top: 15px;
 
+                    .btn_submit {
+                        position: relative !important;
+
+                        .btn_loadingg {
+                            position: absolute;
+                            top: 50%;
+                            left: 50%;
+                            transform: translate(-50%, -50%);
+                            display: none;
+                        }
+
+                        &.active {
+                            background-color: rgba(rgb(4, 0, 0), 0.4) !important;
+                            opacity: 0.7 !important;
+
+                            .btn_loadingg {
+                                display: block;
+                            }
+                        }
+                    }
+
                 }
 
                 .button button {
@@ -247,6 +268,27 @@ input:checked+.slider:before {
             margin-bottom: 10px;
             padding: 10px;
         }
+
+        .btn_submit {
+            position: relative !important;
+
+            .btn_loading {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                display: none;
+            }
+
+            &.active {
+                background-color: rgba(rgb(4, 0, 0), 0.4) !important;
+                opacity: 0.7 !important;
+
+                .btn_loading {
+                    display: block;
+                }
+            }
+        }
     }
 
     .add_content input {
@@ -276,6 +318,27 @@ input:checked+.slider:before {
 
     .button_add_staff {
         margin-top: 100px;
+
+        .btn_submit {
+            position: relative !important;
+
+            .btn_loading {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                display: none;
+            }
+
+            &.active {
+                background-color: rgba(rgb(4, 0, 0), 0.4) !important;
+                opacity: 0.7 !important;
+
+                .btn_loading {
+                    display: block;
+                }
+            }
+        }
     }
 
     .button_add_staff button {

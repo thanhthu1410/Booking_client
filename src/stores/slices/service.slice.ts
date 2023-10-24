@@ -23,13 +23,6 @@ const initialState: ServicesState = {
 
 }
 
-// const initialState: {
-//     data: null | undefined | Services[]
-// } = {
-
-//      reLoad: false
-// };
-
 const serviceSlice = createSlice({
     name: "services",
     initialState,
@@ -37,7 +30,7 @@ const serviceSlice = createSlice({
         insertService: function (state, action) {
             state.data?.unshift(action.payload)
         },
-        reload: (state) => {
+        reload: function (state) {
             return {
                 ...state,
                 reLoad: !state.reLoad,
