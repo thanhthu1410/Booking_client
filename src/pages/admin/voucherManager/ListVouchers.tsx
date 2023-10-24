@@ -53,7 +53,7 @@ function ListVoucher() {
             .finally(() => {
                 setIsLoading(false); // Kết thúc loading
             });
-    }, [voucherStore.reLoad])
+    }, [])
 
     function changePage(pageItemObj: any) {
         api.voucherApi.findAllPagination(maxItemPage, pageItemObj.skip)
@@ -74,6 +74,7 @@ function ListVoucher() {
             })
     }
     function deleteVoucher(voucher: Voucher) {
+        
         const newData = {
             ...voucher,
             IsDelete: true
@@ -84,8 +85,25 @@ function ListVoucher() {
             onOk: () => {
                 api.voucherApi.update(newData)
                     .then(res => {
-                        message.success("Delete Voucher Successfull !");
-                        dispatch(voucherAction.setReLoad());
+                        if(res.status == 200){
+                            console.log("res",res);
+                        
+                            message.success("Delete Voucher Successfull !");
+                            
+                            const listVoucher = vouchers;
+                            console.log("voucher",vouchers);
+                            console.log("listVoucherAfterDelete",listVoucher);
+                            
+                            
+                            const newListVoucher = listVoucher.filter((item: Voucher) => 
+                                item.id !== voucher.id
+                            )
+                            console.log("newListVoucher",newListVoucher);
+                            
+                            setVouchers(newListVoucher)
+                            // dispatch(voucherAction.setReLoad());
+                        }
+                       
                     })
                     .catch(err => console.log("err", err)
                     )
@@ -229,7 +247,7 @@ function ListVoucher() {
 
 
                    }
-                   {modal ? <EditVoucher setModal={setModal} voucher={vocherState}></EditVoucher> : <></>}
+                   {modal ? <EditVoucher setModal={setModal} voucher={vocherState} vouchers={vouchers} setVouchers={setVouchers}></EditVoucher> : <></>}
                </tbody>
            </Table>}
             

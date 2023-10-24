@@ -4,11 +4,13 @@ import './editVoucher.scss'
 import { message } from 'antd';
 import api from '@/services/api';
 import { useDispatch } from 'react-redux';
-import { voucherAction } from '@/stores/slices/voucher.slice';
+import { Voucher, voucherAction } from '@/stores/slices/voucher.slice';
 
 interface Props {
     setModal: any
     voucher: any
+    vouchers: Voucher[]
+    setVouchers: any
 }
 export default function EditVoucher(props: Props) {
     const dispatch = useDispatch()
@@ -56,8 +58,27 @@ export default function EditVoucher(props: Props) {
             .then(res => {
                 if (res.status == 200) {
                     message.success("Update Voucher Successfull !");
-                    dispatch(voucherAction.setReLoad());
-                    props.setModal(false)
+                   
+                    const listVoucherAfterEdit = props.vouchers.map((item: Voucher) => {
+                        if(item.id === props.voucher.id){
+                            return {
+                                ...item, code: updateData.code,
+                                title: updateData.title,
+                                discountType: updateData.discountType,
+                                value: updateData.value,
+                                status: updateData.status
+                            };
+                            // return item 
+                        } else {
+                            return item;
+                        }
+                    })
+                    console.log("lisvoucherAfter",listVoucherAfterEdit);
+                    props.setVouchers(listVoucherAfterEdit);
+                    props.setModal(false);
+                    
+                    // dispatch(voucherAction.setReLoad());
+                  
                 }
             })
             .catch(err => console.log("err", err))
