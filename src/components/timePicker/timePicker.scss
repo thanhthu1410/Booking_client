@@ -1,0 +1,41 @@
+.timePicker_container {
+    width: 50%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    // height: 100px;
+    max-height: 350px;
+    overflow-y: scroll;
+    // border: 1px solid black;
+
+    .timePicker_time {
+        width: 20%;
+        border: 1px solid black;
+        border-radius: 10px;
+        height: 35px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .timePicker_time.activeTime {
+        background-color: #1677ff;
+        color: #fff;
+    }
+
+    .timePicker_time.notSelectable {
+        opacity: 0.2;
+        /* Thêm độ trong suốt để mờ đi */
+    }
+
+    .timePicker_time:hover::after {
+        content: "k";
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 12px;
+        color: #007bff;
+    }
+}
