@@ -1,5 +1,6 @@
 import Sidebar from "@/pages/admin/Admin";
 import Time from "@/pages/admin/Time";
+import ListAppointment from "@/pages/admin/appointmentManager/ListAppointment";
 import ListCustomer from "@/pages/admin/customerManager/ListCustomer";
 import AddService from "@/pages/admin/serviceManager/AddService";
 import ListService from "@/pages/admin/serviceManager/ListService";
@@ -17,8 +18,9 @@ export default
             <Route path='listCustomer' element={<ListCustomer />}></Route>
             <Route path='listStaff' element={<ListStaff />}></Route>
             <Route path='addStaff' element={<AddStaff />}></Route>
-            <Route path="voucher" element={<Voucher/>}></Route>
-            <Route path="listvoucher" element={<ListVouchers/>}></Route>
-            <Route path="setting" element={<Time/>}></Route>
+            <Route path="voucher" element={<Voucher />}></Route>
+            <Route path="listvoucher" element={<ListVouchers />}></Route>
+            <Route path="setting" element={<Time />}></Route>
+            <Route path="appointment" element={<ListAppointment />}></Route>
         </Route>
     </Route>
