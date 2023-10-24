@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,700;1,100;1,300;1,400;1,500;1,700&display=swap');
+
+.List_appointment_container {
+    color: black;
+    font-family: 'Roboto', sans-serif;
+
+    table {
+        font-family: 'Roboto', sans-serif;
+        margin-top: 20px;
+
+        td,
+        th {
+            border: 1px solid #898989;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        th {
+            padding: 20px;
+        }
+
+        tbody {
+            .appointment {
+                height: 50px;
+                width: 300px;
+
+                p {
+                    margin-bottom: 0;
+                    font-family: 'Roboto', sans-serif;
+                    text-align: left;
+                }
+
+                .appointment__detail {
+                    background-color: #dcc7ff;
+                    height: 100px;
+                    overflow-y: scroll;
+                    cursor: pointer;
+
+                    .customer__name {
+                        font-weight: bold;
+                    }
+                }
+
+                .appointment__detail.accepted {
+                    background-color: #7aefa6;
+                }
+            }
+        }
+    }
+}

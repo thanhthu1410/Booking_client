@@ -14,9 +14,10 @@ export default function RouteSetup() {
                     <Route index element={<Layout />}></Route>
                     <Route path="/booking" element={Lazy(() => import("@pages/booking/Booking"))()}></Route>
                     <Route path="/service" element={Lazy(() => import("@pages/services/Service"))()}></Route>
-                  
+
                 </Route>
-                <Route path="/login" element={<Login/>}></Route>
+                <Route path="/login" element={<Login />}></Route>
+                <Route path="/thanks" element={Lazy(() => import("@/pages/thanks/Thanks"))()}></Route>
                 {RouteAdmin}
             </Routes>
         </BrowserRouter>

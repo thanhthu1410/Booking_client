@@ -7,6 +7,8 @@ import { voucherAction } from "./stores/slices/voucher.slice";
 import { StoreType } from "./stores";
 import { serviceActions } from "./stores/slices/service.slice";
 import { staffActions } from "./stores/slices/staff.slice";
+import { Socket, io } from "socket.io-client";
+import { appointmentActions } from "./stores/slices/appointment.slice";
 
 function App() {
   const store = useSelector((store: StoreType) => store)
@@ -44,14 +46,36 @@ function App() {
     api.staffApi.findAllStaff()
       .then(res => {
         if (res.status == 200) {
-          // console.log("serviceList", res.data.data);
           dispatch(staffActions.setDataStaff(res.data.data))
 
         }
       })
   }, [store.staffStore.reLoad])
 
+  useEffect(() => {
+    let socket: Socket = io("http://localhost:3003")
+    socket.on("connectStatus", (data: { status: boolean, message: string }) => {
+      if (data.status) {
+        console.log(data.message)
+      } else {
+        console.log(data.message)
+      }
+    })
 
+    socket.on("listAppointments", (listAppointments) => {
+      try {
+        console.log("listAppointments", listAppointments)
+        dispatch(appointmentActions.setData(listAppointments));
+      } catch (error) {
+        console.error("Error updating appointment store:", error);
+      }
+    });
+
+    socket.on("bookingFail", (data) => {
+      console.log("data", data);
+    });
+
+  }, [])
 
 
   return (

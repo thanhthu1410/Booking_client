@@ -1,0 +1,50 @@
+.appointmentDetail__container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: rgba(black, 0.7);
+    width: 100vw;
+    height: 100vh;
+    z-index: 1001;
+
+    .appointmentDetail__content {
+        width: 400px;
+        background-color: white;
+        border-radius: 10px;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 1002;
+        height: 360px;
+        text-align: center;
+
+        .appointmentDetail__header {
+            width: 100%;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: flex-end;
+            border-bottom: 1px solid black;
+            margin-bottom: 10px;
+
+            button {
+                display: flex;
+                align-items: center;
+                border: none;
+            }
+        }
+
+        .appointmentDetail__footer {
+            border-top: 1px solid black;
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 10px;
+            padding-right: 10px;
+            padding-top: 10px;
+
+            .close__button {
+                margin-right: 10px;
+            }
+        }
+    }
+}

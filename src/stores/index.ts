@@ -3,13 +3,15 @@ import { timeReducer } from './slices/time.slice';
 import { serviceReducer } from './slices/service.slice';
 import { voucherReducer } from './slices/voucher.slice';
 import { staffReducer } from './slices/staff.slice';
+import { appointmentReducer } from './slices/appointment.slice';
 
 // Kết hợp reducer
 const rootReducer = combineReducers({
     timeStore: timeReducer,
     serviceStore: serviceReducer,
     voucherStore: voucherReducer,
-    staffStore: staffReducer
+    staffStore: staffReducer,
+    appointmentStore: appointmentReducer,
 });
 
 // Xuất ra store type
