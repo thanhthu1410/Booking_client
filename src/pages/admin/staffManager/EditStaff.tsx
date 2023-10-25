@@ -3,7 +3,7 @@ import './staff.scss'
 import { useRef, useState } from 'react'
 import api from '@/services/api';
 import { Modal, Spin, message } from 'antd';
-import { staffActions } from '@/stores/slices/staff.slice';
+import { StaffState, staffActions } from '@/stores/slices/staff.slice';
 import { StoreType } from '@/stores';
 import { LoadingOutlined } from '@ant-design/icons';
 import Loading from '@/pages/component/Loading';
@@ -22,13 +22,15 @@ export default function EditStaff(props: any) {
     );
     const dispatch = useDispatch()
     const [updateData, setUpdateData] = useState(props.staff);
-    console.log(" updateData:", updateData)
     const [picture, setPicture] = useState<File | null>(null);
     const [isDelete, setIsDelete] = useState(false);
     const urlPreviewRef = useRef<HTMLImageElement>(null);
     const [isSwitchOn, setIsSwitchOn] = useState(updateData?.status || false);
     const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
-    console.log("selectedServiceId", selectedServiceId);
+
+    const serviceStore = useSelector((store: StoreType) => {
+        return store.serviceStore
+    })
 
     async function updateStaff(eventForm: any) {
         if ((eventForm.target as any).desc.value == "") {
@@ -50,11 +52,10 @@ export default function EditStaff(props: any) {
             desc: eventForm.target.desc.value,
             status: isSwitchOn,
         };
-        console.log("updateInfor :", updateInfor)
         let formData = new FormData();
         formData?.append('staff', JSON.stringify(updateInfor));
         formData?.append('avatar', picture!)
-        // setLoad(true)
+        setLoad(true)
         api.staffApi.update(updateData?.id, formData)
             .then((res) => {
                 if (res.status == 200) {
@@ -63,7 +64,7 @@ export default function EditStaff(props: any) {
                     setUpdateData(updateInfor)
                     setIsSwitchOn(updateInfor.status);
                     dispatch(staffActions.reload());
-                    //setLoad(false)
+                    setLoad(false)
                 } else {
                     props.setModal(false);
                     Modal.error({
@@ -76,9 +77,6 @@ export default function EditStaff(props: any) {
 
             })
     }
-
-
-
     function handleDeleteStaffService(id: any) {
         api.staffApi.deleteStaffService(id)
             .then(res => {
@@ -93,23 +91,7 @@ export default function EditStaff(props: any) {
             })
             .catch(err => console.log("err", err)
             )
-
-
     }
-
-
-    const serviceStore = useSelector((store: StoreType) => {
-        return store.serviceStore
-    })
-    // console.log("🚀 serviceStore ~ serviceStore:", serviceStore.data)
-
-    const staffStore = useSelector((store: StoreType) => {
-        return store.staffStore
-    })
-    // console.log("staffStore ~ staffStore:", staffStore.data)
-
-
-
 
     const handleAddService = (e: any) => {
         e.preventDefault();
@@ -123,16 +105,12 @@ export default function EditStaff(props: any) {
         };
         api.staffApi.createStaffService(serviceData)
             .then((res) => {
-                // console.log("davao");
-                console.log(" res:", res)
                 if (res.status == 200) {
                     const dataFilterService = serviceStore.data?.filter((service) => Number(service.id) === Number(selectedServiceId))
                     const newDataService = [...updateData?.staffServices]
                     if (dataFilterService && dataFilterService?.length > 0) {
                         newDataService.push({ id: res?.data?.data?.id, service: dataFilterService[0], serviceId: dataFilterService[0]?.id, staffId: updateData?.id })
                         setUpdateData({ ...updateData, staffServices: newDataService })
-                        //console.log("newcvf", newDataService);
-
                     }
                     message.success("Create Service Successful");
                 } else {
@@ -232,14 +210,15 @@ export default function EditStaff(props: any) {
                                     {/* <option >Chossed All Service... </option> */}
                                     {updateData?.staffServices.length == serviceStore?.data?.length && <option>Chossed All Service... </option>}
                                     {serviceStore?.data?.map((service) => {
-                                        const isServiceAdded = updateData?.staffServices?.some((item: any) => item.service.id === service.id);
+                                        const isServiceAdded = updateData?.staffServices?.some((item: any) => item?.service?.id === service?.id);
                                         if (!isServiceAdded) {
                                             return (
                                                 <option
-                                                    key={service.id} value={service.id} >{service.name}
+                                                    key={service?.id} value={service?.id} >{service?.name}
                                                 </option>
                                             );
                                         }
+
                                         return null;
                                     })}
                                 </select>
@@ -262,13 +241,15 @@ export default function EditStaff(props: any) {
                                 </thead>
                                 <tbody>
                                     {updateData?.staffServices?.map((item: any) => {
-                                        const serviceInData = serviceStore?.data?.find((service) => service.id === item.service.id);
+                                        console.log("item.service.id", item);
+
+                                        const serviceInData = serviceStore?.data?.find((service) => service?.id == item?.service?.id);
                                         // Chỉ hiển thị nếu dịch vụ có trong serviceStore?.data?
                                         if (serviceInData) {
                                             return (
                                                 <tr key={item.id} >
                                                     <td><img style={{ width: "50px", height: "50px", }} src={item?.service?.avatar} alt="" /></td>
-                                                    <td><p>{item.service.name}</p></td>
+                                                    <td><p>{item?.service?.name}</p></td>
                                                     <td><i onClick={(e) => {
                                                         setIsDelete(!isDelete);
                                                         e.preventDefault();

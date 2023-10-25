@@ -44,7 +44,7 @@ function App() {
   }, [store.serviceStore.reLoad])
 
   useEffect(() => {
-    api.staffApi.findAllStaff()
+    api.staffApi.searchStaff('')
       .then(res => {
         if (res.status == 200) {
           dispatch(staffActions.setDataStaff(res.data.data))

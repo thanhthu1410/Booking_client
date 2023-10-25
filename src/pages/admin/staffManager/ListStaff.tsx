@@ -10,101 +10,51 @@ import { Staff, staffActions } from '@/stores/slices/staff.slice'
 import { StoreType } from '@/stores'
 
 export default function ListStaff() {
-
     const dispatch = useDispatch()
     const navigate = useNavigate()
     const [modal, setModal] = useState(false)
     const [isDelete, setIsDelete] = useState(false);
     const [updateData, setUpdateData] = useState([])
-
-    const [selectedPage, setSelectedPage] = useState(null);
-    const [maxItemPage, setMaxItemPage] = useState(2);
-    const [skipItem, setSkipItem] = useState(0);
-    const [maxPage, setMaxPage] = useState<any[]>([]);
     const [searchStatus, setSearchStatus] = useState(false);
-    const [searchData, setSearchData] = useState<Staff[]>([]);
-    const [loading, setLoading] = useState(false);
-
+    const [searchData, setSearchData] = useState<string>('');
+    const staffStore = useSelector((store: StoreType) => {
+        return store.staffStore
+    })
     let timeOut: any;
-    function search(e: any) {
-
-        if (e.target.value == "") {
-            setSearchData([])
-            return;
-        };
+    function search(value: string) {
         timeOut = setTimeout(async () => {
             setSearchStatus(true)
             try {
                 if (searchStatus) {
                     return
                 }
-                let result = await api.staffApi.searchStaff(e.target.value);
+                let result = await api.staffApi.searchStaff(value);
                 if (result.status == 200) {
                     // sau 1.5s set lai data & tat loading
                     setTimeout(() => {
                         setSearchStatus(false);
-                        setSearchData(result.data.data);
+                        dispatch(staffActions.setDataStaff(result.data.data));
                     }, 1500)
-                    console.log("setSeardata", searchData);
+
                 }
                 else {
                     setSearchStatus(false);
                 }
             } catch (err) {
                 console.log("err:", err)
-                console.log("loi call api search");
-
             }
         }, 500)
 
     }
+    useEffect(() => {
+        search(searchData)
+    }, [searchData])
 
-
-    // useEffect(() => {
-    //     api.staffApi.findAll(maxItemPage, skipItem)
-    //         .then(res => {
-    //             if (res.status == 200) {
-    //                 let maxPageArr: any[] = [];
-    //                 for (let i = 0; i < res.data.maxPage; i++) {
-    //                     maxPageArr.push({
-    //                         number: Number(i) + 1,
-    //                         skip: res.data.data.length * Number(i)
-    //                     })
-    //                 }
-    //                 setMaxPage(maxPageArr);
-    //                 setSkipItem(res.data.data.length)
-    //                 //setServices(res.data.data)
-    //                 dispatch(serviceActions.reload());
-    //             }
-    //         })
-    //         .catch(err => {
-    //             console.log("err", err);
-
-    //         })
-    // }, [])
-
-
-    // function changePage(pageItemObj: any) {
-    //     api.staffApi.findAll(maxItemPage, pageItemObj.skip)
-    //         .then(res => {
-    //             if (res.status == 200) {
-    //                 console.log("res.data", res.data)
-    //                 let maxPageArr: any[] = [];
-    //                 for (let i = 0; i < res.data.maxPage; i++) {
-    //                     maxPageArr.push({
-    //                         number: Number(i) + 1,
-    //                         skip: res.data.data.length * Number(i)
-    //                     })
-    //                 }
-    //                 setMaxPage(maxPageArr);
-    //                 setSkipItem(res.data.data.length)
-    //                 //setServices(res.data.data)
-    //                 setSelectedPage(pageItemObj.number);
-    //                 dispatch(serviceActions.reload());
-
-    //             }
-    //         })
-    // }
+    useEffect(() => {
+        return () => {
+            search('')
+        };
+    }, [])
 
     const handleDelete = (id: any) => {
         Modal.confirm({
@@ -115,7 +65,9 @@ export default function ListStaff() {
                     .then(res => {
                         console.log("delete", isDelete);
                         setIsDelete(!isDelete)
-                        dispatch(staffActions.reload())
+                        // setSearchData(id)
+                        search(searchData)
+                        // dispatch(staffActions.reload())
                     })
                     .catch(err => console.log("err", err)
                     )
@@ -124,20 +76,8 @@ export default function ListStaff() {
     };
 
 
-
-    const staffStore = useSelector((store: StoreType) => {
-        return store.staffStore
-    })
-    //console.log("staffStore:", staffStore?.data)
-
-    useEffect(() => {
-        if (staffStore && staffStore.data !== null) {
-            console.log('staffStore:', staffStore.data);
-        }
-    }, [staffStore?.data])
-
     return (
-        <div>
+        <div className='staff_container'>
             {modal ? (
                 <EditStaff
                     setModal={setModal} staff={updateData}
@@ -152,7 +92,7 @@ export default function ListStaff() {
             <div className='voucher_search_container'>
                 <input type="text" placeholder='Enter Staff...' onChange={(e) => {
                     e.preventDefault()
-                    search(e);
+                    setSearchData(e.target.value)
                 }} />
                 <i className="fa-solid search_icon fa-magnifying-glass"></i>
             </div>
@@ -172,72 +112,33 @@ export default function ListStaff() {
                         </tr>
                     </thead>
                     <tbody>
-                        {searchData.length > 0 ? (
-                            searchData?.map((item: any, index) => (
-                                <tr key={Date.now() * Math.random()}>
-                                    <th scope="row">{index + 1}</th>
-                                    <td><img className='img' src={item.avatar} alt="" /></td>
-                                    <td>{item.name}</td>
-                                    <td>{item.birthDay}</td>
-                                    <td>{item.phoneNumber}</td>
-                                    <td>{item.experience}</td>
-                                    <td>{item.desc}</td>
-                                    {/* <td >{item.updatedAt}</td>
-                                    <td>{item.createdAt}</td> */}
-                                    <td>
-                                        <label className="switch">
-                                            <input type="checkbox" defaultChecked={item.status} />
-                                            <span className="slider round"></span>
-                                        </label>
-                                    </td>
-                                    <td className='action'>
-                                        <button onClick={() => {
-                                            setModal(true)
-                                            setUpdateData(item)
-                                        }} type="button" className="btn btn-success">Edit</button>
-                                        <button onClick={(e: any) => {
-                                            e.preventDefault()
-                                            handleDelete(item.id)
-                                        }} type="button" className="btn btn-danger">Delete</button>
-                                    </td>
-                                </tr>
-                            ))
-                        ) : (
-                            <>
-                                {staffStore?.data?.map((staff: any, index) => (
-                                    <tr key={Date.now() * Math.random()}>
-                                        <th scope="row">{index + 1}</th>
-                                        <td><img className='img' src={staff.avatar} alt="" /></td>
-
-                                        <td>{staff.name}</td>
-                                        <td>{staff.birthDay}</td>
-                                        <td>{staff.phoneNumber}</td>
-                                        <td>{staff.experience}</td>
-                                        <td>{staff.desc}</td>
-                                        {/* <td >{staff.updatedAt}</td>
-                                        <td>{staff.createdAt}</td> */}
-                                        <td>
-                                            <label className="switch">
-                                                <input type="checkbox" defaultChecked={staff.status} />
-                                                <span className="slider round"></span>
-                                            </label>
-                                        </td>
-                                        <td className='action'>
-                                            <button onClick={() => {
-                                                setModal(true)
-                                                setUpdateData(staff)
-                                            }} type="button" className="btn btn-success">Edit</button>
-                                            <button onClick={(e: any) => {
-                                                e.preventDefault()
-                                                handleDelete(staff.id)
-                                            }} type="button" className="btn btn-danger">Delete</button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </>
-                        )}
-
-
+                        {staffStore?.data?.map((staff: any, index) => (
+                            <tr key={Date.now() * Math.random()}>
+                                <th className='render_service_item' scope="row">{index + 1}</th>
+                                <td className='render_service_item'><img className='img' src={staff.avatar} alt="" /></td>
+                                <td className='render_service_item'>{staff.name}</td>
+                                <td className='render_service_item'>{staff.birthDay}</td>
+                                <td className='render_service_item'>{staff.phoneNumber}</td>
+                                <td className='render_service_item'>{staff.experience}</td>
+                                <td className='render_service_item desc'>{staff.desc}</td>
+                                <td className='render_service_item'>
+                                    <label className="switch">
+                                        <input type="checkbox" defaultChecked={staff.status} />
+                                        <span className="slider round"></span>
+                                    </label>
+                                </td>
+                                <td className='action'>
+                                    <button onClick={() => {
+                                        setModal(true)
+                                        setUpdateData(staff)
+                                    }} type="button" className="btn btn-success">Edit</button>
+                                    <button onClick={(e: any) => {
+                                        e.preventDefault()
+                                        handleDelete(staff.id)
+                                    }} type="button" className="btn btn-danger">Delete</button>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
                 {searchStatus ? (<div className="d-flex justify-content-center loading-wrapper">
@@ -245,27 +146,6 @@ export default function ListStaff() {
                         <span className="visually-hidden">Loading...</span>
                     </div>
                 </div>) : <></>}
-                {/* <nav aria-label="Page navigation example page_box  ">
-                    <ul className="pagination">
-                        <li className="page-item">
-                            <a className="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        {
-                            maxPage.map(item => {
-                                return (
-                                    <li key={Math.random() * Date.now()} className="page-item"><a className="page-link" href="#" onClick={() => changePage(item)}>{item.number}</a></li>
-                                )
-                            })
-                        }
-                        <li className="page-item">
-                            <a className="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav> */}
             </div>
         </div>
     )
