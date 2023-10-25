@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { timeAction } from '@/stores/slices/time.slice';
 import { message } from 'antd';
+import { Appointment } from '@/stores/slices/appointment.slice';
 
 interface TimePickerProps {
     startTime: string | undefined;
@@ -16,6 +17,9 @@ interface TimePickerProps {
 }
 
 export default function TimePicker({ startTime, endTime, minTime, timeBooking, setTimeBooking, stepMinute }: TimePickerProps) {
+    const apppointmentStore = useSelector((store: StoreType) => store.appointmentStore)
+    console.log("apointmentsotre",apppointmentStore);
+    
     const [activeTime, setActiveTime] = useState<string | null>(null);
 
     const generateTimes = (start: string, end: string) => {
@@ -51,12 +55,19 @@ export default function TimePicker({ startTime, endTime, minTime, timeBooking, s
             {times.map((time, index) => {
 
                 let isSelectable = false
-
                 if (time > currentDateTime) {
                     isSelectable = true
-                } else {
-
                 }
+                apppointmentStore.data?.map((appointment: Appointment) => {
+                    if(appointment.time == time && appointment.status == "ACCEPTED"){
+                        
+                        console.log("time",time);
+                        console.log("appointment.time",appointment.time == time);
+                        isSelectable = false;
+                      
+                    }
+                })
+              
 
                 return (
                     <div
@@ -64,7 +75,7 @@ export default function TimePicker({ startTime, endTime, minTime, timeBooking, s
                         className={`timePicker_time ${time === activeTime ? "activeTime" : ""} ${isSelectable ? "selectable" : "notSelectable"}`}
                         onClick={() => {
 
-                            if ((`${new Date(Date.now()).getHours()}:${new Date(Date.now()).getMinutes() + minTime!}  `) > time) {
+                            if (moment(new Date()).add(minTime, 'minutes').format('HH:mm') > time) {
                                 isSelectable = false;
                                 message.warning(`Đặt bàn tối thiểu trước ${minTime} minutes`)
                             }

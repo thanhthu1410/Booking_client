@@ -11,6 +11,8 @@ interface Props {
     voucher: any
     vouchers: Voucher[]
     setVouchers: any
+    setSearchData: any
+    searchData: Voucher[]
 }
 export default function EditVoucher(props: Props) {
     const dispatch = useDispatch()
@@ -58,26 +60,60 @@ export default function EditVoucher(props: Props) {
             .then(res => {
                 if (res.status == 200) {
                     message.success("Update Voucher Successfull !");
-                   
-                    const listVoucherAfterEdit = props.vouchers.map((item: Voucher) => {
-                        if(item.id === props.voucher.id){
-                            return {
-                                ...item, code: updateData.code,
-                                title: updateData.title,
-                                discountType: updateData.discountType,
-                                value: updateData.value,
-                                status: updateData.status
-                            };
-                            // return item 
-                        } else {
-                            return item;
-                        }
-                    })
-                    console.log("lisvoucherAfter",listVoucherAfterEdit);
-                    props.setVouchers(listVoucherAfterEdit);
-                    props.setModal(false);
-                    
-                    // dispatch(voucherAction.setReLoad());
+                    if(props.searchData.length > 0) {
+                        const listVoucherSearchAfterEdit = props.searchData.map((item: Voucher) => {
+                            if(item.id === props.voucher.id){
+                                return {
+                                    ...item, code: updateData.code,
+                                    title: updateData.title,
+                                    discountType: updateData.discountType,
+                                    value: updateData.value,
+                                    status: updateData.status
+                                };
+                                // return item 
+                            } else {
+                                return item;
+                            }
+                        })
+                        console.log("lisvoucherAfter",listVoucherSearchAfterEdit);
+                        props.setSearchData(listVoucherSearchAfterEdit);
+                        props.setModal(false);
+                        const listVoucherAfterEdit = props.vouchers.map((item: Voucher) => {
+                            if(item.id === props.voucher.id){
+                                return {
+                                    ...item, code: updateData.code,
+                                    title: updateData.title,
+                                    discountType: updateData.discountType,
+                                    value: updateData.value,
+                                    status: updateData.status
+                                };
+                                // return item 
+                            } else {
+                                return item;
+                            }
+                        })
+                        console.log("lisvoucherAfter",listVoucherAfterEdit);
+                        props.setVouchers(listVoucherAfterEdit);
+                        props.setModal(false);
+                    }else{
+                        const listVoucherAfterEdit = props.vouchers.map((item: Voucher) => {
+                            if(item.id === props.voucher.id){
+                                return {
+                                    ...item, code: updateData.code,
+                                    title: updateData.title,
+                                    discountType: updateData.discountType,
+                                    value: updateData.value,
+                                    status: updateData.status
+                                };
+                                // return item 
+                            } else {
+                                return item;
+                            }
+                        })
+                        console.log("lisvoucherAfter",listVoucherAfterEdit);
+                        props.setVouchers(listVoucherAfterEdit);
+                        props.setModal(false);
+                    }
                   
                 }
             })

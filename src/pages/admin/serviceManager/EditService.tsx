@@ -19,6 +19,7 @@ export default function EditService(props: any) {
     const urlPreviewRef = useRef<HTMLImageElement>(null);
     //console.log("urlPreviewRef:", urlPreviewRef)
 
+    
     async function updateService(eventForm: any) {
         eventForm.preventDefault();
         console.log("thu nekk");

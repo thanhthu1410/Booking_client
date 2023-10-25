@@ -17,7 +17,7 @@ export default function RouteSetup() {
 
                 </Route>
                 <Route path="/login" element={<Login />}></Route>
-                <Route path="/thanks" element={Lazy(() => import("@/pages/thanks/Thanks"))()}></Route>
+                <Route path="/thanks/:id" element={Lazy(() => import("@/pages/thanks/Thanks"))()}></Route>
                 {RouteAdmin}
             </Routes>
         </BrowserRouter>
