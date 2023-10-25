@@ -28,7 +28,7 @@ function ListVoucher() {
     const navigate = useNavigate();
     function currencyFormat(num: number) {
         return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-     }
+    }
     useEffect(() => {
         setIsLoading(true);
         api.voucherApi.findAllPagination(maxItemPage, skipItem)
@@ -74,7 +74,7 @@ function ListVoucher() {
             })
     }
     function deleteVoucher(voucher: Voucher) {
-        
+
         const newData = {
             ...voucher,
             IsDelete: true
@@ -85,25 +85,27 @@ function ListVoucher() {
             onOk: () => {
                 api.voucherApi.update(newData)
                     .then(res => {
-                        if(res.status == 200){
-                            console.log("res",res);
-                        
+                        if (res.status == 200) {
                             message.success("Delete Voucher Successfull !");
-                            
                             const listVoucher = vouchers;
-                            console.log("voucher",vouchers);
-                            console.log("listVoucherAfterDelete",listVoucher);
-                            
-                            
-                            const newListVoucher = listVoucher.filter((item: Voucher) => 
-                                item.id !== voucher.id
-                            )
-                            console.log("newListVoucher",newListVoucher);
-                            
-                            setVouchers(newListVoucher)
-                            // dispatch(voucherAction.setReLoad());
+                            if (searchData.length > 0) {
+                                const listVoucherAfterDel = [...searchData]
+                                const newListVoucher = listVoucher.filter((item: Voucher) =>
+                                    item.id !== voucher.id
+                                )
+                                setVouchers(newListVoucher)
+                                const newListVoucherSearch = listVoucherAfterDel.filter((item: Voucher) =>
+                                    item.id !== voucher.id
+                                )
+                                setSearchData(newListVoucherSearch);
+                            } else {
+                                const newListVoucher = listVoucher.filter((item: Voucher) =>
+                                    item.id !== voucher.id
+                                )
+                                setVouchers(newListVoucher)
+                            }
                         }
-                       
+
                     })
                     .catch(err => console.log("err", err)
                     )
@@ -132,8 +134,6 @@ function ListVoucher() {
                     setTimeout(() => {
                         setSearchStatus(false);
                         setSearchData(result.data.data);
-                        console.log("searchdata", searchData);
-
                     }, 1500)
 
                 } else {
@@ -157,100 +157,100 @@ function ListVoucher() {
                 <input type="text" placeholder='Enter Voucher Code... ' onChange={(e: any) => searchVoucher(e)} />
                 <i className="fa-solid search_icon fa-magnifying-glass"></i>
             </div>
-            {searchStatus ?  <div className="d-flex justify-content-center loading-wrapper">
-              <div className="spinner-border" role="status">
-                <span className="visually-hidden">Loading...</span>
-              </div>
+            {searchStatus ? <div className="d-flex justify-content-center loading-wrapper">
+                <div className="spinner-border" role="status">
+                    <span className="visually-hidden">Loading...</span>
+                </div>
             </div> : <Table striped>
-               
-               <thead>
-                   <tr>
-                       <th>No</th>
-                       <th>Code</th>
-                       <th>Title</th>
-                       <th>Discount Type</th>
-                       <th>Value</th>
-                       <th>Status</th>
-                       <th>Start Time</th>
-                       <th>End Time</th>
-                       <th>Action</th>
-                   </tr>
-               </thead>
-               <tbody className='content_listvoucher'>
-                   {
-                       searchData?.length  > 0 ?
-                           searchData.map((voucher: Voucher, index: number) => <tr key={Math.random() * Date.now()}>
-                               <td>{index + 1}</td>
-                               <td>{voucher.code}</td>
-                               <td>{voucher.title}</td>
-                               <td>{voucher.discountType}</td>
-                               <td>{voucher.value}</td>
 
-                               <td>{voucher.status ?
+                <thead>
+                    <tr>
+                        <th>No</th>
+                        <th>Code</th>
+                        <th>Title</th>
+                        <th>Discount Type</th>
+                        <th>Value</th>
+                        <th>Status</th>
+                        <th>Start Time</th>
+                        <th>End Time</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody className='content_listvoucher'>
+                    {
+                        searchData?.length > 0 ?
+                            searchData.map((voucher: Voucher, index: number) => <tr key={Math.random() * Date.now()}>
+                                <td>{index + 1}</td>
+                                <td>{voucher.code}</td>
+                                <td>{voucher.title}</td>
+                                <td>{voucher.discountType}</td>
+                                <td>{voucher.value}</td>
 
-                                   <label className="switch">
-                                       <input type="checkbox" name='active' checked />
-                                       <span className="slider round"></span>
-                                   </label>
+                                <td>{voucher.status ?
 
-                                   :
-                                   <label className="switch">
-                                       <input type="checkbox" name='active' />
-                                       <span className="slider round"></span>
-                                   </label>
-                               }</td>
-                               <td>{moment(new Date(Number(voucher.startAt))).format('DD/MM/YYYY')}</td>
-                               <td>{moment(new Date(Number(voucher.endAt))).format('DD/MM/YYYY')}</td>
-                               <td className='action'>
-                                   <i className="fa-solid fa-trash" onClick={() => deleteVoucher(voucher)}></i>
-                                   <i onClick={() => {
-                                       setModal(true)
-                                       setVoucherState(voucher)
-                                   }} className="fa-solid fa-pen">
+                                    <label className="switch">
+                                        <input type="checkbox" name='active' checked />
+                                        <span className="slider round"></span>
+                                    </label>
 
-                                   </i>
-                               </td>
-                           </tr>)
-                           : vouchers.map((voucher: Voucher, index: number) => <tr key={Math.random() * Date.now()}>
-                               <td>{index + 1}</td>
-                               <td>{voucher.code}</td>
-                               <td>{voucher.title}</td>
-                               <td>{voucher.discountType}</td>
-                               <td>{voucher.discountType == "percent" ? `${voucher.value}%` : currencyFormat(voucher.value)}</td>
+                                    :
+                                    <label className="switch">
+                                        <input type="checkbox" name='active' />
+                                        <span className="slider round"></span>
+                                    </label>
+                                }</td>
+                                <td>{moment(new Date(Number(voucher.startAt))).format('DD/MM/YYYY')}</td>
+                                <td>{moment(new Date(Number(voucher.endAt))).format('DD/MM/YYYY')}</td>
+                                <td className='action'>
+                                    <i className="fa-solid fa-trash" onClick={() => deleteVoucher(voucher)}></i>
+                                    <i onClick={() => {
+                                        setModal(true)
+                                        setVoucherState(voucher)
+                                    }} className="fa-solid fa-pen">
 
-                               <td>{voucher.status ?
+                                    </i>
+                                </td>
+                            </tr>)
+                            : vouchers.map((voucher: Voucher, index: number) => <tr key={Math.random() * Date.now()}>
+                                <td>{index + 1}</td>
+                                <td>{voucher.code}</td>
+                                <td>{voucher.title}</td>
+                                <td>{voucher.discountType}</td>
+                                <td>{voucher.discountType == "percent" ? `${voucher.value}%` : currencyFormat(voucher.value)}</td>
 
-                                   <label className="switch">
-                                       <input type="checkbox" name='active' checked />
-                                       <span className="slider round"></span>
-                                   </label>
+                                <td>{voucher.status ?
 
-                                   :
-                                   <label className="switch">
-                                       <input type="checkbox" name='active' />
-                                       <span className="slider round"></span>
-                                   </label>
-                               }</td>
-                               <td>{moment(new Date(Number(voucher.startAt))).format('DD/MM/YYYY')}</td>
-                               <td>{moment(new Date(Number(voucher.endAt))).format('DD/MM/YYYY')}</td>
-                               <td className='action'>
-                                   <i className="fa-solid fa-trash" onClick={() => deleteVoucher(voucher)}></i>
-                                   <i onClick={() => {
-                                       setModal(true)
-                                       setVoucherState(voucher)
-                                   }} className="fa-solid fa-pen">
+                                    <label className="switch">
+                                        <input type="checkbox" name='active' checked />
+                                        <span className="slider round"></span>
+                                    </label>
 
-                                   </i>
-                               </td>
-                           </tr>)
+                                    :
+                                    <label className="switch">
+                                        <input type="checkbox" name='active' />
+                                        <span className="slider round"></span>
+                                    </label>
+                                }</td>
+                                <td>{moment(new Date(Number(voucher.startAt))).format('DD/MM/YYYY')}</td>
+                                <td>{moment(new Date(Number(voucher.endAt))).format('DD/MM/YYYY')}</td>
+                                <td className='action'>
+                                    <i className="fa-solid fa-trash" onClick={() => deleteVoucher(voucher)}></i>
+                                    <i onClick={() => {
+                                        setModal(true)
+                                        setVoucherState(voucher)
+                                    }} className="fa-solid fa-pen">
+
+                                    </i>
+                                </td>
+                            </tr>)
 
 
 
-                   }
-                   {modal ? <EditVoucher setModal={setModal} voucher={vocherState} vouchers={vouchers} setVouchers={setVouchers}></EditVoucher> : <></>}
-               </tbody>
-           </Table>}
-            
+                    }
+                    {modal ? <EditVoucher setModal={setModal} voucher={vocherState} vouchers={vouchers} setVouchers={setVouchers}></EditVoucher> : <></>}
+                </tbody>
+            </Table>}
+
             <nav aria-label="Page navigation example page_box">
                 <ul className="pagination">
                     <li className="page-item">

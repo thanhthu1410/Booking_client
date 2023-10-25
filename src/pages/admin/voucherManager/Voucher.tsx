@@ -5,13 +5,15 @@ import { useDispatch } from "react-redux";
 import { voucherAction } from "@/stores/slices/voucher.slice";
 import DateTimeVoucher from "@/pages/bookings/Booking";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 interface VoucherTime {
   start: string
   end: string
 }
 export default function Voucher() {
-  const dispatch = useDispatch()
-  const [voucherTime, setVoucherTime] = useState<VoucherTime>()
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [voucherTime, setVoucherTime] = useState<VoucherTime>();
   console.log("voucherTime", voucherTime);
   let timeStart: string;
   let timeEnd: string;
@@ -74,8 +76,12 @@ export default function Voucher() {
   }
   return (
     <div className="voucher_container">
+        <div className='admin_title'>
+                <h3 onClick={() => navigate("/admin/service")} className='title_1'>Admin / </h3>
+                <h3>Add Vouchers</h3>
+            </div>
       <div className="add_voucher_container">
-        <h4><i className="fa-solid fa-plus"></i> Add Voucher :</h4>
+    
         <label htmlFor=""> Expiry Date : </label>
         <DateTimeVoucher setVoucherTime={setVoucherTime} />
         <form onSubmit={(e: any) => {
