@@ -34,6 +34,7 @@
                     height: 100px;
                     overflow-y: scroll;
                     cursor: pointer;
+                    padding-left: 20px;
 
                     .customer__name {
                         font-weight: bold;
@@ -42,6 +43,14 @@
 
                 .appointment__detail.accepted {
                     background-color: #7aefa6;
+                }
+
+                .appointment__detail.rejected {
+                    background-color: #f6d6d6;
+                }
+
+                .appointment__detail.done {
+                    background-color: #ffffb3;
                 }
             }
         }

@@ -45,6 +45,18 @@
             .close__button {
                 margin-right: 10px;
             }
+
+            .save__button {
+                background-color: #1677ff;
+                color: #fff;
+                border: none;
+                padding: 0px 17px;
+                border-radius: 5px;
+            }
+
+            .save__button.done {
+                opacity: 0.3;
+            }
         }
     }
 }
