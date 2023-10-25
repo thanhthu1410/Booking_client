@@ -187,13 +187,13 @@ function ListVoucher() {
                                 <td>{voucher.status ?
 
                                     <label className="switch">
-                                        <input type="checkbox" name='active' checked />
+                                        <input type="checkbox" name='active' checked disabled />
                                         <span className="slider round"></span>
                                     </label>
 
                                     :
                                     <label className="switch">
-                                        <input type="checkbox" name='active' />
+                                        <input type="checkbox" name='active' disabled/>
                                         <span className="slider round"></span>
                                     </label>
                                 }</td>
@@ -219,13 +219,13 @@ function ListVoucher() {
                                 <td>{voucher.status ?
 
                                     <label className="switch">
-                                        <input type="checkbox" name='active' checked />
+                                        <input type="checkbox" name='active' checked disabled/>
                                         <span className="slider round"></span>
                                     </label>
 
                                     :
                                     <label className="switch">
-                                        <input type="checkbox" name='active' />
+                                        <input type="checkbox" name='active' disabled/>
                                         <span className="slider round"></span>
                                     </label>
                                 }</td>

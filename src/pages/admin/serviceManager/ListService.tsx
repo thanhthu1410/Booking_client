@@ -185,7 +185,7 @@ export default function ListService() {
                                     <td className='render_service_item desc'>{item.desc}</td>
                                     <td className='render_service_item'>
                                         <label className="switch">
-                                            <input type="checkbox" defaultChecked={item.status} />
+                                            <input type="checkbox" defaultChecked={item.status} disabled/>
                                             <span className="slider round"></span>
                                         </label>
                                     </td>
@@ -213,7 +213,7 @@ export default function ListService() {
                                         <td className='render_service_item desc'>{item.desc}</td>
                                         <td className='render_service_item'>
                                             <label className="switch">
-                                                <input type="checkbox" defaultChecked={item.status} />
+                                                <input type="checkbox" defaultChecked={item.status} disabled/>
                                                 <span className="slider round"></span>
                                             </label>
                                         </td>
