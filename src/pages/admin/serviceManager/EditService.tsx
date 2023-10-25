@@ -49,14 +49,10 @@ export default function EditService(props: any) {
             .update(updateData?.id, formData)
             .then((res) => {
                 if (res.status == 200) {
-                    console.log("DAVAO");
-                    console.log("res", res.data);
-
-
                     message.success(res.data.message);
                     props.setModal(false);
                     const updateListService = props.services.map((service: any) => {
-                        if (service.id === updateData.id) {
+                        if (service.id === updateData?.id) {
                             return {
                                 ...service,
                                 name: updateInfor.name,
@@ -70,8 +66,6 @@ export default function EditService(props: any) {
                         }
                     })
                     props.setServices(updateListService);
-                    // setIsSwitchOn(updateInfor.status);
-                    // dispatch(serviceActions.reload());
                 } else {
                     props.setModal(false);
                     Modal.error({
