@@ -27,6 +27,8 @@ export default function EditStaff(props: any) {
     const [isDelete, setIsDelete] = useState(false);
     const urlPreviewRef = useRef<HTMLImageElement>(null);
     const [isSwitchOn, setIsSwitchOn] = useState(updateData?.status || false);
+    const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
+    console.log("selectedServiceId", selectedServiceId);
 
     async function updateStaff(eventForm: any) {
         if ((eventForm.target as any).desc.value == "") {
@@ -52,7 +54,7 @@ export default function EditStaff(props: any) {
         let formData = new FormData();
         formData?.append('staff', JSON.stringify(updateInfor));
         formData?.append('avatar', picture!)
-        setLoad(true)
+        // setLoad(true)
         api.staffApi.update(updateData?.id, formData)
             .then((res) => {
                 if (res.status == 200) {
@@ -60,8 +62,8 @@ export default function EditStaff(props: any) {
                     props.setModal(false);
                     setUpdateData(updateInfor)
                     setIsSwitchOn(updateInfor.status);
-                    //dispatch(staffActions.reload());
-                    setLoad(false)
+                    dispatch(staffActions.reload());
+                    //setLoad(false)
                 } else {
                     props.setModal(false);
                     Modal.error({
@@ -107,8 +109,7 @@ export default function EditStaff(props: any) {
     // console.log("staffStore ~ staffStore:", staffStore.data)
 
 
-    const [selectedServiceId, setSelectedServiceId] = useState<string | null>(null);
-    console.log("selectedServiceId", selectedServiceId);
+
 
     const handleAddService = (e: any) => {
         e.preventDefault();
@@ -120,9 +121,6 @@ export default function EditStaff(props: any) {
             serviceId: Number(selectedServiceId),
             staffId: Number(updateData?.id),
         };
-
-
-
         api.staffApi.createStaffService(serviceData)
             .then((res) => {
                 // console.log("davao");
@@ -131,9 +129,10 @@ export default function EditStaff(props: any) {
                     const dataFilterService = serviceStore.data?.filter((service) => Number(service.id) === Number(selectedServiceId))
                     const newDataService = [...updateData?.staffServices]
                     if (dataFilterService && dataFilterService?.length > 0) {
-                        newDataService.push({ IsDelete: false, id: res?.data?.data?.id, service: dataFilterService[0], serviceId: dataFilterService[0]?.id, staffId: updateData?.id })
+                        newDataService.push({ id: res?.data?.data?.id, service: dataFilterService[0], serviceId: dataFilterService[0]?.id, staffId: updateData?.id })
                         setUpdateData({ ...updateData, staffServices: newDataService })
-                        console.log("newcvf", newDataService);
+                        //console.log("newcvf", newDataService);
+
                     }
                     message.success("Create Service Successful");
                 } else {
@@ -142,6 +141,10 @@ export default function EditStaff(props: any) {
             })
             .catch((err) => console.log("err", err));
     };
+
+    function selectOption(e: any) {
+        setSelectedServiceId(e.target.value);
+    }
     return (
         <div>
             <div className='container_editService'>
@@ -217,16 +220,24 @@ export default function EditStaff(props: any) {
                             <div>
                                 <select name="serviceId"
                                     id="serviceDropdown"
-                                    onChange={(e) => {
-                                        console.log("dfdsgdg", e.target.value);
-                                        setSelectedServiceId(e.target.value);
+
+                                    onChange={(e: any) => {
+                                        selectOption(e);
+                                    }}
+                                    onBlur={(e) => {
+                                        // Đảm bảo rằng selectedServiceId được cập nhật khi rời khỏi phần tử select
+                                        selectOption(e);
                                     }}
                                 >
+                                    {/* <option >Chossed All Service... </option> */}
+                                    {updateData?.staffServices.length == serviceStore?.data?.length && <option>Chossed All Service... </option>}
                                     {serviceStore?.data?.map((service) => {
-                                        const isServiceAdded = updateData?.staffServices?.some((item: any) => item.service.id == service.id);
+                                        const isServiceAdded = updateData?.staffServices?.some((item: any) => item.service.id === service.id);
                                         if (!isServiceAdded) {
                                             return (
-                                                <option key={service.id} value={service.id} >{service.name}</option>
+                                                <option
+                                                    key={service.id} value={service.id} >{service.name}
+                                                </option>
                                             );
                                         }
                                         return null;
@@ -251,7 +262,7 @@ export default function EditStaff(props: any) {
                                 </thead>
                                 <tbody>
                                     {updateData?.staffServices?.map((item: any) => {
-                                        const serviceInData = serviceStore?.data?.find((service) => service.id == item.service.id);
+                                        const serviceInData = serviceStore?.data?.find((service) => service.id === item.service.id);
                                         // Chỉ hiển thị nếu dịch vụ có trong serviceStore?.data?
                                         if (serviceInData) {
                                             return (

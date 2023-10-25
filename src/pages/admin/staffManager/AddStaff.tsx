@@ -28,7 +28,7 @@ export default function AddStaff() {
     const [selectedServices, setSelectedServices] = useState<number[]>([]);
 
     const onChange = (checkedValues: any) => {
-        console.log("Checked values:", checkedValues);
+        //console.log("Checked values:", checkedValues);
         setSelectedServices(checkedValues);
     };
     const serviceStore = useSelector((store: StoreType) => {
@@ -100,8 +100,6 @@ export default function AddStaff() {
                 ).value = "";
                 (imgPreviewRef.current! as HTMLImageElement).src = "https://content.gobsn.com/i/bodyandfit/no-xplode_Image_01?layer0=$PDP$";
                 setSelectedServices([]);
-                //console.log("res", res)
-                dispatch(staffActions.insertStaff(res.data));
                 message.success("Add Staff sucsses")
                 setLoad(false)
             })

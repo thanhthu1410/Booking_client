@@ -123,11 +123,18 @@ export default function ListStaff() {
         })
     };
 
+
+
     const staffStore = useSelector((store: StoreType) => {
         return store.staffStore
     })
-    console.log("staffStore:", staffStore.data)
+    //console.log("staffStore:", staffStore?.data)
 
+    useEffect(() => {
+        if (staffStore && staffStore.data !== null) {
+            console.log('staffStore:', staffStore.data);
+        }
+    }, [staffStore?.data])
 
     return (
         <div>
@@ -160,8 +167,6 @@ export default function ListStaff() {
                             <th scope="col">Phone</th>
                             <th scope="col">Experience</th>
                             <th scope="col">Description</th>
-                            <th scope="col">Update At</th>
-                            <th scope="col">Create At</th>
                             <th scope="col">Status</th>
                             <th scope="col">Actions</th>
                         </tr>
