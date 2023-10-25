@@ -42,7 +42,7 @@ export default function AddService() {
         }
         const priceValue = (e.target as any).price.value;
         if (!priceValue || !isNumber(priceValue)) {
-            message.warning("Please enter a valid numeric price for the service");
+            message.warning("Please check Price of Service - Enter number ");
             return;
         }
         console.log("da vao")

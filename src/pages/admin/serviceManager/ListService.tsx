@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 import api from '@/services/api'
 import { useDispatch, useSelector } from 'react-redux'
 import { Modal, message } from 'antd'
-import { Services, serviceActions } from '@/stores/slices/service.slice'
+import { Service, serviceActions } from '@/stores/slices/service.slice'
 import { StoreType } from '@/stores'
 
 
@@ -22,7 +22,7 @@ export default function ListService() {
     const [maxPage, setMaxPage] = useState<any[]>([]);
     const dispatch = useDispatch();
     const [searchStatus, setSearchStatus] = useState(false);
-    const [searchData, setSearchData] = useState<Services[]>([]);;
+    const [searchData, setSearchData] = useState<Service[]>([]);;
 
     //const [loading, setLoading] = useState(false);
     let timeOut: any;
@@ -113,8 +113,18 @@ export default function ListService() {
                     .then(res => {
                         message.success("Delete Service Successfull !");
                         const listServiceAfterDel = services;
-                        const filterService = listServiceAfterDel.filter((item: Services) => item.id !== id)
-                        setServices(filterService);
+                        
+                        if(searchData.length > 0) {
+                            const listServiceSearch = [...searchData]
+                            const filterService = listServiceAfterDel.filter((item: Service) => item.id !== id)
+                            setServices(filterService);
+                            const filterServiceSearch = listServiceSearch.filter((item: Service) => item.id !== id);
+                            setSearchData(filterServiceSearch);
+                        }else{
+                            const filterService = listServiceAfterDel.filter((item: Service) => item.id !== id)
+                            setServices(filterService);
+                        }
+                        
                     })
                     .catch(err => console.log("err", err)
                     )
@@ -129,7 +139,7 @@ export default function ListService() {
 
     return (
 
-        <div>
+        <div className='listservices_container'>
             {modal ? (
                 <EditService setModal={setModal} item={updateData} services={services} setServices={setServices} ></EditService>
             ) : (
@@ -169,20 +179,18 @@ export default function ListService() {
                         {searchData.length > 0 ? (
                             searchData?.map((item: any, index) => (
                                 <tr key={Date.now() * Math.random()}>
-                                    <th scope="row">{index + 1}</th>
-                                    <td><img className='img' src={item.avatar} alt="" /></td>
+                                    <td scope="row" className='render_service_item'>{index + 1}</td>
+                                    <td  className='render_service_item'><img className='img' src={item.avatar} alt="" /></td>
                                     {/* <td>000001</td> */}
-                                    <td>{item.name}</td>
-                                    <td>${item.price}</td>
-                                    <td>{item.desc}</td>
-                                    <td>
+                                    <td  className='render_service_item' >{item.name}</td>
+                                    <td  className='render_service_item' >${item.price}</td>
+                                    <td  className='render_service_item desc'>{item.desc}</td>
+                                    <td  className='render_service_item'>
                                         <label className="switch">
                                             <input type="checkbox" defaultChecked={item.status} />
                                             <span className="slider round"></span>
                                         </label>
                                     </td>
-                                    {/* <td >{item.createAt}</td>
-                                    <td>{item.updateAt}</td> */}
                                     <td className='action'>
                                         <button onClick={() => {
                                             setModal(true)
@@ -200,13 +208,13 @@ export default function ListService() {
                             <>
                                 {services?.map((item: any, index) => (
                                     <tr key={Date.now() * Math.random()}>
-                                        <th scope="row">{index + 1}</th>
-                                        <td><img className='img' src={item.avatar} alt="" /></td>
+                                        <td className='render_service_item' scope="row">{index + 1}</td>
+                                        <td className='render_service_item'><img className='img' src={item.avatar} alt="" /></td>
                                         {/* <td>000001</td> */}
-                                        <td>{item.name}</td>
-                                        <td>${item.price}</td>
-                                        <td>{item.desc}</td>
-                                        <td>
+                                        <td className='render_service_item'>{item.name}</td>
+                                        <td className='render_service_item'>${item.price}</td>
+                                        <td className='render_service_item desc'>{item.desc}</td>
+                                        <td className='render_service_item'>
                                             <label className="switch">
                                                 <input type="checkbox" defaultChecked={item.status} />
                                                 <span className="slider round"></span>
@@ -214,7 +222,7 @@ export default function ListService() {
                                         </td>
                                         {/* <td >{item.createAt}</td>
                                         <td>{item.updateAt}</td> */}
-                                        <td className='action'>
+                                        <td className='action '>
                                             <button onClick={() => {
                                                 setModal(true)
                                                 setUpdateData(item)
