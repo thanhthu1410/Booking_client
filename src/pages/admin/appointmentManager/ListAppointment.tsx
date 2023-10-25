@@ -4,7 +4,7 @@ import { StoreType } from '@/stores';
 import { useEffect, useState } from 'react';
 import AppointmentDetail from './AppointmentDetail';
 import CalendarAntd from '@/components/calendarAntd/CalendarAntd';
-import { DatePicker, DatePickerProps } from 'antd';
+import { DatePicker, DatePickerProps, Select, Space } from 'antd';
 import dayjs from 'dayjs';
 import { Appointment } from '@/stores/slices/appointment.slice';
 
@@ -82,10 +82,34 @@ export default function ListAppointment() {
 
     const [showModal, setShowModal] = useState(false);
 
+    const status = ["ALL", "PENDING", "ACCEPTED", "REJECTED", "DONE"];
+
+    const [appointmentStatus, setAppointmentStatus] = useState<string>("ALL");
+
+    const handleChange = (value: string) => {
+        setAppointmentStatus(value);
+    };
+
     return (
         <div className='List_appointment_container'>
             <h2>List Appointments</h2>
             <DatePicker onChange={onChange} value={dateRange} defaultValue={dayjs()} format="DD/MM/YYYY" />
+            <Space wrap>
+                <Select
+                    defaultValue="Status"
+                    style={{ width: 150, height: 33, marginLeft: 10 }}
+                    onChange={(value) => handleChange(value)}
+                    value={appointmentStatus}
+                >
+                    {status.map((item) => (
+                        <Select.Option key={Math.random() * Date.now()} value={item}>
+                            <div>
+                                <p style={{ marginBottom: "0px" }}>{item}</p>
+                            </div>
+                        </Select.Option>
+                    ))}
+                </Select>
+            </Space>
             <table>
                 <thead>
                     <tr>
@@ -104,12 +128,13 @@ export default function ListAppointment() {
                                     {appointmentStore.data?.filter(appointment =>
                                         appointment.date == datePicked &&
                                         appointment.time === time &&
-                                        appointment.appointmentDetails.some(detail => detail.staffId === staff.id)
+                                        appointment.appointmentDetails.some(detail => detail.staffId === staff.id) &&
+                                        (appointmentStatus === "ALL" || appointment.status === appointmentStatus)
                                     )
                                         .map(appointment => {
                                             // console.log("appointment", appointment);
                                             return (
-                                                <div key={appointment.id} className={`appointment__detail ${appointment.status == "ACCEPTED" ? "accepted" : appointment.status == "REJECTED" ? "rejected" : ""}`} onClick={() => {
+                                                <div key={appointment.id} className={`appointment__detail ${appointment.status == "ACCEPTED" ? "accepted" : appointment.status == "REJECTED" ? "rejected" : appointment.status == "DONE" ? "done" : ""}`} onClick={() => {
                                                     setAppointmentDetail(appointment);
                                                     setStaffId(staff.id);
                                                     setShowModal(true);

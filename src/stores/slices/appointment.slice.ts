@@ -8,7 +8,8 @@ export interface Customer {
 export enum AppointmentStatus {
     PENDING = 'PENDING',
     ACCEPTED = 'ACCEPTED',
-    REJECTED = 'REJECTED'
+    REJECTED = 'REJECTED',
+    DONE = 'DONE'
 }
 
 export interface Appointment {
