@@ -119,7 +119,7 @@ export default function AppointmentDetail(props: AppointmentData) {
                         onChange={(value) => handleChange(value)}
                         value={appointmentStatus}
                     >
-                        {appointmentStatus != "DONE" && status.map((item) => (
+                        {props.appointmentData.status != "DONE" && status.map((item) => (
                             <Select.Option key={Math.random() * Date.now()} value={item}>
                                 <div>
                                     <p style={{ marginBottom: "0px" }}>{item}</p>
