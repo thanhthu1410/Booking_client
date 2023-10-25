@@ -13,6 +13,7 @@ export default function ListService() {
     const navigate = useNavigate()
     const [modal, setModal] = useState(false)
     const [services, setServices] = useState([])
+    // console.log("services:", services)
     const [updateData, setUpdateData] = useState([])
     const [isDelete, setIsDelete] = useState(false);
     const [selectedPage, setSelectedPage] = useState(null);
@@ -23,8 +24,10 @@ export default function ListService() {
     const [searchStatus, setSearchStatus] = useState(false);
     const [searchData, setSearchData] = useState<Service[]>([]);;
 
+    //const [loading, setLoading] = useState(false);
     let timeOut: any;
     function search(e: any) {
+
         if (e.target.value == "") {
             setSearchData([])
             return;
@@ -79,7 +82,6 @@ export default function ListService() {
 
             })
     }, [])
-
     function changePage(pageItemObj: any) {
         api.serviceApi.findMany(maxItemPage, pageItemObj.skip)
             .then(res => {
@@ -110,6 +112,7 @@ export default function ListService() {
                     .then(res => {
                         message.success("Delete Service Successfull !");
                         const listServiceAfterDel = services;
+
                         if (searchData.length > 0) {
                             const listServiceSearch = [...searchData]
                             const filterService = listServiceAfterDel.filter((item: Service) => item.id !== id)
@@ -120,6 +123,7 @@ export default function ListService() {
                             const filterService = listServiceAfterDel.filter((item: Service) => item.id !== id)
                             setServices(filterService);
                         }
+
                     })
                     .catch(err => console.log("err", err)
                     )
@@ -127,11 +131,16 @@ export default function ListService() {
         })
     };
 
+
+
+
+
+
     return (
 
         <div className='listservices_container'>
             {modal ? (
-                <EditService setModal={setModal} item={updateData} services={services} setServices={setServices} ></EditService>
+                <EditService setModal={setModal} item={updateData} services={services} setServices={setServices} searchData={searchData} setSearchData={setSearchData}></EditService>
             ) : (
                 <></>
             )}
@@ -151,13 +160,15 @@ export default function ListService() {
             <div>
                 <table className="table">
                     <thead className="thead-dark">
-                        <tr>
-                            <th scope="col">#</th>
+                        <tr><th scope="col">#</th>
                             <th scope="col">Avartar</th>
+                            {/* <th scope="col">User ID</th> */}
                             <th scope="col">Name</th>
                             <th scope="col">Price</th>
                             <th scope="col">Description</th>
                             <th scope="col">Status</th>
+                            {/* <th scope="col">Create At</th>
+                            <th scope="col">Update At</th> */}
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -168,6 +179,7 @@ export default function ListService() {
                                 <tr key={Date.now() * Math.random()}>
                                     <td scope="row" className='render_service_item'>{index + 1}</td>
                                     <td className='render_service_item'><img className='img' src={item.avatar} alt="" /></td>
+                                    {/* <td>000001</td> */}
                                     <td className='render_service_item' >{item.name}</td>
                                     <td className='render_service_item' >${item.price}</td>
                                     <td className='render_service_item desc'>{item.desc}</td>
@@ -194,8 +206,7 @@ export default function ListService() {
                             <>
                                 {services?.map((item: any, index) => (
                                     <tr key={Date.now() * Math.random()}>
-                                        <td className='render_service_item' scope="row">{index + 1}</td>
-                                        <td className='render_service_item'><img className='img' src={item.avatar} alt="" /></td>
+                                        <td className='render_service_item' scope="row">{index + 1}</td><td className='render_service_item'><img className='img' src={item.avatar} alt="" /></td>
                                         {/* <td>000001</td> */}
                                         <td className='render_service_item'>{item.name}</td>
                                         <td className='render_service_item'>${item.price}</td>
@@ -240,8 +251,7 @@ export default function ListService() {
                         {
                             maxPage.map(item => {
                                 return (
-                                    <li key={Math.random() * Date.now()} className="page-item"><a className="page-link" href="#" onClick={() => changePage(item)}>{item.number}</a></li>
-                                )
+                                    <li key={Math.random() * Date.now()} className="page-item"><a className="page-link" href="#" onClick={() => changePage(item)}>{item.number}</a></li>)
                             })
                         }
                         <li className="page-item">
