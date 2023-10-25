@@ -121,7 +121,6 @@ const CalendarAntd = (props: DataProps) => {
                 onPanelChange={onPanelChange}
                 onSelect={(date, { source }) => {
                     if (source === 'date') {
-                        // console.log('Panel Select:', date.format('DD/MM/YYYY'));
                         props.setDateBooking(date.format('DD/MM/YYYY'));
                     }
                 }}

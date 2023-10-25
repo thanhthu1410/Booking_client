@@ -144,7 +144,7 @@ export default function Booking() {
                 title: "Đã đặt lịch thành công",
                 content: "Đã đặt lịch thành công, vui lòng kiểm tra email để xác nhận lịch hẹn",
                 onOk: () => {
-                    window.location.href = "/thanks"
+                    window.location.href = "/"
                 }
             })
         } else {
@@ -160,7 +160,7 @@ export default function Booking() {
                 title: "Đã đặt lịch thành công",
                 content: "Đã đặt lịch thành công, vui lòng kiểm tra email để xác nhận lịch hẹn",
                 onOk: () => {
-                    // window.location.href = "/thanks"
+                    window.location.href = "/"
                 }
             })
         }
@@ -363,7 +363,7 @@ export default function Booking() {
                                 />
                                 :
                                 <TimePickerAll startTime={timeStore.data?.startTime} endTime={timeStore.data?.endTime} minTime={timeStore.data?.duration}
-                                    timeBooking={timeBooking} setTimeBooking={setTimeBooking} stepMinute={timeStore.data?.stepMinute} />}
+                                    timeBooking={timeBooking} setTimeBooking={setTimeBooking} stepMinute={timeStore.data?.stepMinute} dateBooking={dateBooking} />}
                         </div>
                         <div className='booking_right_service_button'>
                             <button className={`continue_button ${timeBooking ? "enable" : ""}`} type='button' onClick={() => handleShowInformation()}>Continue</button>

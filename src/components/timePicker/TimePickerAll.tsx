@@ -4,6 +4,7 @@ import { StoreType } from '@/stores';
 import { useEffect, useState } from 'react';
 import moment from 'moment';
 import { timeAction } from '@/stores/slices/time.slice';
+import { Appointment } from '@/stores/slices/appointment.slice';
 
 interface TimePickerProps {
     startTime: string | undefined;
@@ -11,11 +12,15 @@ interface TimePickerProps {
     minTime: number | undefined;
     timeBooking: string | undefined;
     setTimeBooking: any;
-    stepMinute: number | undefined
+    stepMinute: number | undefined;
+    dateBooking: string | undefined
 }
 
-export default function TimePickerAll({ startTime, endTime, minTime, timeBooking, setTimeBooking, stepMinute }: TimePickerProps) {
+export default function TimePickerAll({ startTime, endTime, minTime, timeBooking, setTimeBooking, stepMinute, dateBooking }: TimePickerProps) {
     const [activeTime, setActiveTime] = useState<string | null>(null);
+    const appointmentStore = useSelector((store: StoreType) => store.appointmentStore);
+
+    console.log("dateBooking", dateBooking);
 
     const generateTimes = (start: string, end: string) => {
         const times = [];
@@ -51,10 +56,17 @@ export default function TimePickerAll({ startTime, endTime, minTime, timeBooking
 
                 let isSelectable = true;
 
+                appointmentStore.data?.map((appointment: Appointment) => {
+                    if (appointment.date == dateBooking && appointment.time == time && appointment.status == "ACCEPTED") {
+                        isSelectable = false;
+                    }
+                })
+
                 return (
                     <div
                         key={index}
-                        className={`timePicker_time ${time === activeTime ? "activeTime" : ""}`}
+                        // className={`timePicker_time ${time === activeTime ? "activeTime" : ""}`}
+                        className={`timePicker_time ${time === activeTime ? "activeTime" : ""} ${isSelectable ? "selectable" : "notSelectable"}`}
                         onClick={() => {
                             if (isSelectable) {
                                 setActiveTime(time === activeTime ? null : time);

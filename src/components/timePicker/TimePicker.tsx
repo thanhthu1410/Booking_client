@@ -17,9 +17,8 @@ interface TimePickerProps {
 }
 
 export default function TimePicker({ startTime, endTime, minTime, timeBooking, setTimeBooking, stepMinute }: TimePickerProps) {
-    const apppointmentStore = useSelector((store: StoreType) => store.appointmentStore)
-    console.log("apointmentsotre",apppointmentStore);
-    
+    const appointmentStore = useSelector((store: StoreType) => store.appointmentStore)
+
     const [activeTime, setActiveTime] = useState<string | null>(null);
 
     const generateTimes = (start: string, end: string) => {
@@ -58,16 +57,11 @@ export default function TimePicker({ startTime, endTime, minTime, timeBooking, s
                 if (time > currentDateTime) {
                     isSelectable = true
                 }
-                apppointmentStore.data?.map((appointment: Appointment) => {
-                    if(appointment.time == time && appointment.status == "ACCEPTED"){
-                        
-                        console.log("time",time);
-                        console.log("appointment.time",appointment.time == time);
+                appointmentStore.data?.map((appointment: Appointment) => {
+                    if (appointment.time == time && appointment.status == "ACCEPTED") {
                         isSelectable = false;
-                      
                     }
                 })
-              
 
                 return (
                     <div
