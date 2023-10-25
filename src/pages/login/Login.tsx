@@ -22,7 +22,8 @@ function Login() {
        await api.authApi.login(loginData)
        .then((res) => {
             if(res.status!=201){
-
+                   message.warning("Please check your account ! ")
+                    
             }else{
                 localStorage.setItem("token", res.data.accessToken)
                 message.success("Đăng Nhập thành công")
@@ -30,7 +31,6 @@ function Login() {
                     window.location.href="/"
                   }, 2000)
             }
-           console.log("res", res.status);
            
        }).catch((err) => {
             message.warning(err.response.data.message)

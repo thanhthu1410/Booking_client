@@ -14,7 +14,6 @@ export default function Voucher() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [voucherTime, setVoucherTime] = useState<VoucherTime>();
-  console.log("voucherTime", voucherTime);
   let timeStart: string;
   let timeEnd: string;
 
@@ -23,9 +22,6 @@ export default function Voucher() {
     const dataObjEnd = new Date(voucherTime.end);
     timeStart = dataObjStart.getTime().toString()
     timeEnd = dataObjEnd.getTime().toString()
-    console.log("timeStart", timeStart);
-    console.log("endStart", timeEnd);
-
   }
 
 

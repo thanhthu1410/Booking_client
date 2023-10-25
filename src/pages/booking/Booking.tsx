@@ -160,7 +160,7 @@ export default function Booking() {
                 title: "Đã đặt lịch thành công",
                 content: "Đã đặt lịch thành công, vui lòng kiểm tra email để xác nhận lịch hẹn",
                 onOk: () => {
-                    window.location.href = "/thanks"
+                    // window.location.href = "/thanks"
                 }
             })
         }
@@ -196,7 +196,6 @@ export default function Booking() {
             .then(res => {
                 if (res.status) {
                     if (res.data.status) {
-                        console.log("res", res.data.data)
                         if (res.data.data.discountType == "percent") {
                             handleCalculateSubTotal("percent", res.data.data.value);
                             setDiscountPercent(res.data.data.value);

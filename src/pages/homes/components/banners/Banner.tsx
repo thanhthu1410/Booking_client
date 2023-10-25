@@ -31,7 +31,8 @@ export default function Banner() {
               <span className="char17">9</span>
               <span className="char18">6</span></div>
           </div>
-          <img className="img2" src="https://themeholy.com/html/rasm/demo/assets/img/normal/about_3_2.jpg" alt="" />
+          {/* <img className="img2" src="https://themeholy.com/html/rasm/demo/assets/img/normal/about_3_2.jpg" alt="" /> */}
+          <img className="img2" src="https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/395366141_3792397300987923_5668594513319135466_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_ohc=9cJL7nAmE6MAX_Ccj1W&_nc_ht=scontent.fsgn2-5.fna&oh=00_AfBdcGTaQyFHfJaYoFndD9XzPUuqcLL-78HALE6mD2v27Q&oe=653CD351" alt="" />
         </div>
         <div className="banner_chirld_right">
           <p className="banner_detail_title">

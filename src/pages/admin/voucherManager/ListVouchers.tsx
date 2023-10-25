@@ -129,8 +129,6 @@ function ListVoucher() {
                 let result = await api.voucherApi.search(searchString.target.value);
                 if (result.status == 200) {
                     // sau 1.5s set lai data & tat loading
-                    console.log("res", result);
-
                     setTimeout(() => {
                         setSearchStatus(false);
                         setSearchData(result.data.data);
@@ -247,7 +245,7 @@ function ListVoucher() {
 
 
                     }
-                    {modal ? <EditVoucher setModal={setModal} voucher={vocherState} vouchers={vouchers} setVouchers={setVouchers}></EditVoucher> : <></>}
+                    {modal ? <EditVoucher setModal={setModal} voucher={vocherState} vouchers={vouchers} setVouchers={setVouchers} searchData={searchData} setSearchData={setSearchData}></EditVoucher> : <></>}
                 </tbody>
             </Table>}
 
