@@ -49,8 +49,12 @@ export default function AppointmentDetail(props: AppointmentData) {
 
     const dispatch = useDispatch();
 
+    const [isSaveDisabled, setIsSaveDisabled] = useState(false);
+
+
     function handleUpdateAppointment(e: React.FormEvent) {
         e.preventDefault();
+        setIsSaveDisabled(true);
         let data = {
             status: appointmentStatus,
             time
@@ -126,7 +130,7 @@ export default function AppointmentDetail(props: AppointmentData) {
                 </Space>
                 <div className='appointmentDetail__footer'>
                     <Button className='close__button' type="primary" onClick={() => props.setShowModal(false)}>Close</Button>
-                    {appointmentStatus != "DONE" ? <button type='submit' className='save__button'>Save</button> : <button type='button' className='save__button done'>Save</button>}
+                    {props.appointmentData.status != "DONE" && isSaveDisabled == false ? <button type='submit' className='save__button'>Save</button> : <button type='button' className='save__button done'>Save</button>}
                 </div>
             </div>
         </form>
