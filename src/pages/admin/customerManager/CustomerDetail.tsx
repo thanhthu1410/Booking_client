@@ -10,7 +10,7 @@ interface Props {
 }
 export default function CustomerDetail(props: Props) {
 
-    console.log("props.customerDetail", props.customerDetail);
+    // console.log("props.customerDetail", props.customerDetail);
 
 
     return (
@@ -25,7 +25,12 @@ export default function CustomerDetail(props: Props) {
                                 <div className='customer_appointments_item'>
                                     <p>Date: {item.date}</p>
                                     <p>Time: {item.time}</p>
-                                    {item.voucher.discountType == "percent" ? (<p>Discount: {item.voucher.value}%</p>) : (<p>Voucher: ${item.voucher.value}</p>)}
+                                    {item?.voucher?.discountType === "percent" ? (
+                                        <p>Discount: {item?.voucher?.value}%</p>
+                                    ) : (item?.voucher?.discountType) === "cash" ? (
+                                        <p>Voucher: ${item?.voucher?.value}</p>
+                                    ) : null}
+                                    {/* {(item?.voucher?.discountType) == "percent" ? (<p>Discount: {item?.voucher?.value}%</p>) : (<p>Voucher: ${item?.voucher?.value}</p>)} */}
                                     <p>Total: ${item.total}</p>
                                 </div>
                             </div>

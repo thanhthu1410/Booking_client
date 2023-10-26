@@ -92,14 +92,10 @@ const Sidebar: React.FC = () => {
                     <i className="bx bx-menu" id="sidebarOpen" />
                     <img src="https://firebasestorage.googleapis.com/v0/b/bookingsalon-fa833.appspot.com/o/homepageImg%2Flogo-white.svg?alt=media&token=56a09dd9-7817-464e-99c4-feb3a28f33ff&_gl=1*1ufdsen*_ga*MTg1ODg5NjEyOS4xNjg4MDg4OTU3*_ga_CW55HF8NVT*MTY5NzE3MDU0Mi41OS4xLjE2OTcxNzE0MDguMjUuMC4w" alt="" />
                 </div>
-                <div className="search_bar">
-                    <input type="text" placeholder="Search" />
-                </div>
                 <div className="navbar_content">
                     <i className="bi bi-grid" />
                     <i className="bx bx-sun" id="darkLight" />
                     <i className="bx bx-bell" />
-                    <img src="https://rasm.co/cdn/shop/products/DSC_3446_1100x.JPG?v=1686770055" alt="" className="profile" />
                 </div>
             </nav>
             <div className='body_container' >

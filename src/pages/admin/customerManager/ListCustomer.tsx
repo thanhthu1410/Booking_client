@@ -46,9 +46,8 @@ export default function ListCustomer() {
                     setTimeout(() => {
                         setSearchStatus(false);
                         setSearchData(result.data.data);
-                        //dispatch(customerActions.setDataCustomer(result.data.data))
                     }, 1500)
-                    console.log("setSeardata", searchData);
+                    // console.log("setSeardata", searchData);
                 }
                 else {
                     setSearchStatus(false);
@@ -62,9 +61,6 @@ export default function ListCustomer() {
 
     }
 
-    // useEffect(() => {
-    //     console.log("setSeardata", searchData);
-    // }, [searchData]);
 
     useEffect(() => {
         api.customerApi.findMany(maxItemPage, skipItem)
@@ -163,7 +159,6 @@ export default function ListCustomer() {
                                         <button onClick={() => {
                                             setModal(true)
                                             setCustomerDetail(item)
-                                            //setSearchData(item)
                                         }} type="button" className="btn btn-success">Detail</button>
                                     </td>
                                 </tr>
