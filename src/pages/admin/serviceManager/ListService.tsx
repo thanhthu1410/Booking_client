@@ -206,8 +206,13 @@ export default function ListService() {
                             <>
                                 {services?.map((item: any, index) => (
                                     <tr key={Date.now() * Math.random()}>
+
+                                        <td className='render_service_item' scope="row">{index + 1}</td>
+                                        <td className='render_service_item'><img className='img' src={item.avatar} alt="" /></td>
+
                                         <td className='render_service_item' scope="row">{index + 1}</td><td className='render_service_item'><img className='img' src={item.avatar} alt="" /></td>
                                         {/* <td>000001</td> */}
+
                                         <td className='render_service_item'>{item.name}</td>
                                         <td className='render_service_item'>${item.price}</td>
                                         <td className='render_service_item desc'>{item.desc}</td>
@@ -217,8 +222,6 @@ export default function ListService() {
                                                 <span className="slider round"></span>
                                             </label>
                                         </td>
-                                        {/* <td >{item.createAt}</td>
-                                        <td>{item.updateAt}</td> */}
                                         <td className='action '>
                                             <button onClick={() => {
                                                 setModal(true)

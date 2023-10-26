@@ -10,6 +10,7 @@ import { staffActions } from "./stores/slices/staff.slice";
 import { Socket, io } from "socket.io-client";
 import { appointmentActions } from "./stores/slices/appointment.slice";
 import axios from "axios";
+import { customerActions } from "./stores/slices/customer.slice";
 
 function App() {
   const store = useSelector((store: StoreType) => store)
@@ -52,6 +53,16 @@ function App() {
         }
       })
   }, [store.staffStore.reLoad])
+
+  useEffect(() => {
+    api.customerApi.searchCustomer('')
+      .then(res => {
+        if (res.status == 200) {
+          //console.log("customer", res.data.data);
+          dispatch(customerActions.setDataCustomer(res.data.data))
+        }
+      })
+  }, [store.customerStore.reLoad])
 
   useEffect(() => {
     let socket: Socket = io("http://localhost:3003")

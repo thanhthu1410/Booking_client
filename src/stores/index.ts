@@ -4,6 +4,7 @@ import { serviceReducer } from './slices/service.slice';
 import { voucherReducer } from './slices/voucher.slice';
 import { staffReducer } from './slices/staff.slice';
 import { appointmentReducer } from './slices/appointment.slice';
+import { customerReducer } from './slices/customer.slice';
 
 // Kết hợp reducer
 const rootReducer = combineReducers({
@@ -12,6 +13,7 @@ const rootReducer = combineReducers({
     voucherStore: voucherReducer,
     staffStore: staffReducer,
     appointmentStore: appointmentReducer,
+    customerStore: customerReducer,
 });
 
 // Xuất ra store type
