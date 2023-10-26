@@ -359,7 +359,7 @@ export default function Booking() {
                             <CalendarAntd dateBooking={dateBooking} setDateBooking={setDateBooking} maxDate={timeStore.data?.maxDate} />
                             {dateBooking === dayjs().format('DD/MM/YYYY') ?
                                 <TimePicker startTime={timeStore.data?.startTime} endTime={timeStore.data?.endTime} minTime={timeStore.data?.duration}
-                                    timeBooking={timeBooking} setTimeBooking={setTimeBooking} stepMinute={timeStore.data?.stepMinute}
+                                    timeBooking={timeBooking} setTimeBooking={setTimeBooking} stepMinute={timeStore.data?.stepMinute} dateBooking={dateBooking}
                                 />
                                 :
                                 <TimePickerAll startTime={timeStore.data?.startTime} endTime={timeStore.data?.endTime} minTime={timeStore.data?.duration}
