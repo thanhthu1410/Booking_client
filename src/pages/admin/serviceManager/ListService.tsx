@@ -162,13 +162,10 @@ export default function ListService() {
                     <thead className="thead-dark">
                         <tr><th scope="col">#</th>
                             <th scope="col">Avartar</th>
-                            {/* <th scope="col">User ID</th> */}
                             <th scope="col">Name</th>
                             <th scope="col">Price</th>
                             <th scope="col">Description</th>
                             <th scope="col">Status</th>
-                            {/* <th scope="col">Create At</th>
-                            <th scope="col">Update At</th> */}
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -179,13 +176,12 @@ export default function ListService() {
                                 <tr key={Date.now() * Math.random()}>
                                     <td scope="row" className='render_service_item'>{index + 1}</td>
                                     <td className='render_service_item'><img className='img' src={item.avatar} alt="" /></td>
-                                    {/* <td>000001</td> */}
                                     <td className='render_service_item' >{item.name}</td>
                                     <td className='render_service_item' >${item.price}</td>
                                     <td className='render_service_item desc'>{item.desc}</td>
                                     <td className='render_service_item'>
                                         <label className="switch">
-                                            <input type="checkbox" defaultChecked={item.status} disabled/>
+                                            <input type="checkbox" defaultChecked={item.status} disabled />
                                             <span className="slider round"></span>
                                         </label>
                                     </td>
@@ -209,16 +205,12 @@ export default function ListService() {
 
                                         <td className='render_service_item' scope="row">{index + 1}</td>
                                         <td className='render_service_item'><img className='img' src={item.avatar} alt="" /></td>
-
-                                        <td className='render_service_item' scope="row">{index + 1}</td><td className='render_service_item'><img className='img' src={item.avatar} alt="" /></td>
-                                        {/* <td>000001</td> */}
-
                                         <td className='render_service_item'>{item.name}</td>
                                         <td className='render_service_item'>${item.price}</td>
                                         <td className='render_service_item desc'>{item.desc}</td>
                                         <td className='render_service_item'>
                                             <label className="switch">
-                                                <input type="checkbox" defaultChecked={item.status} disabled/>
+                                                <input type="checkbox" defaultChecked={item.status} disabled />
                                                 <span className="slider round"></span>
                                             </label>
                                         </td>
