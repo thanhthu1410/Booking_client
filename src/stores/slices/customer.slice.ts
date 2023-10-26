@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { Voucher } from "./voucher.slice";
 
 export interface Customer {
     id: number
@@ -24,6 +25,7 @@ export interface Appointment {
     total: number
     customerId: number
     customer: Customer
+    voucher: Voucher
     appointmentDetails: AppointmentDetail[]
 }
 

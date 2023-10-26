@@ -25,13 +25,14 @@ export default function CustomerDetail(props: Props) {
                                 <div className='customer_appointments_item'>
                                     <p>Date: {item.date}</p>
                                     <p>Time: {item.time}</p>
-                                    <p>Total: {item.total}</p>
+                                    {item.voucher.discountType == "percent" ? (<p>Discount: {item.voucher.value}%</p>) : (<p>Voucher: ${item.voucher.value}</p>)}
+                                    <p>Total: ${item.total}</p>
                                 </div>
                             </div>
                             {item?.appointmentDetails?.map((infor: AppointmentDetail) => (
                                 <div key={Date.now() * Math.random()} className='customer_appointmentDetails'>
                                     <p>Service Name: <span>{infor?.service?.name}</span></p>
-                                    <p>Price: <span>{infor?.service?.price}</span></p>
+                                    <p>Price: <span>${infor?.service?.price}</span></p>
                                     <p>Staff Name: <span>{infor?.staff?.name}</span></p>
                                 </div>
                             ))}
