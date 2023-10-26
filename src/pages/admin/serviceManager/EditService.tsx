@@ -1,4 +1,3 @@
-
 import { useRef, useState } from 'react'
 import './editService.scss'
 import { Modal, message } from 'antd';
@@ -19,7 +18,7 @@ export default function EditService(props: any) {
     const urlPreviewRef = useRef<HTMLImageElement>(null);
     //console.log("urlPreviewRef:", urlPreviewRef)
 
-    
+
     async function updateService(eventForm: any) {
         eventForm.preventDefault();
         console.log("thu nekk");
@@ -50,23 +49,62 @@ export default function EditService(props: any) {
             .update(updateData?.id, formData)
             .then((res) => {
                 if (res.status == 200) {
+                    console.log("DAVAO");
+                    console.log("res", res.data);
+
+
                     message.success(res.data.message);
                     props.setModal(false);
-                    const updateListService = props.services.map((service: any) => {
-                        if (service.id === updateData?.id) {
-                            return {
-                                ...service,
-                                name: updateInfor.name,
-                                desc: updateInfor.desc,
-                                price: updateInfor.price,
-                                avatar: res.data.data.avatar,
-                                status: updateInfor.status,
+                    if (props.searchData.length > 0) {
+                        const updateDataSearch = props.searchData.map((service: any) => {
+                            if (service.id === updateData.id) {
+                                return {
+                                    ...service,
+                                    name: updateInfor.name,
+                                    desc: updateInfor.desc,
+                                    price: updateInfor.price,
+                                    avatar: res.data.data.avatar,
+                                    status: updateInfor.status,
+                                }
+                            } else {
+                                return service
                             }
-                        } else {
-                            return service
-                        }
-                    })
-                    props.setServices(updateListService);
+                        })
+                        props.setSearchData(updateDataSearch);
+                        const updateListService = props.services.map((service: any) => {
+                            if (service.id === updateData.id) {
+                                return {
+                                    ...service,
+                                    name: updateInfor.name,
+                                    desc: updateInfor.desc,
+                                    price: updateInfor.price,
+                                    avatar: res.data.data.avatar,
+                                    status: updateInfor.status,
+                                }
+                            } else {
+                                return service
+                            }
+                        })
+                        props.setServices(updateListService);
+
+                    } else {
+                        const updateListService = props.services.map((service: any) => {
+                            if (service.id === updateData.id) {
+                                return {
+                                    ...service,
+                                    name: updateInfor.name,
+                                    desc: updateInfor.desc,
+                                    price: updateInfor.price,
+                                    avatar: res.data.data.avatar,
+                                    status: updateInfor.status,
+                                }
+                            } else {
+                                return service
+                            }
+                        })
+                        props.setServices(updateListService);
+                    }
+
                 } else {
                     props.setModal(false);
                     Modal.error({

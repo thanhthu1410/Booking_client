@@ -13,10 +13,11 @@ interface TimePickerProps {
     minTime: number | undefined;
     timeBooking: string | undefined;
     setTimeBooking: any;
-    stepMinute: number | undefined
+    stepMinute: number | undefined;
+    dateBooking: string | undefined
 }
 
-export default function TimePicker({ startTime, endTime, minTime, timeBooking, setTimeBooking, stepMinute }: TimePickerProps) {
+export default function TimePicker({ startTime, endTime, minTime, timeBooking, setTimeBooking, stepMinute, dateBooking }: TimePickerProps) {
     const appointmentStore = useSelector((store: StoreType) => store.appointmentStore)
 
     const [activeTime, setActiveTime] = useState<string | null>(null);
@@ -58,7 +59,7 @@ export default function TimePicker({ startTime, endTime, minTime, timeBooking, s
                     isSelectable = true
                 }
                 appointmentStore.data?.map((appointment: Appointment) => {
-                    if (appointment.time == time && appointment.status == "ACCEPTED") {
+                    if (appointment.date == dateBooking && appointment.time == time && appointment.status == "ACCEPTED") {
                         isSelectable = false;
                     }
                 })
