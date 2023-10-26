@@ -60,6 +60,10 @@ export default function TimePickerAll({ startTime, endTime, minTime, timeBooking
                     if (appointment.date == dateBooking && appointment.time == time && appointment.status == "ACCEPTED") {
                         isSelectable = false;
                     }
+
+                    if (appointment.date == dateBooking && appointment.time == time && appointment.status == "REJECTED") {
+                        isSelectable = true;
+                    }
                 })
 
                 return (

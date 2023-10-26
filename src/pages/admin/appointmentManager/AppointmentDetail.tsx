@@ -6,6 +6,7 @@ import { Appointment, appointmentActions } from '@/stores/slices/appointment.sli
 import api from '@/services/api';
 import { useDispatch, useSelector } from 'react-redux';
 import { StoreType } from '@/stores';
+import { Socket, io } from 'socket.io-client';
 
 type AppointmentData = {
     appointmentData: Appointment;
@@ -72,7 +73,9 @@ export default function AppointmentDetail(props: AppointmentData) {
                                 return appointment;
                             }
                         })
-                        dispatch(appointmentActions.setData(updatedAppointmentStore));
+                        // dispatch(appointmentActions.setData(updatedAppointmentStore));
+                        let socket: Socket = io("http://localhost:3003")
+                        socket.emit("acceptBooking", updatedAppointmentStore);
                         props.setShowModal(false);
                     }
                 }

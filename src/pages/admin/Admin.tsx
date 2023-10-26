@@ -192,7 +192,7 @@ const Sidebar: React.FC = () => {
                                     </Link>
                                 </ul>
                             </li>
-                            <li className="item">
+                            <li className="item" onClick={() => navigate("/admin/chart")}>
                                 <a className="nav_link submenu_item">
                                     <span className="navlink_icon">
                                         <i className="fa-solid fa-chart-simple"></i>
