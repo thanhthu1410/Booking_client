@@ -9,7 +9,6 @@ import { serviceActions } from "./stores/slices/service.slice";
 import { staffActions } from "./stores/slices/staff.slice";
 import { Socket, io } from "socket.io-client";
 import { appointmentActions } from "./stores/slices/appointment.slice";
-import axios from "axios";
 import { customerActions } from "./stores/slices/customer.slice";
 
 function App() {
