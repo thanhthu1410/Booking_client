@@ -27,10 +27,16 @@ export interface Appointment {
     customer: Customer
 }
 
+export interface Message {
+    message: string
+}
+
 const initialState: {
-    data: null | undefined | Appointment[]
+    data: null | undefined | Appointment[],
+    notifications: Message[]
 } = {
-    data: null
+    data: null,
+    notifications: []
 };
 
 const appointmentSlice = createSlice({
@@ -41,6 +47,12 @@ const appointmentSlice = createSlice({
             return {
                 ...state,
                 data: action.payload
+            }
+        },
+        setMessage: function (state, action) {
+            return {
+                ...state,
+                notifications: [...state.notifications, action.payload]
             }
         },
     },
