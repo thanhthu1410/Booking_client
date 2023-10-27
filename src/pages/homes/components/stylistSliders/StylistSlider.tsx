@@ -76,7 +76,7 @@ export default function StylistSlider() {
 
                                     <img className="image" src="https://themeholy.com/html/rasm/demo/assets/img/team/team_2_1.jpg" alt="" />
                                     <div className='sale_carou_title'>
-                                        <button className="btn-98">Name Stylist</button>
+                                        <button className="btn-98">Tom Cruise</button>
                                     </div>
                                 </div>
                             </div>
@@ -85,16 +85,15 @@ export default function StylistSlider() {
 
                                     <img className="image" src="https://themeholy.com/html/rasm/demo/assets/img/team/team_2_2.jpg" alt="" />
                                     <div className='sale_carou_title'>
-                                        <button className="btn-98">Name Stylist</button>
+                                        <button className="btn-98">Jennifer Lawrence</button>
                                     </div>
                                 </div>
                             </div>
                             <div className='sale_carou'>
                                 <div className='sale_carou_chirl' >
-
                                     <img className="image" src="https://themeholy.com/html/rasm/demo/assets/img/team/team_2_3.jpg" alt="" />
                                     <div className='sale_carou_title'>
-                                        <button className="btn-98">Name Stylist</button>
+                                        <button className="btn-98">Henry Cavill</button>
                                     </div>
                                 </div>
                             </div>
@@ -103,7 +102,7 @@ export default function StylistSlider() {
 
                                     <img className="image" src="https://themeholy.com/html/rasm/demo/assets/img/team/team_2_4.jpg" alt="" />
                                     <div className='sale_carou_title'>
-                                        <button className="btn-98">Name Stylist</button>
+                                        <button className="btn-98">Marion Cotillard</button>
                                     </div>
                                 </div>
                             </div>
