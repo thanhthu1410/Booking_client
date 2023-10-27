@@ -267,6 +267,9 @@ export default function Booking() {
             service.serviceId === serviceId ? { ...service, staffId: Number(value) } : service
         ));
     };
+    function currencyFormat(num: number) {
+        return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
 
     return (
         <div className='booking_container'>
@@ -301,8 +304,8 @@ export default function Booking() {
                                 <div className='booking_choose_right'>
                                     <div className='booking_choose_right_inforservice'>
                                         <h5>{service.name}</h5>
-                                        <p>Price: ${service.price}</p>
-                                        <p>{service.desc}</p>
+                                        <p>Price: {currencyFormat(service.price)}</p>
+                                        <p><i className="fa-solid fa-heart icondesc"></i>{service.desc}</p>
                                     </div>
                                     {activeServices.includes(service.id) && (
                                         <div className='staff_list'>
