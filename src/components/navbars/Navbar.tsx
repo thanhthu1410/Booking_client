@@ -1,14 +1,46 @@
-import { useNavigate } from "react-router"
-import "./navbar.scss"
+import { useNavigate } from "react-router";
+import "./navbar.scss";
+import { useState } from "react";
+import { Carousel } from 'antd';
 
 export default function Navbar() {
     const navigate = useNavigate();
+    const [banners, setBanners] = useState([
+        {
+            id: 1,
+            title: "Enjoy a relaxing space and professional hair care services."
+        },
+        {
+            id: 2,
+            title: "Respect and appreciate your natural beauty, along with ceaseless creativity to achieve the perfect look you desire."
+        },
+        {
+            id: 3,
+            title: "With a range of enticing vouchers, use our services now to enjoy."
+        }
+    ]);
     return (
         <div className="navbar_container">
 
             <div className="navbar_container_top">
                 <div className="navbar_container_chirld">
-                    <h1>navbar top</h1>
+                <p className='carousel-container_top'>
+                <Carousel
+                    autoplay
+                    autoplaySpeed={2000}
+                    effect={"fade"}
+                    dots={false}
+                    dotPosition={"bottom"}
+                >
+                    {banners.map((banner, index) => (
+                        <div className="items" key={banner.id + index}>
+                            <p className='title'>{banner.title}</p>
+                        </div>
+                    ))}
+                </Carousel>
+              
+            </p>
+               
                 </div>
             </div>
             <div className="navbar_container_bottom">

@@ -5,13 +5,34 @@
     left: 0;
     z-index: 99;
     background-color: hsl(22, 46%, 92%);
-    .navbar_container_chirld {
-        max-width: 1440px;
-        margin: 0 auto;
-    }
+
 
     .navbar_container_top {
         background-color: hsl(22, 46%, 92%);
+
+        .navbar_container_chirld {
+            max-width: 1440px;
+            margin: 0 auto;
+            text-align: center;
+
+            .carousel-container_top {
+                width: 50%;
+                padding: 0;
+                margin: 0 auto;
+
+                .items {
+                    .title {
+                        padding: 10px 0;
+                        margin: 0;
+                        font-weight: 550;
+
+                    }
+                }
+
+
+            }
+        }
+
 
     }
 
@@ -19,11 +40,14 @@
         background-color: black;
         color: #fff;
 
+
         .navbar_container_chirld {
             display: flex;
             justify-content: space-between;
             align-items: center;
             height: 80px;
+            max-width: 1440px;
+            margin: 0 auto;
         }
 
         .navbar_logo {
@@ -39,10 +63,13 @@
             width: 40%;
             display: flex;
             justify-content: space-between;
-            span{
+
+            span {
                 cursor: pointer;
                 position: relative;
-            }:after{
+            }
+
+            :after {
                 content: '';
                 width: 0;
                 height: 3px;
@@ -51,14 +78,18 @@
                 left: 0;
                 bottom: -10px;
                 transition: 0.5s;
-              }
-             span:hover::after{
-                width:100%;
-              } 
-              .about_title{
+            }
+
+            span:hover::after {
+                width: 100%;
+            }
+
+            .about_title {
                 cursor: pointer;
                 position: relative;
-            }:after{
+            }
+
+            :after {
                 content: '';
                 width: 0;
                 height: 3px;
@@ -67,11 +98,13 @@
                 left: 0;
                 bottom: -10px;
                 transition: 0.5s;
-              }
-             .about_title:hover::after{
-                width:100%;
-              } 
-            .about_title{
+            }
+
+            .about_title:hover::after {
+                width: 100%;
+            }
+
+            .about_title {
                 text-decoration: none;
                 color: #f8f8f8;
             }
