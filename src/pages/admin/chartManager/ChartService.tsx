@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import { StoreType } from '@/stores';
 import { Appointment } from '@/stores/slices/appointment.slice';
 import { Select, Space } from 'antd';
+import dayjs from "dayjs";
 
 const ChartService: React.FC = () => {
     const [chartData, setChartData] = useState<Appointment[]>();
@@ -12,7 +13,7 @@ const ChartService: React.FC = () => {
         numberOfAppointments: number
     }
     const [chartDataService, setChartDataService] = useState<ServiceData[]>();
-    const [month, setMonth] = useState<string>("10")
+    const [month, setMonth] = useState<string>(dayjs().format("MM"))
     const appointmentStore = useSelector((store: StoreType) => {
         return store.appointmentStore
     })
@@ -59,10 +60,8 @@ const ChartService: React.FC = () => {
     }
 
     useEffect(() => {
-        console.log("appointmentStore", appointmentStore.data?.filter((appointment) => appointment.status == "DONE"))
         if (appointmentStore && appointmentStore.data) {
             setChartDataService(formatData(appointmentStore.data))
-            console.log("formatData(appointmentStore.data)", formatData(appointmentStore.data))
         }
     }, [appointmentStore, month])
 
@@ -108,8 +107,9 @@ const ChartService: React.FC = () => {
 
     return (<>
         <Space wrap>
+            <p style={{ marginBottom: "0px" }}>Month</p>
             <Select
-                defaultValue="Month"
+                defaultValue={dayjs().format("MM")}
                 style={{ width: 150, height: 33, marginLeft: 10 }}
                 onChange={(value) => handleChangeMonth(value)}
             >

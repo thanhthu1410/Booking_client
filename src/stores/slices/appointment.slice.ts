@@ -52,7 +52,7 @@ const appointmentSlice = createSlice({
         setMessage: function (state, action) {
             return {
                 ...state,
-                notifications: [...state.notifications, action.payload]
+                notifications: action.payload
             }
         },
     },

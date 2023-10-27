@@ -36,9 +36,8 @@ const Notification: React.FC = () => {
             {open &&
                 <div className='modal__container'>
                     {appointmentStore.notifications?.map((message) => (
-                        <div className='modal__message' key={Math.random() * Date.now()}>
+                        <div className='modal__message' key={Math.random() * Date.now()} style={{ marginBottom: "10px" }}>
                             <Alert message={message.message} type="info" showIcon />
-                            <span className='modal__message__time'>2 minutes ago</span>
                         </div>
                     ))}
                 </div>}
