@@ -154,9 +154,6 @@ const Sidebar: React.FC = () => {
                                     <Link to="appointment" className="nav_link sublink">
                                         List Appointment
                                     </Link>
-                                    <Link to="add" className="nav_link sublink">
-                                        Add Appointment
-                                    </Link>
                                 </ul>
                             </li>
 

@@ -123,7 +123,7 @@ export default function ListStaff() {
                                 <td className='render_service_item desc'>{staff.desc}</td>
                                 <td className='render_service_item'>
                                     <label className="switch">
-                                        <input type="checkbox" defaultChecked={staff.status} />
+                                        <input type="checkbox" defaultChecked={staff.status} disabled />
                                         <span className="slider round"></span>
                                     </label>
                                 </td>

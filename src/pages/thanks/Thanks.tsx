@@ -14,6 +14,7 @@ export default function Thanks() {
     useEffect(() => {
         axios.get("http://localhost:3000/api/v1/appointments/" + id)
             .then(res => {
+                console.log("res", res.data.data);
                 if (appointmentStore) {
                     let appointmentStoreUpdate = appointmentStore.data?.map((appointment) => {
                         if (appointment.id == Number(id)) {
@@ -25,6 +26,9 @@ export default function Thanks() {
                     console.log("appointmentStore", appointmentStore);
                     let socket: Socket = io("http://localhost:3003")
                     socket.emit("acceptBooking", appointmentStoreUpdate);
+                    socket.emit("acceptNotifications", {
+                        message: `${res.data.data.customer.fullName} just confirm appointment`
+                    })
                 }
 
             })
