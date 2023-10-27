@@ -9,7 +9,6 @@ export default function Home() {
       <Navbar />
       <Outlet />
       <Footer />
-      <PhoneIcon />
     </div>
   )
 }

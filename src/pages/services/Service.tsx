@@ -1,6 +1,16 @@
+import { useSelector } from "react-redux"
 import "./service.scss"
+import { StoreType } from "@/stores"
+import { useNavigate } from "react-router-dom";
+
 
 export default function Service() {
+  const serviceStore = useSelector((store : StoreType) => store.serviceStore);
+  console.log("serviceStore",serviceStore);
+  const navigate = useNavigate()
+  function currencyFormat(num: number) {
+    return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}
   return (
     <div className="service_container">
         <div className="service_banner">
@@ -11,78 +21,23 @@ export default function Service() {
           </div>
         </div>
         <div className="service_content">
-          <div className="service_item">
-                <img src="https://i.pinimg.com/564x/f5/68/21/f56821476ddef26201fa55fb4ed76384.jpg" alt="" />
-                <div className="service_item_detail">
-                    <h3>Name service</h3>
-                    <p><i className="fa-solid fa-heart"></i> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit, sit?.</p>
-                    <div className="price_item">
-                    <p >Service Price:</p>
-                    <p className="price_number"> 100.000vnd</p>
-                    </div>           
-                    <button className="btn-21"><span>BOOK  NOW <i className="fa-solid fa-arrow-right"></i></span></button>
-                </div>
-          </div>
-          <div className="service_item">
-                <img src="https://i.pinimg.com/564x/cb/bb/7d/cbbb7d2ce3625017f802a2e8a321d16e.jpg" alt="" />
-                <div className="service_item_detail">
-                    <h3>Name service</h3>
-                    <p><i className="fa-solid fa-heart"></i> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit, sit?.</p>
-                    <div className="price_item">
-                    <p >Service Price:</p>
-                    <p className="price_number"> 100.000vnd</p>
-                    </div>           
-                    <button className="btn-21"><span>BOOK  NOW <i className="fa-solid fa-arrow-right"></i></span></button>
-                </div>
-          </div>
-          <div className="service_item">
-                <img src="https://i.pinimg.com/564x/d9/87/84/d98784df9dead895cc998d167ab414eb.jpg" alt="" />
-                <div className="service_item_detail">
-                    <h3>Name service</h3>
-                    <p><i className="fa-solid fa-heart"></i> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit, sit?.</p>
-                    <div className="price_item">
-                    <p >Service Price:</p>
-                    <p className="price_number"> 100.000vnd</p>
-                    </div>           
-                    <button className="btn-21"><span>BOOK  NOW <i className="fa-solid fa-arrow-right"></i></span></button>
-                </div>
-          </div>
-          <div className="service_item">
-                <img src="https://i.pinimg.com/564x/a2/b8/73/a2b873d57b2e321c5a2b5fab32603dfa.jpg" alt="" />
-                <div className="service_item_detail">
-                    <h3>Name service</h3>
-                    <p><i className="fa-solid fa-heart"></i> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit, sit?.</p>
-                    <div className="price_item">
-                    <p >Service Price:</p>
-                    <p className="price_number"> 100.000vnd</p>
-                    </div>           
-                    <button className="btn-21"><span>BOOK  NOW <i className="fa-solid fa-arrow-right"></i></span></button>
-                </div>
-          </div>
-          <div className="service_item">
-                <img src="https://i.pinimg.com/564x/d9/87/84/d98784df9dead895cc998d167ab414eb.jpg" alt="" />
-                <div className="service_item_detail">
-                    <h3>Name service</h3>
-                    <p><i className="fa-solid fa-heart"></i> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit, sit?.</p>
-                    <div className="price_item">
-                    <p >Service Price:</p>
-                    <p className="price_number"> 100.000vnd</p>
-                    </div>           
-                    <button className="btn-21"><span>BOOK  NOW <i className="fa-solid fa-arrow-right"></i></span></button>
-                </div>
-          </div>
-          <div className="service_item">
-                <img src="https://i.pinimg.com/564x/a2/b8/73/a2b873d57b2e321c5a2b5fab32603dfa.jpg" alt="" />
-                <div className="service_item_detail">
-                    <h3>Name service</h3>
-                    <p><i className="fa-solid fa-heart"></i> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Impedit, sit?.</p>
-                    <div className="price_item">
-                    <p >Service Price:</p>
-                    <p className="price_number"> 100.000vnd</p>
-                    </div>           
-                    <button className="btn-21"><span>BOOK  NOW <i className="fa-solid fa-arrow-right"></i></span></button>
-                </div>
-          </div>
+          {serviceStore.data?.map((service: any) => ( 
+                 <div className="service_item">
+                 <img src={service?.avatar} alt="" />
+                 <div className="service_item_detail">
+                     <h3>{service.name}</h3>
+                     <p><i className="fa-solid fa-heart"></i> {service.desc}</p>
+                     <div className="price_item">
+                     <p >Service Price:</p>
+                     <p className="price_number"> {currencyFormat(service.price)}</p>
+                     </div>           
+                     <button className="btn-21" onClick={() => navigate("/booking")}><span>BOOK  NOW <i className="fa-solid fa-arrow-right"></i></span></button>
+                 </div>
+           </div>
+          
+          ))}
+      
+         
         </div>
     </div>
   )

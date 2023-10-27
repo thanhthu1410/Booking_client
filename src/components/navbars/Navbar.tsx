@@ -2,6 +2,7 @@ import { useNavigate } from "react-router";
 import "./navbar.scss";
 import { useState } from "react";
 import { Carousel } from 'antd';
+import PhoneIcon from "../phoneIcon/PhoneIcon";
 
 export default function Navbar() {
     const navigate = useNavigate();
@@ -56,9 +57,7 @@ export default function Navbar() {
                         <a className="about_title" href="#about">TIPS</a>
                     </div>
                     <div className="navbar_right">
-                        <i className="fa-solid fa-magnifying-glass"></i>
-                        <i className="fa-solid fa-bag-shopping"></i>
-                        <i className="fa-solid fa-location-dot"></i>
+                        <PhoneIcon/>
                     </div>
                 </div>
             </div>
