@@ -3,6 +3,7 @@
 import React, { useEffect } from 'react';
 import './admin.scss'
 import { Link, Outlet, useNavigate } from 'react-router-dom';
+import Notification from '@/components/notification/Notification';
 
 const Sidebar: React.FC = () => {
     const navigate = useNavigate();
@@ -97,6 +98,9 @@ const Sidebar: React.FC = () => {
                     <i className="bx bx-sun" id="darkLight" />
                     <i className="bx bx-bell" />
                 </div>
+                <div>
+                    <Notification />
+                </div>
             </nav>
             <div className='body_container' >
                 <div className="sidebar">
@@ -188,7 +192,7 @@ const Sidebar: React.FC = () => {
                                     </Link>
                                 </ul>
                             </li>
-                            <li className="item" onClick={() => navigate("/admin/chart")}>
+                            <li className="item">
                                 <a className="nav_link submenu_item">
                                     <span className="navlink_icon">
                                         <i className="fa-solid fa-chart-simple"></i>
@@ -196,6 +200,14 @@ const Sidebar: React.FC = () => {
                                     <span className="navlink">Chart Manager</span>
                                     <i className="bx bx-chevron-right arrow-left" />
                                 </a>
+                                <ul className="menu_items submenu">
+                                    <Link to="chart-avenue" className="nav_link sublink">
+                                        Chart Avenue
+                                    </Link>
+                                    <Link to="chart-service" className="nav_link sublink">
+                                        Chart Service
+                                    </Link>
+                                </ul>
                             </li>
 
                             <li className="item">

@@ -32,14 +32,6 @@ export default function ListAppointment() {
 
     const stepMinute = timeStore.data?.stepMinute || 0;
 
-    // useEffect(() => {
-    //     console.log("appointmentStore", appointmentStore.data)
-    // }, [appointmentStore])
-
-    // useEffect(() => {
-    //     console.log("staffStore", staffStore)
-    // }, [staffStore])
-
     const generateTimes = (start: string, end: string) => {
         const times = [];
         const [startHour, startMinute] = start.split(':').map(Number);
@@ -129,10 +121,9 @@ export default function ListAppointment() {
                                         appointment.date == datePicked &&
                                         appointment.time === time &&
                                         appointment.appointmentDetails.some(detail => detail.staffId === staff.id) &&
-                                        (appointmentStatus === "ALL" || appointment.status === appointmentStatus)
+                                        (appointmentStatus === "ALL" && appointment.status != "REJECTED" || appointment.status === appointmentStatus)
                                     )
                                         .map(appointment => {
-                                            // console.log("appointment", appointment);
                                             return (
                                                 <div key={appointment.id} className={`appointment__detail ${appointment.status == "ACCEPTED" ? "accepted" : appointment.status == "REJECTED" ? "rejected" : appointment.status == "DONE" ? "done" : ""}`} onClick={() => {
                                                     setAppointmentDetail(appointment);

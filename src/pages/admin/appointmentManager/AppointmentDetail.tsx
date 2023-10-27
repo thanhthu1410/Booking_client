@@ -19,6 +19,7 @@ const status = ["PENDING", "ACCEPTED", "REJECTED", "DONE"];
 export default function AppointmentDetail(props: AppointmentData) {
     const [appointmentStatus, setAppointmentStatus] = useState<string>(props.appointmentData.status);
     const [time, setTime] = useState(props.appointmentData.time);
+    const [date, setDate] = useState(props.appointmentData.date);
 
     const appointmentStore = useSelector((store: StoreType) => {
         return store.appointmentStore
@@ -58,7 +59,8 @@ export default function AppointmentDetail(props: AppointmentData) {
         setIsSaveDisabled(true);
         let data = {
             status: appointmentStatus,
-            time
+            time,
+            // date: datePicked
         }
         console.log("data", data);
         api.appointmentApi.update(props.appointmentData.id, data)
@@ -73,8 +75,7 @@ export default function AppointmentDetail(props: AppointmentData) {
                                 return appointment;
                             }
                         })
-                        // dispatch(appointmentActions.setData(updatedAppointmentStore));
-                        let socket: Socket = io("http://localhost:3003")
+                        let socket: Socket = io("http://localhost:3003");
                         socket.emit("acceptBooking", updatedAppointmentStore);
                         props.setShowModal(false);
                     }

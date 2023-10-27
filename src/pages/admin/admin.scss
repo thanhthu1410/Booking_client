@@ -27,7 +27,8 @@
         top: 120px !important;
         left: 325px !important;
         height: 90vh !important;
-        width: 1500px !important;
+        // width: 1500px !important;
+        width: 70%;
         // background-color: red !important;
     }
 
@@ -287,18 +288,20 @@
         left: -100%;
     }
 }
-.voucher_search_container{
+
+.voucher_search_container {
     position: relative;
     width: 50%;
     margin-bottom: 30px;
-    
-    input{
+
+    input {
         padding: 7px 40px;
         width: 100%;
         border-radius: 26px;
         font-size: 1.1rem;
     }
-    .search_icon{
+
+    .search_icon {
         position: absolute !important;
         left: 10px;
         top: 14px;

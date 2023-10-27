@@ -101,14 +101,6 @@ export default function Booking() {
         }
     }
 
-    useEffect(() => {
-        console.log("selectedServices", selectedServices)
-    }, [selectedServices])
-
-    // useEffect(() => {
-    //     console.log("selectedStaff", selectedStaff)
-    // }, [selectedStaff])
-
     let socket: Socket = io("http://localhost:3003")
 
     function handleSubmit(e: React.FormEvent) {
@@ -221,10 +213,6 @@ export default function Booking() {
     const serviceStore = useSelector((store: StoreType) => {
         return store.serviceStore
     })
-
-    useEffect(() => {
-        console.log("serviceStore", serviceStore)
-    }, [serviceStore])
 
     useEffect(() => {
         api.serviceApi.findAllService()

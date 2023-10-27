@@ -21,14 +21,12 @@ function App() {
     api.timeApi.findAll()
       .then(res => {
         if (res.status == 200) {
-          console.log("res", res.data.data);
           dispatch(timeAction.setData(res.data.data));
         }
       })
     api.voucherApi.findMany()
       .then(res => {
         if (res.status == 200) {
-          console.log("listvoucher", res)
           dispatch(voucherAction.setData(res.data.data))
         }
       })
@@ -76,7 +74,6 @@ function App() {
 
     socket.on("listAppointments", (listAppointments) => {
       try {
-        console.log("listAppointmentsInStore", listAppointments)
         dispatch(appointmentActions.setData(listAppointments));
       } catch (error) {
         console.error("Error updating appointment store:", error);
@@ -86,6 +83,11 @@ function App() {
     socket.on("bookingFail", (data) => {
       console.log("data", data);
     });
+
+    socket.on("notifications", (data) => {
+      console.log("data", data)
+      dispatch(appointmentActions.setMessage(data))
+    })
 
   }, [])
 

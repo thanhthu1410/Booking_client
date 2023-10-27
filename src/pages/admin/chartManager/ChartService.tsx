@@ -5,8 +5,13 @@ import { StoreType } from '@/stores';
 import { Appointment } from '@/stores/slices/appointment.slice';
 import { Select, Space } from 'antd';
 
-const AcquisitionsChart: React.FC = () => {
+const ChartService: React.FC = () => {
     const [chartData, setChartData] = useState<Appointment[]>();
+    interface ServiceData {
+        serviceName: string,
+        numberOfAppointments: number
+    }
+    const [chartDataService, setChartDataService] = useState<ServiceData[]>();
     const [month, setMonth] = useState<string>("10")
     const appointmentStore = useSelector((store: StoreType) => {
         return store.appointmentStore
@@ -18,27 +23,49 @@ const AcquisitionsChart: React.FC = () => {
         setMonth(value);
     }
 
-    useEffect(() => {
-        if (appointmentStore) {
-            let data = appointmentStore.data?.filter((appointment) => appointment.status === "DONE");
-            if (data) {
-                data = data.reduce((accumulator: any, current) => {
-                    const existingItem = accumulator?.find((item: any) => item.date === current.date);
-                    if (existingItem) {
-                        existingItem.total += current.total;
-                    } else {
-                        accumulator.push({ date: current.date, total: current.total });
-                    }
-                    return accumulator;
-                }, []);
+    function formatData(appointments: Appointment[]): { serviceName: string, numberOfAppointments: number }[] {
+        let doneAppointments = appointments.filter(appointment => appointment.status === "DONE");
+
+        const selectedMonth = month; // Ví dụ: Chọn tháng 10
+        doneAppointments = doneAppointments?.filter((item) => item.date.split('/')[1] === selectedMonth);
+
+        const serviceCounts: { [serviceId: number]: number } = {};
+
+        for (const appointment of doneAppointments) {
+            for (const appointmentDetail of appointment.appointmentDetails) {
+                const serviceId = appointmentDetail.serviceId;
+                if (serviceCounts[serviceId]) {
+                    serviceCounts[serviceId]++;
+                } else {
+                    serviceCounts[serviceId] = 1;
+                }
             }
-            // Lọc theo tháng
-            const selectedMonth = month; // Ví dụ: Chọn tháng 10
-            data = data?.filter((item) => item.date.split('/')[1] === selectedMonth);
-            setChartData(data);
-            console.log("data", data);
         }
-    }, [appointmentStore, month]);
+
+        const formattedData: { serviceName: string, numberOfAppointments: number }[] = [];
+
+        for (const serviceId in serviceCounts) {
+            const serviceName = appointments[0]?.appointmentDetails.find(detail => detail.serviceId === Number(serviceId))?.service.name;
+
+            if (serviceName) {
+                formattedData.push({
+                    serviceName,
+                    numberOfAppointments: serviceCounts[Number(serviceId)]
+                });
+            }
+        }
+
+        return formattedData;
+    }
+
+    useEffect(() => {
+        console.log("appointmentStore", appointmentStore.data?.filter((appointment) => appointment.status == "DONE"))
+        if (appointmentStore && appointmentStore.data) {
+            setChartDataService(formatData(appointmentStore.data))
+            console.log("formatData(appointmentStore.data)", formatData(appointmentStore.data))
+        }
+    }, [appointmentStore, month])
+
 
     const chartRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -56,11 +83,11 @@ const AcquisitionsChart: React.FC = () => {
                 chartInstanceRef.current = new Chart(ctx, {
                     type: 'bar',
                     data: {
-                        labels: chartData?.map(row => row.date),
+                        labels: chartDataService?.map(row => row.serviceName),
                         datasets: [
                             {
-                                label: 'Acquisitions by date',
-                                data: chartData?.map(row => row.total),
+                                label: 'Acquisitions by service',
+                                data: chartDataService?.map(row => row.numberOfAppointments),
                                 backgroundColor: 'rgba(75, 192, 192, 0.2)',
                                 borderColor: 'rgba(75, 192, 192, 1)',
                                 borderWidth: 1,
@@ -77,7 +104,7 @@ const AcquisitionsChart: React.FC = () => {
                 });
             }
         }
-    }, [chartData]);
+    }, [chartDataService]);
 
     return (<>
         <Space wrap>
@@ -98,4 +125,4 @@ const AcquisitionsChart: React.FC = () => {
         <canvas ref={chartRef} id="acquisitions" width="400" height="400"></canvas></>);
 };
 
-export default AcquisitionsChart;
+export default ChartService;
