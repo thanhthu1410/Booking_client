@@ -5,7 +5,8 @@ export interface Time {
     endTime: string,
     stepMinute: number,
     duration: number,
-    maxDate: number
+    maxDate: number,
+    reminderTime: number
 }
 
 export interface TimeState {

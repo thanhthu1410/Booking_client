@@ -35,11 +35,21 @@ const Notification: React.FC = () => {
             </button>
             {open &&
                 <div className='modal__container'>
-                    {appointmentStore.notifications?.map((message) => (
-                        <div className='modal__message' key={Math.random() * Date.now()} style={{ marginBottom: "10px" }}>
-                            <Alert message={message.message} type="info" showIcon />
-                        </div>
-                    ))}
+                    {appointmentStore.notifications?.slice(appointmentStore.notifications.length - 10, appointmentStore.notifications.length).map((message) => {
+                        if (message.message.includes("confirm")) {
+                            return (
+                                <div className='modal__message' key={Math.random() * Date.now()} style={{ marginBottom: "10px", color: "red" }}>
+                                    <Alert message={message.message} type="success" showIcon />
+                                </div>
+                            )
+                        } else {
+                            return (
+                                <div className='modal__message' key={Math.random() * Date.now()} style={{ marginBottom: "10px" }}>
+                                    <Alert message={message.message} type="info" showIcon />
+                                </div>
+                            )
+                        }
+                    })}
                 </div>}
         </>
     );

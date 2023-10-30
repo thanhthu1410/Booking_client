@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import './time.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import api from '@/services/api';
-import { Space, TimePicker } from 'antd';
+import { InputNumber, Space, TimePicker } from 'antd';
 import { Modal, message } from 'antd';
 import { StoreType } from '@/stores';
 import { timeAction } from '@/stores/slices/time.slice';
@@ -29,7 +29,7 @@ export default function Time() {
             startTime: start,
             endTime: end,
             maxDate: Number(e.target.daysReservation.value),
-            stepMinute: Number(e.target.minimumPeriod.value),
+            stepMinute: Number(e.target.stepMinute.value),
             reminderTime: Number(e.target.reminderTime.value)
         }
         api.timeApi.update(data)
@@ -68,34 +68,36 @@ export default function Time() {
             {timeStore.data && (
                 <div className='admin'>
                     <form onSubmit={(e: any) => handleSubmit(e)}>
-                        <div className='form_group'>
-                            <label htmlFor="">Start Time</label><br />
-                            <Space>
-                                <TimePicker onChange={(value) => { handleChangeStartTime(value) }} format='HH:mm' defaultValue={dayjs(timeStore.data?.startTime, 'HH:mm')} />
-                            </Space>
-                        </div>
-                        <div className='form_group'>
-                            <label htmlFor="">End Time</label><br />
-                            <Space>
-                                <TimePicker onChange={(value) => { handleChangeEndTime(value) }} format='HH:mm' defaultValue={dayjs(timeStore.data?.endTime, 'HH:mm')} />
-                            </Space>
-                        </div>
+                        <div className='time__form'>
+                            <div className='form_group'>
+                                <label htmlFor="">Giờ bắt đầu</label><br />
+                                <Space>
+                                    <TimePicker onChange={(value) => { handleChangeStartTime(value) }} format='HH:mm' defaultValue={dayjs(timeStore.data?.startTime, 'HH:mm')} style={{ width: "220px" }} />
+                                </Space>
+                            </div>
+                            <div className='form_group'>
+                                <label htmlFor="">Giờ kết thúc</label><br />
+                                <Space>
+                                    <TimePicker onChange={(value) => { handleChangeEndTime(value) }} format='HH:mm' defaultValue={dayjs(timeStore.data?.endTime, 'HH:mm')} style={{ width: "220px" }} />
+                                </Space>
+                            </div>
 
-                        <div className='form_group'>
-                            <label htmlFor="">Khoảng cách 1 khung giờ (phút)</label><br />
-                            <input type="text" name="duration" defaultValue={timeStore.data?.stepMinute} />
-                        </div>
-                        <div className='form_group'>
-                            <label htmlFor="">Số ngày cho đặt trước</label><br />
-                            <input type="text" name="daysReservation" defaultValue={timeStore.data?.maxDate} />
-                        </div>
-                        <div className='form_group'>
-                            <label htmlFor="">Thời gian đặt trước tối thiểu (phút)</label><br />
-                            <input type="text" name="minimumPeriod" defaultValue={timeStore.data?.duration} />
-                        </div>
-                        <div className='form_group'>
-                            <label htmlFor="">Nhắc lịch trước giờ hẹn (phút)</label><br />
-                            <input type="text" name="reminderTime" defaultValue={timeStore.data?.duration} />
+                            <div className='form_group'>
+                                <label htmlFor="">Khoảng cách 1 khung giờ (phút)</label><br />
+                                <InputNumber defaultValue={timeStore.data?.stepMinute} name="stepMinute" style={{ width: "80%" }} />
+                            </div>
+                            <div className='form_group'>
+                                <label htmlFor="">Số ngày cho đặt trước</label><br />
+                                <InputNumber defaultValue={timeStore.data?.maxDate} name="daysReservation" style={{ width: "80%" }} />
+                            </div>
+                            <div className='form_group'>
+                                <label htmlFor="">Thời gian đặt trước tối thiểu (phút)</label><br />
+                                <InputNumber defaultValue={timeStore.data?.duration} name="duration" style={{ width: "80%" }} />
+                            </div>
+                            <div className='form_group'>
+                                <label htmlFor="">Nhắc lịch trước giờ hẹn (phút)</label><br />
+                                <InputNumber defaultValue={timeStore.data?.reminderTime} name="reminderTime" style={{ width: "80%" }} />
+                            </div>
                         </div>
                         <button type='submit' className='save_button'>
                             {loading ? <span className='loading-spinner'></span> : "Save"}

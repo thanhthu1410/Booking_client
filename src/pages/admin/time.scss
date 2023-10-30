@@ -1,19 +1,27 @@
 .admin {
     padding: 50px;
 
-    .form_group {
-        input {}
-    }
+    .time__form {
+        display: flex;
+        flex-wrap: wrap;
 
-    .save_button {
-        margin-top: 20px;
-        padding: 7px 20px;
-        background-color: black;
-        color: #fff;
-        border: none;
+        .form_group {
+            width: 30%;
+        }
+
+
     }
 }
 
 .mbsc-form-control-wrapper {
     width: 200px;
+}
+
+.save_button {
+    margin-top: 20px;
+    padding: 7px 20px;
+    background-color: black;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
 }
