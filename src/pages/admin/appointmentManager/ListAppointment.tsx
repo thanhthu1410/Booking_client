@@ -78,19 +78,25 @@ export default function ListAppointment() {
 
     const [appointmentStatus, setAppointmentStatus] = useState<string>("ALL");
 
-    const handleChange = (value: string) => {
+    const [selectedStaff, setSelectedStaff] = useState<string>("ALL");
+
+    const handleChangeStatus = (value: string) => {
         setAppointmentStatus(value);
     };
 
+    const handleChangeStaff = (value: string) => {
+        setSelectedStaff(value);
+    }
+
     return (
         <div className='List_appointment_container'>
-            <h2>List Appointments</h2>
+            <button className='new__booking__button'>New booking</button>
             <DatePicker onChange={onChange} value={dateRange} defaultValue={dayjs()} format="DD/MM/YYYY" />
             <Space wrap>
                 <Select
                     defaultValue="Status"
                     style={{ width: 150, height: 33, marginLeft: 10 }}
-                    onChange={(value) => handleChange(value)}
+                    onChange={(value) => handleChangeStatus(value)}
                     value={appointmentStatus}
                 >
                     {status.map((item) => (
@@ -102,46 +108,81 @@ export default function ListAppointment() {
                     ))}
                 </Select>
             </Space>
+            <Space wrap>
+                <Select
+                    defaultValue="ALL" // Set default value to "ALL"
+                    style={{ width: 150, height: 33, marginLeft: 10 }}
+                    onChange={(value) => handleChangeStaff(value)}
+                    value={selectedStaff}
+                >
+                    <Select.Option key="all" value="ALL">ALL</Select.Option> {/* Add this line */}
+                    {staffStore.data?.map((staff) => (
+                        <Select.Option key={Math.random() * Date.now()} value={staff.name}>
+                            <div>
+                                <p style={{ marginBottom: "0px" }}>{staff.name}</p>
+                            </div>
+                        </Select.Option>
+                    ))}
+                </Select>
+            </Space>
+
             <table>
                 <thead>
                     <tr>
                         <th></th>
-                        {staffStore.data?.map((staff) => (
-                            <th key={Math.random() * Date.now()}>{staff.name}</th>
-                        ))}
+                        {staffStore.data?.map((staff) => {
+                            if (selectedStaff === "ALL" || staff.name === selectedStaff) {
+                                return (
+                                    <th key={Math.random() * Date.now()}>
+                                        <img src={staff.avatar} alt="" className='staff__avatar' />
+                                        {staff.name}
+                                    </th>
+                                );
+                            }
+                            return null; // Return null for staff not selected
+                        })}
                     </tr>
                 </thead>
+
                 <tbody>
                     {times.map((time) => (
                         <tr key={time}>
-                            <td style={{ width: "100px" }}>{time}</td>
-                            {staffStore.data?.map((staff) => (
-                                <td key={Math.random() * Date.now()} className='appointment'>
-                                    {appointmentStore.data?.filter(appointment =>
-                                        appointment.date == datePicked &&
-                                        appointment.time === time &&
-                                        appointment.appointmentDetails.some(detail => detail.staffId === staff.id) &&
-                                        (appointmentStatus === "ALL" && appointment.status != "REJECTED" || appointment.status === appointmentStatus)
-                                    )
-                                        .map(appointment => {
-                                            return (
-                                                <div key={appointment.id} className={`appointment__detail ${appointment.status == "ACCEPTED" ? "accepted" : appointment.status == "REJECTED" ? "rejected" : appointment.status == "DONE" ? "done" : ""}`} onClick={() => {
-                                                    setAppointmentDetail(appointment);
-                                                    setStaffId(staff.id);
-                                                    setShowModal(true);
-                                                }}>
-                                                    <p className='customer__name'>Customer: {appointment.customer.fullName}</p>
-                                                    <p>Status: {appointment.status}</p>
-                                                    {appointment.appointmentDetails.filter(service => service.staffId == staff.id).
-                                                        map((item) => (
-                                                            <p key={Math.random() * Date.now()}>Service: {item.service.name}</p>
-                                                        ))}
-                                                    <p>Total: ${appointment.total}</p>
-                                                </div>
+                            <td style={{ width: "130px" }}>
+                                {dayjs(time, 'HH:mm').format('hh:mm A')}
+                            </td>
+                            {staffStore.data?.map((staff) => {
+                                if (selectedStaff === "ALL" || staff.name === selectedStaff) {
+                                    return (
+                                        <td key={Math.random() * Date.now()} className={`appointment ${selectedStaff == "ALL" ? "all" : "selectedStaff"}`}>
+                                            {appointmentStore.data?.filter(appointment =>
+                                                appointment.date == datePicked &&
+                                                appointment.time === time &&
+                                                appointment.appointmentDetails.some(detail => detail.staffId === staff.id) &&
+                                                (appointmentStatus === "ALL" && appointment.status != "REJECTED" || appointment.status === appointmentStatus) &&
+                                                (selectedStaff === "ALL" || staff.name === selectedStaff)
                                             )
-                                        })}
-                                </td>
-                            ))}
+                                                .map(appointment => {
+                                                    return (
+                                                        <div key={appointment.id} className={`appointment__detail ${appointment.status == "ACCEPTED" ? "accepted" : appointment.status == "REJECTED" ? "rejected" : appointment.status == "DONE" ? "done" : ""}`} onClick={() => {
+                                                            setAppointmentDetail(appointment);
+                                                            setStaffId(staff.id);
+                                                            setShowModal(true);
+                                                        }}>
+                                                            <p className='customer__name'> <b>Customer:</b>  {appointment.customer.fullName}</p>
+                                                            <p><b>Status:</b>  {appointment.status}</p>
+                                                            {appointment.appointmentDetails.filter(service => service.staffId == staff.id).
+                                                                map((item) => (
+                                                                    <p key={Math.random() * Date.now()}><b>Service:</b> {item.service.name}</p>
+                                                                ))}
+                                                            <p><b>Total:</b>  ${appointment.total}</p>
+                                                        </div>
+                                                    )
+                                                })}
+                                        </td>
+                                    )
+                                }
+                                return null
+                            })}
                         </tr>
                     ))}
                 </tbody>
