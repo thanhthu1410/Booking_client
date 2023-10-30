@@ -30,7 +30,8 @@
                 }
 
                 .appointment__detail {
-                    background-color: #dcc7ff;
+                    background-color: #e2d7f5;
+                    border-left: 5px solid #7d32a9;
                     height: 100px;
                     overflow-y: scroll;
                     cursor: pointer;
@@ -42,15 +43,18 @@
                 }
 
                 .appointment__detail.accepted {
-                    background-color: #7aefa6;
+                    background-color: #a7f6c5;
+                    border-left: 5px solid #70bb5a;
                 }
 
                 .appointment__detail.rejected {
                     background-color: #f6d6d6;
+                    border-left: 5px solid #fa9f9f;
                 }
 
                 .appointment__detail.done {
-                    background-color: #ffffb3;
+                    background-color: #f7f7d1;
+                    border-left: 5px solid #ecc23d;
                 }
             }
         }
