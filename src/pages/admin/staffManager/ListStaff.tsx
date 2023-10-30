@@ -90,7 +90,7 @@ export default function ListStaff() {
                 <h3>List Staff</h3>
             </div>
             <div className='voucher_search_container'>
-                <input type="text" placeholder='Enter Staff...' onChange={(e) => {
+                <input type="text" placeholder='Enter Name Staff...' onChange={(e) => {
                     e.preventDefault()
                     setSearchData(e.target.value)
                 }} />

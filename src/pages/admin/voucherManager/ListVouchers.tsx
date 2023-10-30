@@ -159,9 +159,9 @@ function ListVoucher() {
                 <div className="spinner-border" role="status">
                     <span className="visually-hidden">Loading...</span>
                 </div>
-            </div> : <Table striped>
+            </div> : <table className='table'>
 
-                <thead>
+                <thead className="thead-dark">
                     <tr>
                         <th>No</th>
                         <th>Code</th>
@@ -247,7 +247,7 @@ function ListVoucher() {
                     }
                     {modal ? <EditVoucher setModal={setModal} voucher={vocherState} vouchers={vouchers} setVouchers={setVouchers} searchData={searchData} setSearchData={setSearchData}></EditVoucher> : <></>}
                 </tbody>
-            </Table>}
+            </table>}
 
             <nav aria-label="Page navigation example page_box">
                 <ul className="pagination">

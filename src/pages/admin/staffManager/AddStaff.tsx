@@ -160,14 +160,14 @@ export default function AddStaff() {
                     </div>
                     <div className='staff_service'>
                         <div className='staff_service_text'>
-                            <h1>List Service</h1>
+                            <h3>List Service</h3>
                         </div>
                         <div className='list_service'>
                             <Checkbox.Group onChange={onChange} value={selectedServices}>
                                 {serviceStore.data?.map((item: any) => (
                                     <div key={item.id} className='container_choose_service'>
                                         <Checkbox value={item.id}>
-                                            <label>{item.name}  &nbsp;</label >
+                                            <label className='add_staff_nameservice'>{item.name}  &nbsp;</label >
                                         </Checkbox>
                                   
                                     </div> 
