@@ -35,7 +35,9 @@ function App() {
     api.serviceApi.findAllService()
       .then(res => {
         if (res.status == 200) {
-          dispatch(serviceActions.setDataService(res.data.data))
+          dispatch(serviceActions.setDataService(res.data.data));
+          console.log("abc");
+          
 
         }
       })

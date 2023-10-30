@@ -113,7 +113,7 @@ export default function AddStaff() {
 
 
     return (
-        <div>
+     
             <div className='Staff_container'>
                 <div className='admin_title'>
                     <h3 onClick={() => navigate("/admin/service")} className='title_1'>Admin / </h3>
@@ -165,12 +165,12 @@ export default function AddStaff() {
                         <div className='list_service'>
                             <Checkbox.Group onChange={onChange} value={selectedServices}>
                                 {serviceStore.data?.map((item: any) => (
-                                    <div key={item.id}>
+                                    <div key={item.id} className='container_choose_service'>
                                         <Checkbox value={item.id}>
-                                            <label>{item.name}</label>
+                                            <label>{item.name}  &nbsp;</label >
                                         </Checkbox>
-                                        <br />
-                                    </div>
+                                  
+                                    </div> 
                                 ))}
                             </Checkbox.Group>
                         </div>
@@ -187,7 +187,7 @@ export default function AddStaff() {
                         </div>
                     </div>
                 </form>
-            </div>
+         
         </div>
     )
 }

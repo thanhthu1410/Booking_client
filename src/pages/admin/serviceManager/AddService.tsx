@@ -1,15 +1,16 @@
 import { useNavigate } from 'react-router-dom'
 import './service.scss'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { FormEvent, MutableRefObject, useRef, useState } from 'react';
 import api from '@/services/api';
 import { serviceActions } from '@/stores/slices/service.slice';
 import { Modal, Spin, message } from 'antd';
 import { LoadingOutlined } from '@ant-design/icons';
 import Loading from '@/pages/component/Loading';
+import { StoreType } from '@/stores';
 
 export default function AddService() {
-
+    const serviceStore = useSelector((store: StoreType) => store.serviceStore)
     const [load, setLoad] = useState(false);
     const antIcon = (
         <LoadingOutlined
@@ -75,7 +76,8 @@ export default function AddService() {
                 (imgPreviewRef.current! as HTMLImageElement).src = "https://content.gobsn.com/i/bodyandfit/no-xplode_Image_01?layer0=$PDP$";
                 dispatch(serviceActions.insertService(res.data));
                 message.success("Add Service sucsses")
-                setLoad(false)
+                setLoad(false);
+                dispatch(serviceActions.reload())
             })
             .catch(err => {
                 console.log("err", err);
