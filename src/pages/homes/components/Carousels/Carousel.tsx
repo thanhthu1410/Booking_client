@@ -14,7 +14,7 @@ const navigate = useNavigate()
     };
     const sr = ScrollReveal();
     sr.reveal('.title-h2', slideUp);
-  });
+  },[]);
   useEffect(() => {
     const slideUp = {
       // distance: '180%',
@@ -23,7 +23,7 @@ const navigate = useNavigate()
     };
     const sr = ScrollReveal();
     sr.reveal('.btn-101', slideUp);
-  });
+  },[]);
   useEffect(() => {
     const slideUp = {
       distance: '160%',
@@ -34,7 +34,7 @@ const navigate = useNavigate()
     };
     const sr = ScrollReveal();
     sr.reveal('.title-h5', slideUp);
-  });
+  },[]);
   const [banners, setBanners] = useState([
     {
       id: 1,

@@ -31,8 +31,8 @@ export default function Banner() {
               <span className="char17">9</span>
               <span className="char18">6</span></div>
           </div>
-          {/* <img className="img2" src="https://themeholy.com/html/rasm/demo/assets/img/normal/about_3_2.jpg" alt="" /> */}
-          <img className="img2" src="https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/395366141_3792397300987923_5668594513319135466_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_ohc=9cJL7nAmE6MAX_Ccj1W&_nc_ht=scontent.fsgn2-5.fna&oh=00_AfBdcGTaQyFHfJaYoFndD9XzPUuqcLL-78HALE6mD2v27Q&oe=653CD351" alt="" />
+          <img className="img2" src="https://themeholy.com/html/rasm/demo/assets/img/normal/about_3_2.jpg" alt="" />
+          {/* <img className="img2" src="https://scontent.fsgn2-5.fna.fbcdn.net/v/t39.30808-6/395366141_3792397300987923_5668594513319135466_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=5f2048&_nc_ohc=9cJL7nAmE6MAX_Ccj1W&_nc_ht=scontent.fsgn2-5.fna&oh=00_AfBdcGTaQyFHfJaYoFndD9XzPUuqcLL-78HALE6mD2v27Q&oe=653CD351" alt="" /> */}
         </div>
         <div className="banner_chirld_right">
           <p className="banner_detail_title">
@@ -65,28 +65,28 @@ export default function Banner() {
             </div>
             <div className="service_item">
               <img src="https://themeholy.com/html/rasm/demo/assets/img/icon/service_3_2.svg" alt="" />
-              <p className="title">Hair Cut</p>
-              <p className="content">A versatile and classic haircut that can be worn in different lengths and styles, suitable for various face shapes</p>
+              <p className="title">Hairdryer</p>
+              <p className="content">Hairdryers are salons and households for various hair styling purposes, such as drying wet hair after washing</p>
             </div>
             <div className="service_item">
               <img src="https://themeholy.com/html/rasm/demo/assets/img/icon/service_3_3.svg" alt="" />
-              <p className="title">Hair Cut</p>
-              <p className="content">A versatile and classic haircut that can be worn in different lengths and styles, suitable for various face shapes</p>
+              <p className="title">Hair Coloring</p>
+              <p className="content">Hair coloring is the process of changing the natural color of ones hair using different types color treatments.</p>
             </div>
             <div className="service_item">
               <img src="https://themeholy.com/html/rasm/demo/assets/img/icon/service_3_4.svg" alt="" />
-              <p className="title">Hair Cut</p>
-              <p className="content">A versatile and classic haircut that can be worn in different lengths and styles, suitable for various face shapes</p>
+              <p className="title">Hair Style</p>
+              <p className="content">If youre unsure about a specific style or how to achieve it, a hairstylist can offer you achieve the desired look.</p>
             </div>
             <div className="service_item">
               <img src="https://themeholy.com/html/rasm/demo/assets/img/icon/service_3_5.svg" alt="" />
-              <p className="title">Hair Cut</p>
-              <p className="content">A versatile and classic haircut that can be worn in different lengths and styles, suitable for various face shapes</p>
+              <p className="title">Smooth Shaving</p>
+              <p className="content">Once you finish shaving, rinse your skin with cool water to close the pores and then pat dry with a clean towel.</p>
             </div>
             <div className="service_item">
               <img src="https://themeholy.com/html/rasm/demo/assets/img/icon/service_3_6.svg" alt="" />
-              <p className="title">Hair Cut</p>
-              <p className="content">A versatile and classic haircut that can be worn in different lengths and styles, suitable for various face shapes</p>
+              <p className="title">Hair Trimming</p>
+              <p className="content">Hair trimming is the process of cutting the ends of your hair to maintain its length, shape, and overall health.</p>
             </div>
           </div>
         </div>
