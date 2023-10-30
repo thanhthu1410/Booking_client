@@ -75,6 +75,7 @@ export default function AppointmentDetail(props: AppointmentData) {
                                 return appointment;
                             }
                         })
+                        dispatch(appointmentActions.setData(updatedAppointmentStore));
                         let socket: Socket = io("http://localhost:3003");
                         socket.emit("acceptBooking", updatedAppointmentStore);
                         props.setShowModal(false);
@@ -111,7 +112,7 @@ export default function AppointmentDetail(props: AppointmentData) {
                         .map((item) => (
                             <div key={Math.random() * Date.now()}>
                                 <p key={item.service.name}>{item.service.name}: ${item.service.price}</p>
-                                <p>{item.service.desc} minute</p>
+                                {/* <p>{item.service.desc}</p> */}
                             </div>
 
                         ))}
