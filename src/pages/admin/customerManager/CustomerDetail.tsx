@@ -9,8 +9,9 @@ interface Props {
     setCustomerDetail: any
 }
 export default function CustomerDetail(props: Props) {
-
-    // console.log("props.customerDetail", props.customerDetail);
+    function currencyFormat(num: number) {
+        return '$' + num.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+    }
 
 
     return (
@@ -28,16 +29,16 @@ export default function CustomerDetail(props: Props) {
                                     {item?.voucher?.discountType === "percent" ? (
                                         <p>Discount: {item?.voucher?.value}%</p>
                                     ) : (item?.voucher?.discountType) === "cash" ? (
-                                        <p>Voucher: ${item?.voucher?.value}</p>
+                                        <p>Voucher: {currencyFormat(item?.voucher?.value)}</p>
                                     ) : null}
                                     {/* {(item?.voucher?.discountType) == "percent" ? (<p>Discount: {item?.voucher?.value}%</p>) : (<p>Voucher: ${item?.voucher?.value}</p>)} */}
-                                    <p>Total: ${item.total}</p>
+                                    <p>Total: {currencyFormat(item.total)}</p>
                                 </div>
                             </div>
                             {item?.appointmentDetails?.map((infor: AppointmentDetail) => (
                                 <div key={Date.now() * Math.random()} className='customer_appointmentDetails'>
                                     <p>Service Name: <span>{infor?.service?.name}</span></p>
-                                    <p>Price: <span>${infor?.service?.price}</span></p>
+                                    <p>Price: <span>{currencyFormat(infor?.service?.price)}</span></p>
                                     <p>Staff Name: <span>{infor?.staff?.name}</span></p>
                                 </div>
                             ))}
@@ -48,7 +49,7 @@ export default function CustomerDetail(props: Props) {
                 <div className='Cancle_button'>
                     <button onClick={() => {
                         props.setModal(false)
-                    }} type="button" className="btn btn-secondary">Cancle</button>
+                    }} type="button" className="btn btn-secondary btnClose">Close</button>
                 </div>
             </div>
         </div>

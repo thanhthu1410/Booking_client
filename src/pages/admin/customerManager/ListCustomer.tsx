@@ -1,22 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 import './listCustomer.scss'
-
 import { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import { StoreType } from '@/stores';
 import api from '@/services/api';
-import { Customer, customerActions } from '@/stores/slices/customer.slice';
+import { Customer } from '@/stores/slices/customer.slice';
 import CustomerDetail from './CustomerDetail';
 import moment from 'moment';
-
 export default function ListCustomer() {
     const navigate = useNavigate()
-    const dispatch = useDispatch()
-
-    const customerStore = useSelector((store: StoreType) => {
-        return store.customerStore
-    })
-
     const [modal, setModal] = useState(false)
     const [listCustomer, setListCustomer] = useState<Customer[]>([])
     const [selectedPage, setSelectedPage] = useState(null);
@@ -26,7 +16,6 @@ export default function ListCustomer() {
     const [searchStatus, setSearchStatus] = useState(false);
     const [searchData, setSearchData] = useState<Customer[]>([]);
     const [customerDetail, setCustomerDetail] = useState<Customer>()
-
     let timeOut: any;
     function search(e: any) {
         clearTimeout(timeOut);
@@ -123,7 +112,7 @@ export default function ListCustomer() {
                 <h3>List Customer</h3>
             </div>
             <div className='voucher_search_container'>
-                <input type="text" placeholder='Enter Service...' onChange={(e) => {
+                <input type="text" placeholder='Enter Email of Customer...' onChange={(e) => {
                     e.preventDefault()
                     search(e)
                 }} />
@@ -132,14 +121,14 @@ export default function ListCustomer() {
 
             <div className='customer_container_content'>
                 <table className="table">
-                    <thead className="thead-dark">
+                    <thead className="thead-dark" >
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Name</th>
                             <th scope="col">Phone</th>
-                            <th scope="col">email</th>
+                            <th scope="col">Email</th>
                             <th scope="col">Create At</th>
-                            <th scope="col">Update At</th>
+                        
                             <th scope="col">Action</th>
 
                         </tr>
@@ -154,7 +143,6 @@ export default function ListCustomer() {
                                     <td>{item?.phoneNumber}</td>
                                     <td>{item?.email}</td>
                                     <td >{moment(new Date(Number(item?.createdAt))).format('DD/MM/YYYY')}</td>
-                                    <td>{moment(new Date(Number(item?.updatedAt))).format('DD/MM/YYYY')}</td>
                                     <td className='action'>
                                         <button onClick={() => {
                                             setModal(true)
@@ -172,8 +160,8 @@ export default function ListCustomer() {
                                         <td>{customer?.fullName}</td>
                                         <td>{customer?.phoneNumber}</td>
                                         <td>{customer?.email}</td>
-                                        <td >{customer?.createdAt}</td>
-                                        <td>{customer?.updatedAt}</td>
+                                        <td >{moment(new Date(Number(customer?.createdAt))).format('DD/MM/YYYY')}</td>
+                                
                                         <td className='action'>
                                             <button onClick={() => {
                                                 setModal(true)
