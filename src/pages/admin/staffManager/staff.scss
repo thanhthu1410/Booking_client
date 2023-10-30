@@ -1,4 +1,5 @@
 .staff_container {
+   
 
     .switch {
         position: relative;
@@ -107,23 +108,7 @@
         margin: 0 auto;
     }
 
-    .admin_title {
-        display: flex;
-        width: 100%;
-        margin-bottom: 20px;
-
-        h3 {
-            cursor: pointer;
-        }
-
-        h3:hover {
-            color: black;
-        }
-
-        .title_1 {
-            color: grey;
-        }
-    }
+    
 }
 
 /* EditStaff */
@@ -198,7 +183,7 @@
 
                 .button {
 
-                    margin-top: 15px;
+                    margin-top: 10px;
 
                     .btn_submit {
                         position: relative !important;
@@ -356,7 +341,7 @@
     }
 
     .button_add_staff {
-        margin-top: 100px;
+        margin-top: 40px;
         border-radius: 10px !important;
         .btn_submit {
             position: relative !important;
@@ -383,5 +368,28 @@
     .button_add_staff button {
         font-size: 15px;
 
+    }
+    .container_choose_service{
+        display: flex;
+        flex-direction: column;
+        width: 330px;
+    }
+}
+.admin_title {
+    display: flex !important;
+    width: 500px;
+    margin-bottom: 20px;
+
+    h3 {
+        cursor: pointer;
+        padding-right: 10px;
+    }
+
+    h3:hover {
+        color: black;
+    }
+
+    .title_1 {
+        color: rgb(158, 157, 157);
     }
 }
