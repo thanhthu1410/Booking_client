@@ -30,7 +30,6 @@ export default function Thanks() {
                         message: `${res.data.data.customer.fullName} just confirm appointment at ${res.data.data.date} ${res.data.data.time}`
                     })
                 }
-
             })
             .catch()
     }, [id])
