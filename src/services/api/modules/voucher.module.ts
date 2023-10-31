@@ -3,13 +3,21 @@ import axios from "axios";
 
 export default {
     create: async function (data: any) {
-        return await axios.post(import.meta.env.VITE_APP_SERVER_HOST_API + "vouchers", data)
+        return await axios.post(import.meta.env.VITE_APP_SERVER_HOST_API + "vouchers", data, {
+            headers: {
+                authorization:`Bearer ${localStorage.getItem("access_token")}`,  
+            }
+        })
     },
     findMany: async function () {
         return await axios.get(import.meta.env.VITE_APP_SERVER_HOST_API + "vouchers/search");
     },
     update: async function (voucher: Voucher) {
-        return await axios.patch(import.meta.env.VITE_APP_SERVER_HOST_API + "vouchers/" + voucher.id, voucher);
+        return await axios.patch(import.meta.env.VITE_APP_SERVER_HOST_API + "vouchers/" + voucher.id, voucher, {
+            headers: {
+                authorization:`Bearer ${localStorage.getItem("access_token")}`,  
+            }
+        });
     },
     findAllPagination: async function (take: number, skip: number) {
         return await axios.get(`${import.meta.env.VITE_APP_SERVER_HOST_API}vouchers?take=${take}&skip=${skip}`);

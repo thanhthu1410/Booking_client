@@ -19,6 +19,7 @@
     "paths": {
       "@/*": ["./src/*", "./dist/*", ""],
       "@components/*": ["src/components/*"],
+      "@helpers/*": ["src/helpers/*"],
       "@pages/*": ["src/pages/*"],
       "@services/*": ["src/services/*"],
       "@routes/*": ["src/routes/*"],
