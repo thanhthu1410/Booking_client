@@ -93,46 +93,64 @@ export default function AppointmentDetail(props: AppointmentData) {
         }}>
             <div className='appointmentDetail__content'>
                 <div className='appointmentDetail__header'>
+                    <h3>VIEW APPOINTMENT</h3>
                     <button onClick={() => props.setShowModal(false)}>
                         <span className="material-symbols-outlined">close</span>
                     </button>
                 </div>
-                <div>
-                    <p>Customer Name: {props.appointmentData.customer.fullName}</p>
-                </div>
-                <div style={{ marginBottom: "10px" }}>
-                    Date: <DatePicker onChange={onChange} defaultValue={dayjs(props.appointmentData.date, "DD/MM/YYYY")} format="DD/MM/YYYY" />
-                </div>
-                <Space>
-                    Time: <TimePicker onChange={(value) => { handleChangeTime(value) }} format='HH:mm' defaultValue={dayjs(time, 'HH:mm')} />
-                </Space>
-                <div>
-                    {props.appointmentData.appointmentDetails
-                        .filter(service => service.staffId === props.staffId)
-                        .map((item) => (
-                            <div key={Math.random() * Date.now()}>
-                                <p key={item.service.name}>{item.service.name}: ${item.service.price}</p>
-                                {/* <p>{item.service.desc}</p> */}
+                <div className='appointmentDetail__body'>
+                    <div className='appointmentDetail__body__left'>
+                        <div style={{ marginBottom: "10px" }}>
+                            <p><i className="fa-regular fa-calendar"></i> {props.appointmentData.date}</p>
+                            {/* Date: <DatePicker onChange={onChange} defaultValue={dayjs(props.appointmentData.date, "DD/MM/YYYY")} format="DD/MM/YYYY" /> */}
+                        </div>
+                        <div className='appointmentDetail__body__left__service'>
+                            <Space>
+                                Time: <TimePicker onChange={(value) => { handleChangeTime(value) }} format='HH:mm' defaultValue={dayjs(time, 'HH:mm')} />
+                            </Space>
+                            <div>
+                                {props.appointmentData.appointmentDetails
+                                    .filter(service => service.staffId === props.staffId)
+                                    .map((item) => (
+                                        <div key={Math.random() * Date.now()}>
+                                            <p key={item.service.name}>{item.service.name}</p>
+                                        </div>
+                                    ))}
                             </div>
-
-                        ))}
+                            <div>
+                                {props.appointmentData.appointmentDetails
+                                    .filter(service => service.staffId === props.staffId)
+                                    .map((item) => (
+                                        <div key={Math.random() * Date.now()}>
+                                            <p key={item.service.name}>${item.service.price}</p>
+                                        </div>
+                                    ))}
+                            </div>
+                        </div>
+                        <div className='appointmentDetail__body__left__customer'>
+                            <p>Customer Name: {props.appointmentData.customer.fullName}</p>
+                        </div>
+                    </div>
+                    <div className='appointmentDetail__body__right'>
+                        <span>Appointment Status:</span>
+                        <Space wrap>
+                            <Select
+                                defaultValue="Status"
+                                style={{ width: 150, height: 40 }}
+                                onChange={(value) => handleChange(value)}
+                                value={appointmentStatus}
+                            >
+                                {props.appointmentData.status != "DONE" && status.map((item) => (
+                                    <Select.Option key={Math.random() * Date.now()} value={item}>
+                                        <div>
+                                            <p style={{ marginBottom: "0px" }}>{item}</p>
+                                        </div>
+                                    </Select.Option>
+                                ))}
+                            </Select>
+                        </Space>
+                    </div>
                 </div>
-                <Space wrap>
-                    <Select
-                        defaultValue="Status"
-                        style={{ width: 150, height: 40 }}
-                        onChange={(value) => handleChange(value)}
-                        value={appointmentStatus}
-                    >
-                        {props.appointmentData.status != "DONE" && status.map((item) => (
-                            <Select.Option key={Math.random() * Date.now()} value={item}>
-                                <div>
-                                    <p style={{ marginBottom: "0px" }}>{item}</p>
-                                </div>
-                            </Select.Option>
-                        ))}
-                    </Select>
-                </Space>
                 <div className='appointmentDetail__footer'>
                     <Button className='close__button' type="primary" onClick={() => props.setShowModal(false)}>Close</Button>
                     {props.appointmentData.status != "DONE" && isSaveDisabled == false ? <button type='submit' className='save__button'>Save</button> : <button type='button' className='save__button done'>Save</button>}

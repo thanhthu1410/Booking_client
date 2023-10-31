@@ -8,7 +8,7 @@
     z-index: 1001;
 
     .appointmentDetail__content {
-        width: 400px;
+        width: 50%;
         background-color: white;
         border-radius: 10px;
         position: fixed;
@@ -16,24 +16,25 @@
         left: 50%;
         transform: translate(-50%, -50%);
         z-index: 1002;
-        height: 360px;
+        height: 50%;
         text-align: center;
 
         .appointmentDetail__header {
             width: 100%;
             padding: 10px 20px;
             display: flex;
-            justify-content: flex-end;
-            border-bottom: 1px solid black;
-            margin-bottom: 10px;
+            justify-content: center;
+            border-bottom: 1px solid #e9e9e9;
+            position: relative;
 
             button {
                 display: flex;
                 align-items: center;
                 border: none;
+                position: absolute;
+                right: 0;
 
                 span {
-                    // background-color: #1677ff;
                     color: #1677ff;
                     padding: 5px;
                     background-color: #fff;
@@ -41,13 +42,48 @@
             }
         }
 
+        .appointmentDetail__body {
+            display: flex;
+            justify-content: space-evenly;
+            height: 70%;
+
+            .appointmentDetail__body__left {
+                width: 60%;
+                padding: 10px 30px;
+                border-right: 1px solid #e9e9e9;
+
+                .appointmentDetail__body__left__service {
+                    display: flex;
+                    width: 80%;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 10px;
+
+                    p {
+                        margin-bottom: 0px;
+                    }
+                }
+
+                .appointmentDetail__body__left__customer {
+                    p {
+                        text-align: left;
+                    }
+                }
+            }
+
+            .appointmentDetail__body__right {
+                display: flex;
+                align-items: center;
+                flex-direction: column;
+                justify-content: center;
+            }
+        }
+
         .appointmentDetail__footer {
-            border-top: 1px solid black;
+            border-top: 1px solid #e9e9e9;
             display: flex;
             justify-content: flex-end;
-            margin-top: 10px;
-            padding-right: 10px;
-            padding-top: 10px;
+            padding: 10px;
 
             .close__button {
                 margin-right: 10px;

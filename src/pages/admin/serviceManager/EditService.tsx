@@ -71,6 +71,7 @@ export default function EditService(props: any) {
                             }
                         })
                         props.setSearchData(updateDataSearch);
+                        dispatch(serviceActions.reload())
                         const updateListService = props.services.map((service: any) => {
                             if (service.id === updateData.id) {
                                 return {
@@ -86,6 +87,7 @@ export default function EditService(props: any) {
                             }
                         })
                         props.setServices(updateListService);
+                        dispatch(serviceActions.reload())
 
                     } else {
                         const updateListService = props.services.map((service: any) => {
@@ -103,6 +105,7 @@ export default function EditService(props: any) {
                             }
                         })
                         props.setServices(updateListService);
+                        dispatch(serviceActions.reload())
                     }
 
                 } else {

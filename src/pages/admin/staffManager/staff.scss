@@ -1,4 +1,5 @@
 .staff_container {
+   
 
     .switch {
         position: relative;
@@ -77,6 +78,8 @@
     .desc {
         max-height: 90px;
         overflow-y: scroll;
+       
+
     }
 
     .slider.round:before {
@@ -84,14 +87,14 @@
     }
 
     .action {
-        // display: flex;
-        // gap: 20px;
-        // margin-left: 70px;
+   
         display: flex;
-        gap: 20px;
+        gap: 5px;
         margin: 0 !important;
-        height: 120px;
+        height: 133px;
         justify-content: space-evenly;
+        // border-bottom: 1px solid rgb(238, 233, 233);
+  
 
         button {
             margin: 0;
@@ -107,23 +110,7 @@
         margin: 0 auto;
     }
 
-    .admin_title {
-        display: flex;
-        width: 100%;
-        margin-bottom: 20px;
-
-        h3 {
-            cursor: pointer;
-        }
-
-        h3:hover {
-            color: black;
-        }
-
-        .title_1 {
-            color: grey;
-        }
-    }
+    
 }
 
 /* EditStaff */
@@ -162,8 +149,9 @@
                 justify-content: center;
                 align-items: center;
                 height: 220px;
-
+            
                 img {
+                 
                     width: 200px;
                     height: 200px;
                     border-radius: 50%;
@@ -198,7 +186,7 @@
 
                 .button {
 
-                    margin-top: 15px;
+                    margin-top: 10px;
 
                     .btn_submit {
                         position: relative !important;
@@ -288,11 +276,11 @@
 
 .add_staff_content {
     display: flex;
-    margin-left: 20px;
+    margin-left: 30px;
     gap: 100px;
 
     .add_image {
-        margin-top: 10px;
+        margin-top: 60px;
     }
 
     .add_content {
@@ -337,15 +325,19 @@
     }
 
     .staff_service {
-        font-size: 25px;
+        font-size: 20px;
 
         .staff_service_text {
             font-weight: bold;
-            margin-top: 20px;
+            h3{
+                margin: 0 !important;
+                padding: 0;
+            }
+            // margin-top: 20px;
         }
 
         .list_service {
-            margin: 20px 0;
+            margin: 10px 0;
         }
 
         .list_service label {
@@ -356,7 +348,7 @@
     }
 
     .button_add_staff {
-        margin-top: 100px;
+        margin-top: 10px;
         border-radius: 10px !important;
         .btn_submit {
             position: relative !important;
@@ -384,4 +376,32 @@
         font-size: 15px;
 
     }
+    .container_choose_service{
+        display: flex;
+        flex-direction: column;
+        width: 330px;
+    }
+  
+}
+.admin_title {
+    display: flex !important;
+    width: 500px;
+    margin-bottom: 20px;
+
+    h3 {
+        cursor: pointer;
+        padding-right: 10px;
+    }
+
+    h3:hover {
+        color: black;
+    }
+
+    .title_1 {
+        color: rgb(158, 157, 157);
+    }
+
+}
+.add_staff_nameservice{
+    font-size: 19px !important;
 }

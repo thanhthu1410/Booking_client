@@ -27,7 +27,7 @@ export default function Thanks() {
                     let socket: Socket = io("http://localhost:3003")
                     socket.emit("acceptBooking", appointmentStoreUpdate);
                     socket.emit("acceptNotifications", {
-                        message: `${res.data.data.customer.fullName} just confirm appointment`
+                        message: `${res.data.data.customer.fullName} just confirm appointment at ${res.data.data.date} ${res.data.data.time}`
                     })
                 }
 
