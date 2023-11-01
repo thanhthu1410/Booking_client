@@ -26,6 +26,10 @@ export default function ListAppointment() {
         return store.appointmentStore
     })
 
+    useEffect(() => {
+        console.log("appointmentStore", appointmentStore)
+    }, [appointmentStore])
+
     const staffStore = useSelector((store: StoreType) => {
         return store.staffStore
     })

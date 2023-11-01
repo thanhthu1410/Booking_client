@@ -11,9 +11,10 @@ import ListStaff from "@/pages/admin/staffManager/ListStaff";
 import ListVouchers from "@/pages/admin/voucherManager/ListVouchers";
 import Voucher from "@/pages/admin/voucherManager/Voucher";
 import { Route } from "react-router-dom";
-
+import PrivateRoutes from "./PrivateRoutes";
+//element={<PrivateRoutes />}
 export default
-    <Route>
+    <Route element={<PrivateRoutes />}>
         <Route path='admin' element={<Sidebar />}>
             <Route index path="service" element={<ListService />}></Route>
             <Route path='addService' element={<AddService />}></Route>
