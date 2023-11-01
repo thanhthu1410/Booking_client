@@ -65,20 +65,22 @@ function Login() {
             if (typeof err.response !== "undefined") {
                 if (err.response.status !== 201) {
                     message.warning(err.response.data.message)
-
                 }
-            })
+            } else {
+                message.warning("Server is down. Please try again!")
+            }
+        })
 
     }
-    const findUser = () => {
-        requestApi('users', 'GET', [])
-        .then((result) => {
+    // const findUser = () => {
+    //     requestApi('users', 'GET', [])
+    //     .then((result) => {
         
 
-        }).catch((err) => {
+    //     }).catch((err) => {
             
-        });
-    }
+    //     });
+    // }
     return (
         <div className='login_container'>
             <h2>LOGIN ADMIN</h2>
