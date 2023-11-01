@@ -19,30 +19,30 @@ import { toast } from 'react-toastify';
 function Login() {
     const navigate = useNavigate();
 
-   /*  const handleLogin = async (e:any)=>{
-        e.preventDefault();
-        const loginData = {
-            userName: e.target.userName.value,
-            password: e.target.password.value,
-        }
-       await api.authApi.login(loginData)
-       .then((res) => {
-            if(res.status!=201){
-                   message.warning("Please check your account ! ")
-                    
-            }else{
-                localStorage.setItem("token", res.data.accessToken)
-                message.success("Đăng Nhập thành công")
-                setTimeout(() => {
-                    window.location.href="/"
-                  }, 2000)
-            }
-           
-       }).catch((err) => {
-            message.warning(err.response.data.message)
-       });
-    } */
-    const handleLogin = async (e:any)=>{
+    /*  const handleLogin = async (e:any)=>{
+         e.preventDefault();
+         const loginData = {
+             userName: e.target.userName.value,
+             password: e.target.password.value,
+         }
+        await api.authApi.login(loginData)
+        .then((res) => {
+             if(res.status!=201){
+                    message.warning("Please check your account ! ")
+                     
+             }else{
+                 localStorage.setItem("token", res.data.accessToken)
+                 message.success("Đăng Nhập thành công")
+                 setTimeout(() => {
+                     window.location.href="/"
+                   }, 2000)
+             }
+            
+        }).catch((err) => {
+             message.warning(err.response.data.message)
+        });
+     } */
+    const handleLogin = async (e: any) => {
         e.preventDefault();
         const loginData = {
             userName: e.target.userName.value,
@@ -65,14 +65,12 @@ function Login() {
             if (typeof err.response !== "undefined") {
                 if (err.response.status !== 201) {
                     message.warning(err.response.data.message)
+
                 }
-            } else {
-                message.warning("Server is down. Please try again!")
-            }
-        })
+            })
 
     }
-    const findUser=()=>{
+    const findUser = () => {
         requestApi('users', 'GET', [])
         .then((result) => {
         
@@ -86,15 +84,15 @@ function Login() {
             <h2>LOGIN ADMIN</h2>
             <MDBContainer className="p-3 d-flex flex-column w-50 login_container_chirld">
                 <form action="" onSubmit={handleLogin}>
-                <MDBInput wrapperClass='mb-4' label='User Name' id='form1' type='text' name='userName'/>
-                <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password'  name='password'/>
+                    <MDBInput wrapperClass='mb-4' label='User Name' id='form1' type='text' name='userName' />
+                    <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password' name='password' />
 
-                <div className="d-flex justify-content-between mx-3 mb-4">
-                    <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
-                    <a href="!#">Forgot password?</a>
-                </div>
+                    <div className="d-flex justify-content-between mx-3 mb-4">
+                        <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
+                        <a href="!#">Forgot password?</a>
+                    </div>
 
-                <MDBBtn type='submit' className="mb-4">Sign in</MDBBtn>
+                    <MDBBtn type='submit' className="mb-4">Sign in</MDBBtn>
                 </form>
             </MDBContainer>
         </div>
