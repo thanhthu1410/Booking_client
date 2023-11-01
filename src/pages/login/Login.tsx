@@ -50,11 +50,14 @@ function Login() {
         }
         requestApi('auth/login', 'POST', loginData)
         .then((res) => {
-            console.log(res)
+          
             localStorage.setItem('access_token', res.data.accessToken
             );
             localStorage.setItem('refresh_token', res.data.refreshToken);
-            message.success(res.data.message)
+            message.success("Đăng Nhập thành công")
+            setTimeout(() => {
+                navigate("/admin");
+              }, 1500)
            
         })
         .catch(err => {
@@ -72,8 +75,8 @@ function Login() {
     const findUser=()=>{
         requestApi('users', 'GET', [])
         .then((result) => {
-            console.log("🚀 ~ file: Login.tsx:75 ~ .then ~ result:", result)
-            
+        
+
         }).catch((err) => {
             
         });
@@ -81,7 +84,6 @@ function Login() {
     return (
         <div className='login_container'>
             <h2>LOGIN ADMIN</h2>
-            <button onClick={findUser}>tessss</button>
             <MDBContainer className="p-3 d-flex flex-column w-50 login_container_chirld">
                 <form action="" onSubmit={handleLogin}>
                 <MDBInput wrapperClass='mb-4' label='User Name' id='form1' type='text' name='userName'/>
@@ -94,10 +96,6 @@ function Login() {
 
                 <MDBBtn type='submit' className="mb-4">Sign in</MDBBtn>
                 </form>
-               
-
-              
-
             </MDBContainer>
         </div>
 
