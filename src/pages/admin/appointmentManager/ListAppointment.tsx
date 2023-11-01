@@ -148,7 +148,7 @@ export default function ListAppointment() {
                     {times.map((time) => (
                         <tr key={time}>
                             <td style={{ width: "130px" }}>
-                                {dayjs(time, 'HH:mm').format('hh:mm A')}
+                                {time}
                             </td>
                             {staffStore.data?.map((staff) => {
                                 if (selectedStaff === "ALL" || staff.name === selectedStaff) {
