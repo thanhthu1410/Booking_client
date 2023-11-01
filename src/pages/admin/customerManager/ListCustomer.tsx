@@ -128,7 +128,7 @@ export default function ListCustomer() {
                             <th scope="col">Phone</th>
                             <th scope="col">Email</th>
                             <th scope="col">Create At</th>
-                        
+
                             <th scope="col">Action</th>
 
                         </tr>
@@ -161,7 +161,7 @@ export default function ListCustomer() {
                                         <td>{customer?.phoneNumber}</td>
                                         <td>{customer?.email}</td>
                                         <td >{moment(new Date(Number(customer?.createdAt))).format('DD/MM/YYYY')}</td>
-                                
+
                                         <td className='action'>
                                             <button onClick={() => {
                                                 setModal(true)
