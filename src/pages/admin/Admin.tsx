@@ -92,7 +92,7 @@ const Sidebar: React.FC = () => {
             <nav className="navbar">
                 <div className="logo_item">
                     <i className="bx bx-menu" id="sidebarOpen" />
-                    <img src="https://firebasestorage.googleapis.com/v0/b/bookingsalon-fa833.appspot.com/o/homepageImg%2Flogo-white.svg?alt=media&token=56a09dd9-7817-464e-99c4-feb3a28f33ff&_gl=1*1ufdsen*_ga*MTg1ODg5NjEyOS4xNjg4MDg4OTU3*_ga_CW55HF8NVT*MTY5NzE3MDU0Mi41OS4xLjE2OTcxNzE0MDguMjUuMC4w" alt="" />
+                    <img onClick={() => navigate("/")} style={{cursor:"pointer"}} src="https://firebasestorage.googleapis.com/v0/b/bookingsalon-fa833.appspot.com/o/homepageImg%2Flogo-white.svg?alt=media&token=56a09dd9-7817-464e-99c4-feb3a28f33ff&_gl=1*1ufdsen*_ga*MTg1ODg5NjEyOS4xNjg4MDg4OTU3*_ga_CW55HF8NVT*MTY5NzE3MDU0Mi41OS4xLjE2OTcxNzE0MDguMjUuMC4w" alt="" />
                 </div>
                 <div className='navbar_content'>
                     <div>

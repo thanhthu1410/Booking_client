@@ -133,8 +133,8 @@ export default function Booking() {
             }
             socket.emit("booking", data)
             Modal.success({
-                title: "Đã đặt lịch thành công",
-                content: "Đã đặt lịch thành công, vui lòng kiểm tra email để xác nhận lịch hẹn",
+                title: "Booking successfull ",
+                content: "We has already send to you an Email - Please confirm appointment in your Email ",
                 onOk: () => {
                     window.location.href = "/"
                 }
@@ -149,8 +149,8 @@ export default function Booking() {
             socket.emit("booking", data)
 
             Modal.success({
-                title: "Đã đặt lịch thành công",
-                content: "Đã đặt lịch thành công, vui lòng kiểm tra email để xác nhận lịch hẹn",
+                title: "Booking successfull",
+                content: "We has already send to you an Email - Please confirm appointment in your Email ",
                 onOk: () => {
                     window.location.href = "/"
                 }
@@ -412,10 +412,10 @@ export default function Booking() {
                                 }
                                 return null;
                             })}
-                            <span className='subtotal'>Subtotal:  {` $${selectedServices.reduce((acc, item) => {
+                            <span className='subtotal'>Subtotal:  {` ${currencyFormat(selectedServices.reduce((acc, item) => {
                                 const service = serviceStore.data?.find(service => service.id === item.serviceId);
                                 return acc + (service ? Number(service.price) : 0);
-                            }, 0)}`}  </span>
+                            }, 0))}`}  </span>
                             <div className='voucher_container'>
                                 <label htmlFor="">Enter Voucher :</label> <br />
                                 <input type="text" placeholder='aB3%d' name='voucherCode' onChange={(e) => setVoucherCode(e.target.value)} value={voucherCode} />
@@ -424,25 +424,25 @@ export default function Booking() {
                                 }}><span>Add</span></button>
                             </div>
 
-                            <p className='total_amount'>Discount Amount : ${
+                            <p className='total_amount'>Discount Amount : {
                                 !addVoucher
                                     ? 0
                                     : discountCash
-                                        ? discountCash
-                                        : (discountPercent ?? 0) / 100 * selectedServices.reduce((acc, item) => {
+                                        ? currencyFormat(discountCash)
+                                        : currencyFormat((discountPercent ?? 0) / 100 * selectedServices.reduce((acc, item) => {
                                             const service = serviceStore.data?.find(service => service.id === item.serviceId);
                                             return acc + (service ? Number(service.price) : 0);
-                                        }, 0)
+                                        }, 0))
                             }
                             </p>
 
 
                             <p className='total_amount'>Total Amount : {!addVoucher ?
-                                ` $${selectedServices.reduce((acc, item) => {
+                                ` ${currencyFormat(selectedServices.reduce((acc, item) => {
                                     const service = serviceStore.data?.find(service => service.id === item.serviceId);
                                     return acc + (service ? Number(service.price) : 0);
-                                }, 0)}`
-                                : subTotalVoucher}</p>
+                                }, 0))}`
+                                : currencyFormat(subTotalVoucher)}</p>
                             <button className='checkout' type='submit'>CHECK OUT</button>
 
                         </div>
