@@ -10,7 +10,11 @@ export default {
         })
     },
     findMany: async function () {
-        return await axios.get(import.meta.env.VITE_APP_SERVER_HOST_API + "vouchers/search");
+        return await axios.get(import.meta.env.VITE_APP_SERVER_HOST_API + "vouchers/search",{
+            headers: {
+                authorization:`Bearer ${localStorage.getItem("access_token")}`,  
+            }
+        });
     },
     update: async function (voucher: Voucher) {
         return await axios.patch(import.meta.env.VITE_APP_SERVER_HOST_API + "vouchers/" + voucher.id, voucher, {
@@ -20,10 +24,18 @@ export default {
         });
     },
     findAllPagination: async function (take: number, skip: number) {
-        return await axios.get(`${import.meta.env.VITE_APP_SERVER_HOST_API}vouchers?take=${take}&skip=${skip}`);
+        return await axios.get(`${import.meta.env.VITE_APP_SERVER_HOST_API}vouchers?take=${take}&skip=${skip}`,{
+            headers: {
+                authorization:`Bearer ${localStorage.getItem("access_token")}`,  
+            }
+        });
     },
     search: async (keysearch: string) => {
-        return await axios.get(import.meta.env.VITE_APP_SERVER_HOST_API + `vouchers/search?search=${keysearch}`)
+        return await axios.get(import.meta.env.VITE_APP_SERVER_HOST_API + `vouchers/search?search=${keysearch}`,{
+            headers: {
+                authorization:`Bearer ${localStorage.getItem("access_token")}`,  
+            }
+        })
     },
     getVoucher: async function (voucherCode: string) {
         return await axios.get(import.meta.env.VITE_APP_SERVER_HOST_API + `vouchers/getvoucher?getvoucher=${voucherCode}`);
