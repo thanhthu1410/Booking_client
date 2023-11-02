@@ -318,7 +318,7 @@ export default function Booking() {
                                             <Space wrap>
                                                 <Select
                                                     defaultValue="Select staff"
-                                                    style={{ width: 200, height: 50 }}
+                                                    style={{ width: 265, height: 50 }}
                                                     onChange={(value) => handleChange(value, service.id)}
                                                     value={selectedStaff[service.id.toString()] || "Select staff"}
                                                 >
@@ -326,7 +326,7 @@ export default function Booking() {
                                                         <Select.Option key={item.staff.id} value={item.staff.id}>
                                                             <div>
                                                                 <img src={item.staff.avatar} alt="Staff Image" style={{ width: '40px', marginRight: '8px' }} />
-                                                                {item.staff.name}
+                                                                {item.staff.name} {`(${item.staff.experience})`}
                                                             </div>
                                                         </Select.Option>
                                                     ))}
