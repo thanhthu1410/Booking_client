@@ -49,39 +49,41 @@ function Login() {
             password: e.target.password.value,
         }
         requestApi('auth/login', 'POST', loginData)
-            .then((res) => {
-                console.log(res)
-                localStorage.setItem('access_token', res.data.accessToken
-                );
-                localStorage.setItem('refresh_token', res.data.refreshToken);
-                message.success(res.data.message)
-
-            })
-            .catch(err => {
-                console.log(err)
-                if (typeof err.response !== "undefined") {
-                    if (err.response.status !== 201) {
-                        message.warning(err.response.data.message)
-                    }
-                } else {
-                    message.warning("Server is down. Please try again!")
+        .then((res) => {
+          
+            localStorage.setItem('access_token', res.data.accessToken
+            );
+            localStorage.setItem('refresh_token', res.data.refreshToken);
+            message.success("Đăng Nhập thành công")
+            setTimeout(() => {
+                navigate("/admin");
+              }, 1500)
+           
+        })
+        .catch(err => {
+            console.log(err)
+            if (typeof err.response !== "undefined") {
+                if (err.response.status !== 201) {
+                    message.warning(err.response.data.message)
                 }
-            })
+            } else {
+                message.warning("Server is down. Please try again!")
+            }
+        })
 
     }
-    const findUser = () => {
-        requestApi('users', 'GET', [])
-            .then((result) => {
-                console.log("🚀 ~ file: Login.tsx:75 ~ .then ~ result:", result)
+    // const findUser = () => {
+    //     requestApi('users', 'GET', [])
+    //     .then((result) => {
+        
 
-            }).catch((err) => {
-
-            });
-    }
+    //     }).catch((err) => {
+            
+    //     });
+    // }
     return (
         <div className='login_container'>
             <h2>LOGIN ADMIN</h2>
-            <button onClick={findUser}>tessss</button>
             <MDBContainer className="p-3 d-flex flex-column w-50 login_container_chirld">
                 <form action="" onSubmit={handleLogin}>
                     <MDBInput wrapperClass='mb-4' label='User Name' id='form1' type='text' name='userName' />
