@@ -17,7 +17,7 @@ export default function ListService() {
     const [updateData, setUpdateData] = useState([])
     const [isDelete, setIsDelete] = useState(false);
     const [selectedPage, setSelectedPage] = useState(null);
-    const [maxItemPage, setMaxItemPage] = useState(5);
+    const [maxItemPage, setMaxItemPage] = useState(4);
     const [skipItem, setSkipItem] = useState(0);
     const [maxPage, setMaxPage] = useState<any[]>([]);
     const dispatch = useDispatch();
