@@ -14,7 +14,7 @@ import api from '@/services/api';
 import { message } from 'antd';
 import requestApi from "@helpers/api";
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
+
 
 function Login() {
     const navigate = useNavigate();
@@ -54,7 +54,7 @@ function Login() {
             localStorage.setItem('access_token', res.data.accessToken
             );
             localStorage.setItem('refresh_token', res.data.refreshToken);
-            message.success("Đăng Nhập thành công")
+            message.success("Login Successfull !")
             setTimeout(() => {
                 navigate("/admin");
               }, 1500)
@@ -89,11 +89,7 @@ function Login() {
                     <MDBInput wrapperClass='mb-4' label='User Name' id='form1' type='text' name='userName' />
                     <MDBInput wrapperClass='mb-4' label='Password' id='form2' type='password' name='password' />
 
-                    <div className="d-flex justify-content-between mx-3 mb-4">
-                        <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
-                        <a href="!#">Forgot password?</a>
-                    </div>
-
+                
                     <MDBBtn type='submit' className="mb-4">Sign in</MDBBtn>
                 </form>
             </MDBContainer>

@@ -40,7 +40,7 @@ const CalendarAntd = (props: DataProps) => {
         <div style={wrapperStyle}>
             <Calendar
                 fullscreen={false}
-                validRange={validRange}
+                validRange={validRange as any}
                 defaultValue={dayjs()}
                 headerRender={({ value, type, onChange, onTypeChange }) => {
                     const start = 0;

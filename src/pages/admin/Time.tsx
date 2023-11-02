@@ -7,6 +7,7 @@ import { Modal, message } from 'antd';
 import { StoreType } from '@/stores';
 import { timeAction } from '@/stores/slices/time.slice';
 import dayjs from 'dayjs';
+import { useNavigate } from 'react-router-dom';
 
 export default function Time() {
 
@@ -17,7 +18,7 @@ export default function Time() {
     });
 
     const [loading, setLoading] = useState(false);
-
+    const navigate = useNavigate();
     const [start, setStart] = useState(timeStore.data?.startTime);
     const [end, setEnd] = useState(timeStore.data?.endTime);
 
@@ -65,6 +66,10 @@ export default function Time() {
     }
     return (
         <>
+          <div className='admin_title'>
+                <h3 onClick={() => navigate("/admin/service")} className='title_1'>Admin / </h3>
+                <h3>Setting Time</h3>
+            </div>
             {timeStore.data && (
                 <div className='admin'>
                     <form onSubmit={(e: any) => handleSubmit(e)}>

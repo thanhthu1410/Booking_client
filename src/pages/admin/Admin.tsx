@@ -98,7 +98,7 @@ const Sidebar: React.FC = () => {
                     <div>
                         <i onClick={() => {
                             Modal.confirm({
-                                content: ("Are you sure want to logout?"),
+                                content: ("Do you want to Logout ? "),
                                 onOk: () => {
                                     localStorage.removeItem("refresh_token");
                                     localStorage.removeItem("access_token");
@@ -218,15 +218,7 @@ const Sidebar: React.FC = () => {
                                 </ul>
                             </li>
 
-                            <li className="item">
-                                <a className="nav_link submenu_item">
-                                    <span className="navlink_icon">
-                                        <i className="fa-solid fa-flag"></i>
-                                    </span>
-                                    <span className="navlink">Report</span>
-                                    <i className="bx bx-chevron-right arrow-left" />
-                                </a>
-                            </li>
+                           
 
                             <li className="item" onClick={() => navigate("/admin/setting")}>
                                 <a className="nav_link submenu_item">
