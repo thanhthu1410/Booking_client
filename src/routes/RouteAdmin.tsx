@@ -16,7 +16,7 @@ import PrivateRoutes from "./PrivateRoutes";
 export default
     <Route element={<PrivateRoutes />}>
         <Route path='admin' element={<Sidebar />}>
-            <Route index path="service" element={<ListService />}></Route>
+            <Route index element={<ListService />}></Route>
             <Route path='addService' element={<AddService />}></Route>
             <Route path='listCustomer' element={<ListCustomer />}></Route>
             <Route path='listStaff' element={<ListStaff />}></Route>
